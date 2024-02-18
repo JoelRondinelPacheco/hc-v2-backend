@@ -5,6 +5,8 @@ import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
 import com.cleancoders.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +31,10 @@ public class ServiceSelectorImpl implements ServiceSelector {
         }
 
         return services;
+    }
+
+    @Override
+    public Page<Service> getAll(Pageable pageable) {
+        return null;
     }
 }
