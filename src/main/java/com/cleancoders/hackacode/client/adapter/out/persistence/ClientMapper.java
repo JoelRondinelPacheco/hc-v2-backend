@@ -9,7 +9,7 @@ public class ClientMapper {
 
 
     public static Client entityToDomain(ClientEntity clientEntity) {
-        return null;
+        return new Client(clientEntity.getUser());
     }
 
     public static ClientEntity domainToEntity(Client client) {
