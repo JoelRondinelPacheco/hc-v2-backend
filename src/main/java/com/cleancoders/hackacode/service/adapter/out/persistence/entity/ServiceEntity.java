@@ -25,10 +25,45 @@ public class ServiceEntity {
 
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "service", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
     private List<CategoryEntity> categories;
 
     @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
     private List<SaleEntity> sales;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public List<SaleEntity> getSales() {
+        return sales;
+    }
 }

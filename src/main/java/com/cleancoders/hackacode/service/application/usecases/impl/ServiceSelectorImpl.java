@@ -35,6 +35,6 @@ public class ServiceSelectorImpl implements ServiceSelector {
 
     @Override
     public Page<Service> getAll(Pageable pageable) {
-        return null;
+        return this.serviceSelectorPort.getAll(pageable);
     }
 }

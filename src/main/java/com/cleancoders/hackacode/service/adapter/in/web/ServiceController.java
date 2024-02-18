@@ -6,16 +6,15 @@ import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
 import com.cleancoders.hackacode.service.domain.Category;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/service")
+@RestController
+@RequestMapping("/service")
 public class ServiceController {
 
     @Autowired
@@ -30,6 +29,10 @@ public class ServiceController {
 
     @GetMapping
     public ResponseEntity<List<Service>> getAll(Pageable pageable) {
+        Page<Service> services = this.serviceSelector.getAll(pageable);
+        for (Service ser : services) {
+            System.out.println(ser.toString());
+        }
         return ResponseEntity.ok(this.serviceSelector.getAll(pageable).stream().toList());
     }
 

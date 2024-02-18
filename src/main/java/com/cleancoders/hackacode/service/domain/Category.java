@@ -14,10 +14,6 @@ public class Category {
         return this;
     }
 
-    public Service getService() {
-        return service;
-    }
-
     public Category setService(Service service) {
         this.service = service;
         return this;

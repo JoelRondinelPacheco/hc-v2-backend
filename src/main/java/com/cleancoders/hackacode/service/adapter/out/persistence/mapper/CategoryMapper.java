@@ -12,7 +12,9 @@ public class CategoryMapper implements Mapper<Category, CategoryEntity> {
 
     @Override
     public Category entityToDomain(CategoryEntity categoryEntity) {
-        return null;
+        Category category = new Category();
+        category.setName(categoryEntity.getName());
+        return category;
     }
 
     @Override

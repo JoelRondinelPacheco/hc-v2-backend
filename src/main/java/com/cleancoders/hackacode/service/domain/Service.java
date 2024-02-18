@@ -19,6 +19,56 @@ public class Service implements SaleItem {
     private List<Category> categories;
 
     @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", price=" + price +
+                ", categories=" + categories +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    @Override
     public BigDecimal getPrice() {
         return this.price;
     }
