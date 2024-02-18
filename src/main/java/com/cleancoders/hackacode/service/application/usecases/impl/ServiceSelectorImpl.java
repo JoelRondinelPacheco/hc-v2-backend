@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.service.application.port.usecases.impl;
+package com.cleancoders.hackacode.service.application.usecases.impl;
 
 import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
