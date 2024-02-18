@@ -27,7 +27,12 @@ public class SaleEntity {
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "rel_sales_services",
+            joinColumns = @JoinColumn(name = "sale_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
     private List<ServiceEntity> services;
 
     @Enumerated(EnumType.STRING)

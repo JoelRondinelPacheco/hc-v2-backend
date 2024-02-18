@@ -17,4 +17,8 @@ public class Client {
     public static Client withUser(User user) {
         return new Client(user);
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

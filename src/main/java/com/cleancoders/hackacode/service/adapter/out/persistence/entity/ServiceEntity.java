@@ -1,5 +1,6 @@
 package com.cleancoders.hackacode.service.adapter.out.persistence.entity;
 
+import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,5 +20,8 @@ public class ServiceEntity {
 
     @OneToMany(mappedBy = "service")
     private List<CategoryEntity> categories;
+
+    @ManyToMany(mappedBy = "services")
+    private List<SaleEntity> sales;
 
 }
