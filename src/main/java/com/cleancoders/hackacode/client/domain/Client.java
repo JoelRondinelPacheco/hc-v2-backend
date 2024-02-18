@@ -8,6 +8,7 @@ import java.util.List;
 public class Client {
     private Long id;
     private User user;
+    //TODO VER SI ES NECESARIO ESTE ATRIBUTO ACA
     private List<Sale> sales;
 
     private Client(User user) {

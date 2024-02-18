@@ -21,8 +21,9 @@ public class ClientMapper implements Mapper<Client, ClientEntity> {
     @Override
     public Client entityToDomain(ClientEntity clientEntity) {
         User user = this.userMapper.entityToDomain(clientEntity.getUser());
-
-        return null;
+        Client client = Client.withUser(user);
+        client.setId(clientEntity.getId());
+        return client;
     }
 
     @Override

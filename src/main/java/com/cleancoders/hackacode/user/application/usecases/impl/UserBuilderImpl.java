@@ -10,14 +10,14 @@ public class UserBuilderImpl implements UserBuilder {
     @Override
     public User userFromDTO(NewUserDTO userDTO) {
         return new User.UserBuilder()
-                .setName(userDTO.getName())
-                .setLastname(userDTO.getLastname())
-                .setEmail(userDTO.getEmail())
-                .setAddress(userDTO.getAddress())
-                .setDni(userDTO.getDni())
-                .setBirthday(userDTO.getBirthday())
-                .setNationality(userDTO.getNationality())
-                .setPhoneNumber(userDTO.getPhoneNumber())
+                .name(userDTO.getName())
+                .lastname(userDTO.getLastname())
+                .email(userDTO.getEmail())
+                .address(userDTO.getAddress())
+                .dni(userDTO.getDni())
+                .birthday(userDTO.getBirthday())
+                .nationality(userDTO.getNationality())
+                .phoneNumber(userDTO.getPhoneNumber())
                 .build();
     }
 }

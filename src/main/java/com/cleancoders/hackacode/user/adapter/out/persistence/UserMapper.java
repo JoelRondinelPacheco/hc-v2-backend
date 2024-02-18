@@ -11,8 +11,16 @@ public class UserMapper implements Mapper<User, UserEntity> {
 
     @Override
     public User entityToDomain(UserEntity userEntity) {
-
-        return null;
+        return new User.UserBuilder()
+                .name(userEntity.getName())
+                .lastname(userEntity.getLastname())
+                .email(userEntity.getEmail())
+                .address(userEntity.getAddress())
+                .dni(userEntity.getDni())
+                .birthday(userEntity.getBirthday())
+                .nationality(userEntity.getNationality())
+                .phoneNumber(userEntity.getPhoneNumber())
+                .build();
     }
 
     @Override
