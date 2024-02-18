@@ -9,6 +9,7 @@ public class User {
     private String name;
     private String lastname;
     private String email;
+    private String password;
     private String address;
     private Integer dni;
     private Date birthday;
@@ -33,6 +34,7 @@ public class User {
         private String name;
         private String lastname;
         private String email;
+        private String password;
         private String address;
         private Integer dni;
         private Date birthday;
@@ -41,42 +43,47 @@ public class User {
 
         public UserBuilder() {}
 
-        public UserBuilder setName(String name) {
+        public UserBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public UserBuilder setLastname(String lastname) {
+        public UserBuilder lastname(String lastname) {
             this.lastname = lastname;
             return this;
         }
 
-        public UserBuilder setEmail(String email) {
+        public UserBuilder email(String email) {
             this.email = email;
             return this;
         }
 
-        public UserBuilder setAddress(String address) {
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder address(String address) {
             this.address = address;
             return this;
         }
 
-        public UserBuilder setDni(Integer dni) {
+        public UserBuilder dni(Integer dni) {
             this.dni = dni;
             return this;
         }
 
-        public UserBuilder setBirthday(Date birthday) {
+        public UserBuilder birthday(Date birthday) {
             this.birthday = birthday;
             return this;
         }
 
-        public UserBuilder setNationality(String nationality) {
+        public UserBuilder nationality(String nationality) {
             this.nationality = nationality;
             return this;
         }
 
-        public UserBuilder setPhoneNumber(Integer phoneNumber) {
+        public UserBuilder phoneNumber(Integer phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }

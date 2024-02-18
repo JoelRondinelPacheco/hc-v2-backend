@@ -6,5 +6,4 @@ import com.cleancoders.hackacode.user.domain.User;
 public interface UserUtils {
     void existsByEmail(String email);
 
-    User userFromDTO(NewUserDTO user);
 }

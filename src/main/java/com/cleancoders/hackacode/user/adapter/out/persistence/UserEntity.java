@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 import java.util.Date;
 
-@Entity(name = "user_t")
+@Entity(name = "user_")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,39 @@ public class UserEntity {
     private String nationality;
     private Integer phoneNumber;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Integer getDni() {
+        return dni;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public Integer getPhoneNumber() {
+        return phoneNumber;
+    }
 }

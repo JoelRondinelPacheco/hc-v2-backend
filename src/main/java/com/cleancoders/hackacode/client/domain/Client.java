@@ -8,6 +8,7 @@ import java.util.List;
 public class Client {
     private Long id;
     private User user;
+    //TODO VER SI ES NECESARIO ESTE ATRIBUTO ACA
     private List<Sale> sales;
 
     private Client(User user) {
@@ -16,5 +17,9 @@ public class Client {
 
     public static Client withUser(User user) {
         return new Client(user);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class Sale {
     private Long id;
-    private String num_sale; //????
+    //rivate String num_sale;
     private PaymentMethod paymentMethod;
     private Client client;
     private Employee employee;
