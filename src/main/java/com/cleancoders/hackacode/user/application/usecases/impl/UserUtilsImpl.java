@@ -22,21 +22,4 @@ public class UserUtilsImpl implements UserUtils {
             throw new RuntimeException("TODO CUSTOM EX");
         }
     }
-
-    @Override
-    public User userFromDTO(NewUserDTO userDTO) {
-
-        User user = new User.UserBuilder()
-                .setName(userDTO.getName())
-                .setLastname(userDTO.getLastname())
-                .setEmail(userDTO.getEmail())
-                .setAddress(userDTO.getAddress())
-                .setDni(userDTO.getDni())
-                .setBirthday(userDTO.getBirthday())
-                .setNationality(userDTO.getNationality())
-                .setPhoneNumber(userDTO.getPhoneNumber())
-                .build();
-
-        return this.userRepository.save(user);
-    }
 }

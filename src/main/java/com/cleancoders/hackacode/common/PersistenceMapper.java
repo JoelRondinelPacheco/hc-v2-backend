@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface Mapper {
+public @interface PersistenceMapper {
     @AliasFor(annotation = Component.class)
     String value() default "";
 }

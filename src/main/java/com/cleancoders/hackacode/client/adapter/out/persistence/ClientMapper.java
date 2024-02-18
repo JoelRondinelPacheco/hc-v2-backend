@@ -1,20 +1,32 @@
 package com.cleancoders.hackacode.client.adapter.out.persistence;
 
 import com.cleancoders.hackacode.client.domain.Client;
+import com.cleancoders.hackacode.common.PersistenceMapper;
 import com.cleancoders.hackacode.common.adapter.Mapper;
+import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import com.cleancoders.hackacode.user.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component
+@PersistenceMapper
 @Qualifier("clientMapper")
-public class ClientMapper implements Mapper {
+public class ClientMapper implements Mapper<Client, ClientEntity> {
+
+    @Autowired
+    @Qualifier("userMapper")
+    private Mapper<User, UserEntity> userMapper;
+
+
     @Override
-    public Object entityToDomain(Object o) {
+    public Client entityToDomain(ClientEntity clientEntity) {
+        User user = this.userMapper.entityToDomain(clientEntity.getUser());
+
         return null;
     }
 
     @Override
-    public Object domainToEntity(Object o) {
+    public ClientEntity domainToEntity(Client client) {
         return null;
     }
 }

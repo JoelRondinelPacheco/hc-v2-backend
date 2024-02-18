@@ -16,7 +16,7 @@ public class ClientEntity {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<SaleEntity> sales;
 
     public Long getId() {
