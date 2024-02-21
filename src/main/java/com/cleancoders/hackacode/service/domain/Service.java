@@ -1,7 +1,6 @@
 package com.cleancoders.hackacode.service.domain;
 
 import com.cleancoders.hackacode.saleitem.domain.SaleItem;
-import com.cleancoders.hackacode.service.application.port.in.ServicePersistence;
 
 
 import java.math.BigDecimal;
@@ -16,7 +15,8 @@ public class Service implements SaleItem {
     private Date createdAt;
     private Date updatedAt;
     private BigDecimal price;
-    private List<Category> categories;
+    private Category category;
+    private Long categoryId;
 
     @Override
     public String toString() {
@@ -28,8 +28,16 @@ public class Service implements SaleItem {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", price=" + price +
-                ", categories=" + categories +
+                ", categories=" + category +
                 '}';
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Long getId() {
@@ -56,16 +64,16 @@ public class Service implements SaleItem {
         return updatedAt;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -83,12 +91,14 @@ public class Service implements SaleItem {
         this.name = builder.name;
         this.description = builder.description;
         this.price = builder.price;
+        this.categoryId = builder.categoryId;
     }
 
     public static class ServiceBuilder {
         private String name;
         private String description;
         private BigDecimal price;
+        private Long categoryId;
 
         public ServiceBuilder() {
         }
@@ -105,6 +115,11 @@ public class Service implements SaleItem {
 
         public ServiceBuilder price(BigDecimal price) {
             this.price = price;
+            return this;
+        }
+
+        public ServiceBuilder category(Long categoryId) {
+            this.categoryId = categoryId;
             return this;
         }
 

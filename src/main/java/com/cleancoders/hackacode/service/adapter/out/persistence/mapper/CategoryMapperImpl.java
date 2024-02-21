@@ -6,19 +6,36 @@ import com.cleancoders.hackacode.service.adapter.out.persistence.entity.Category
 import com.cleancoders.hackacode.service.domain.Category;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @PersistenceMapper
-@Qualifier("categoryMapper")
-public class CategoryMapper implements Mapper<Category, CategoryEntity> {
+public class CategoryMapperImpl implements CategoryMapper {
 
     @Override
     public Category entityToDomain(CategoryEntity categoryEntity) {
         Category category = new Category();
+        category.setId(categoryEntity.getId());
         category.setName(categoryEntity.getName());
+        category.setDescription(category.getDescription());
         return category;
     }
 
     @Override
     public CategoryEntity domainToEntity(Category category) {
-        return null;
+        CategoryEntity categoryEntity = CategoryEntity.builder()
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
+        return categoryEntity;
+    }
+
+    @Override
+    public List<CategoryEntity> domaintToEntityList(List<Category> categories) {
+        List<CategoryEntity> categoryEntities = new ArrayList<>();
+        for (Category c : categories) {
+            categoryEntities.add(this.domainToEntity(c));
+        }
+        return categoryEntities;
     }
 }

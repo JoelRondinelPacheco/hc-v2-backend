@@ -1,6 +1,7 @@
 package com.cleancoders.hackacode.service.application.utils;
 
 import com.cleancoders.hackacode.common.UseCase;
+import com.cleancoders.hackacode.service.application.dto.NewCategoryDTO;
 import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
 import com.cleancoders.hackacode.service.domain.Service;
 
@@ -13,6 +14,7 @@ public class ServiceBuilderImpl implements ServiceBuilder{
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
+                .category(dto.getCategoryId())
                 .build();
     }
 }

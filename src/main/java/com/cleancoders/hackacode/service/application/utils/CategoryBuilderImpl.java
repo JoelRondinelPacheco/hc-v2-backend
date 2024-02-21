@@ -1,11 +1,10 @@
 package com.cleancoders.hackacode.service.application.utils;
 
 import com.cleancoders.hackacode.common.UseCase;
-import com.cleancoders.hackacode.service.application.dto.CategoryDTOBase;
-import com.cleancoders.hackacode.service.application.dto.NewCategoryDTO;
+import com.cleancoders.hackacode.service.application.dto.NewCategoryDTOb;
 import com.cleancoders.hackacode.service.application.dto.NewCategoryListDTO;
+import com.cleancoders.hackacode.service.application.dto.NewCategoryDTO;
 import com.cleancoders.hackacode.service.domain.Category;
-import com.cleancoders.hackacode.service.domain.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +14,18 @@ public class CategoryBuilderImpl implements CategoryBuilder{
 
     @Override
     public Category newCategory(NewCategoryDTO dto) {
-        return this.category(dto.getName(), dto.getService());
+        return this.category(dto.getName(), dto.getDescription());
     }
 
     @Override
-    public List<Category> newCategoryList(NewCategoryListDTO dto) {
-        List<Category> categories = new ArrayList<>();
-        for (String name : dto.getCategoryNames()) {
-            categories.add(this.category(name, dto.getService()));
-        }
-        return categories;
+    public List<Category> newServiceCategoryList(NewCategoryDTO service) {
+        return null;
     }
 
-    private Category category(String name, Service service) {
+    private Category category(String name, String description) {
         Category category = new Category();
         category.setName(name);
-        category.setService(service);
+        category.setDescription(description);
         return category;
     }
 }

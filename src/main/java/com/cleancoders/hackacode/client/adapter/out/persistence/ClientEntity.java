@@ -13,10 +13,12 @@ public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    @OneToMany(fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
     private List<SaleEntity> sales;
 
     public Long getId() {
