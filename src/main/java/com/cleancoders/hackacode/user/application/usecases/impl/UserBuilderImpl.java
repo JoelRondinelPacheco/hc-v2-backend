@@ -1,6 +1,6 @@
 package com.cleancoders.hackacode.user.application.usecases.impl;
 
-import com.cleancoders.hackacode.client.application.dto.NewUserDTO;
+import com.cleancoders.hackacode.user.application.dto.NewUserDTO;
 import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.user.application.usecases.UserBuilder;
 import com.cleancoders.hackacode.user.domain.User;

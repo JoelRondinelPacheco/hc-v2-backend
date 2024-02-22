@@ -23,13 +23,20 @@ public class ServiceMapper implements Mapper<Service, ServiceEntity> {
                 .price(serviceEntity.getPrice())
                 .build();
         service.setId(serviceEntity.getId());
+
         //TODO REFACTOR
-        service.setCategories(serviceEntity.getCategories().stream().map(this.categoryMapper::entityToDomain).toList());
+
+        service.setCategory(this.categoryMapper.entityToDomain(serviceEntity.getCategory()));
         return service;
     }
 
     @Override
     public ServiceEntity domainToEntity(Service service) {
-        return null;
+        return ServiceEntity.builder()
+                .code(service.getCode())
+                .name(service.getName())
+                .description(service.getDescription())
+                .price(service.getPrice())
+                .build();
     }
 }

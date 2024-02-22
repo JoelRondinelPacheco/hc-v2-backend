@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface CategoryPersistencePort {
     Category save(Category category);
-    List<Category> saveList(List<Category> categories);
 }

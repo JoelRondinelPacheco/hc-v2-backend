@@ -2,6 +2,8 @@ package com.cleancoders.hackacode.service.adapter.out.persistence.entity;
 
 import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity(name = "service")
+@Data
+@Builder
 public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,45 +29,10 @@ public class ServiceEntity {
 
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
-    private List<CategoryEntity> categories;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
     @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
     private List<SaleEntity> sales;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public List<CategoryEntity> getCategories() {
-        return categories;
-    }
-
-    public List<SaleEntity> getSales() {
-        return sales;
-    }
 }

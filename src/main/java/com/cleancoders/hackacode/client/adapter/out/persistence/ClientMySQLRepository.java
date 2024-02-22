@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface ClientMySQLRepository extends JpaRepository<ClientEntity, Long> {
     boolean existsByUser_Email(String email);
+
+    boolean existsByUser_Id(Long userId);
 }

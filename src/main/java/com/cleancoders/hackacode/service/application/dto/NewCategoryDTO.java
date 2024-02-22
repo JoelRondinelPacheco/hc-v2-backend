@@ -1,13 +1,18 @@
 package com.cleancoders.hackacode.service.application.dto;
 
-public class NewCategoryDTO extends CategoryDTOBase {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class NewCategoryDTO {
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String description;
 }
