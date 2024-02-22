@@ -17,7 +17,7 @@ public class CategoryMapperImpl implements CategoryMapper {
         Category category = new Category();
         category.setId(categoryEntity.getId());
         category.setName(categoryEntity.getName());
-        category.setDescription(category.getDescription());
+        category.setDescription(categoryEntity.getDescription());
         return category;
     }
 

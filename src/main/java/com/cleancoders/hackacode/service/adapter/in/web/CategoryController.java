@@ -2,6 +2,7 @@ package com.cleancoders.hackacode.service.adapter.in.web;
 
 import com.cleancoders.hackacode.service.application.dto.NewCategoryDTO;
 import com.cleancoders.hackacode.service.application.port.in.CategoryPersistence;
+import com.cleancoders.hackacode.service.application.port.in.CategorySelector;
 import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
 import com.cleancoders.hackacode.service.domain.Category;
 import com.cleancoders.hackacode.service.domain.Service;
@@ -21,6 +22,8 @@ public class CategoryController {
     private ServiceSelector serviceSelector;
     @Autowired
     private CategoryPersistence categoryPersistence;
+    @Autowired
+    private CategorySelector categorySelector;
 
     @PostMapping
     public ResponseEntity<Category> addService(@RequestBody NewCategoryDTO body) {
@@ -28,12 +31,13 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Service>> getAll(Pageable pageable) {
-        Page<Service> services = this.serviceSelector.getAll(pageable);
-        for (Service ser : services) {
-            System.out.println(ser.toString());
+    public ResponseEntity<List<Category>> getAll(Pageable pageable) {
+        Page<Category> categories = this.categorySelector.getPage(pageable);
+        for (Category cat : categories) {
+            System.out.println(cat.getName());
+            System.out.println(cat.getDescription());
         }
-        return ResponseEntity.ok(this.serviceSelector.getAll(pageable).stream().toList());
+        return ResponseEntity.ok(categories.stream().toList());
     }
 
 }

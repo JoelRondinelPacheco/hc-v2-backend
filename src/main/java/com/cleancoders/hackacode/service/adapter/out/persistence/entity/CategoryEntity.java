@@ -1,14 +1,18 @@
 package com.cleancoders.hackacode.service.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
 @Entity(name = "category")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CategoryEntity {
     @Id
