@@ -1,14 +1,14 @@
 package com.cleancoders.hackacode.client.adapter.in.web;
 
-import com.cleancoders.hackacode.user.application.dto.NewUserDTO;
+import com.cleancoders.hackacode.client.domain.Client;
+import com.cleancoders.hackacode.person.application.dto.NewPersonDTO;
 import com.cleancoders.hackacode.client.application.port.in.ClientPersistence;
 import com.cleancoders.hackacode.client.application.port.in.ClientSelector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/client")
@@ -19,8 +19,22 @@ public class ClientController {
     private ClientPersistence clientPersistence;
 
     @PostMapping
-    private ResponseEntity<String> save(@RequestBody NewUserDTO userInfo) {
-        this.clientPersistence.newClient(userInfo);
-        return ResponseEntity.ok("");
+    private ResponseEntity<Client> save(@RequestBody NewPersonDTO userInfo) {
+        return ResponseEntity.ok(this.clientPersistence.newClient(userInfo));
+    }
+
+    @GetMapping
+    private ResponseEntity<Page<Client>> getClientsPaginated(Pageable pageable) {
+        return ResponseEntity.ok(this.clientSelector.getClientsPaginated(pageable));
+    }
+
+    @PutMapping("/{clientId}")
+    private ResponseEntity<Client> editClient(@PathVariable String clientId) {
+        return null;
+    }
+
+    @DeleteMapping("/{clientId}")
+    private ResponseEntity<?> deleteClient(@PathVariable String clientId) {
+        return null;
     }
 }

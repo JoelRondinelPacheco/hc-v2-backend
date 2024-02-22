@@ -1,24 +1,22 @@
 package com.cleancoders.hackacode.sale.domain;
 
 import com.cleancoders.hackacode.client.domain.Client;
-import com.cleancoders.hackacode.employee.domain.Employee;
+import com.cleancoders.hackacode.user.domain.User;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import com.cleancoders.hackacode.saleitem.domain.SaleItem;
-
-import java.math.BigDecimal;
 
 public class Sale {
     private Long id;
     //rivate String num_sale;
     private PaymentMethod paymentMethod;
     private Client client;
-    private Employee employee;
+    private User user;
     private SaleItem saleItem;
     private SaleType type;
 
     public Sale(Builder builder) {
         this.client = builder.client;
-        this.employee = builder.employee;
+        this.user = builder.user;
         this.saleItem = builder.saleItem;
         this.type = builder.type;
     }
@@ -26,7 +24,7 @@ public class Sale {
 
     public static class Builder {
         private Client client;
-        private Employee employee;
+        private User user;
         private SaleItem saleItem;
         private SaleType type;
 
@@ -34,8 +32,8 @@ public class Sale {
             this.client = client;
             return this;
         }
-        public Sale.Builder employee(Employee employee) {
-            this.employee = employee;
+        public Sale.Builder employee(User user) {
+            this.user = user;
             return this;
         }
         public Sale.Builder saleItem(SaleItem saleItem) {

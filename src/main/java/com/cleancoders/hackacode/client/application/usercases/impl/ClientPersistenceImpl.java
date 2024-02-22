@@ -1,15 +1,15 @@
 package com.cleancoders.hackacode.client.application.usercases.impl;
 
-import com.cleancoders.hackacode.user.application.dto.NewUserDTO;
+import com.cleancoders.hackacode.person.application.dto.NewPersonDTO;
 import com.cleancoders.hackacode.client.application.port.in.ClientPersistence;
 import com.cleancoders.hackacode.client.application.port.in.ClientUtils;
 import com.cleancoders.hackacode.client.application.port.out.ClientPersistencePort;
 import com.cleancoders.hackacode.client.domain.Client;
 import com.cleancoders.hackacode.common.UseCase;
-import com.cleancoders.hackacode.user.application.port.in.UserPersistence;
-import com.cleancoders.hackacode.user.application.port.in.UserUtils;
-import com.cleancoders.hackacode.user.application.usecases.UserBuilder;
-import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.person.application.port.in.PersonPersistence;
+import com.cleancoders.hackacode.person.application.port.in.PersonUtils;
+import com.cleancoders.hackacode.person.application.usecases.PersonBuilder;
+import com.cleancoders.hackacode.person.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UseCase
@@ -18,29 +18,29 @@ public class ClientPersistenceImpl implements ClientPersistence {
     @Autowired
     private ClientPersistencePort clientRepository;
     @Autowired
-    private UserPersistence userRepository;
+    private PersonPersistence userRepository;
 
     @Autowired
-    private UserUtils userUtils;
+    private PersonUtils personUtils;
     @Autowired
     private ClientUtils clientUtils;
     @Autowired
-    private UserBuilder userBuilder;
+    private PersonBuilder personBuilder;
 
     @Override
-    public Client newClient(NewUserDTO userDTO) {
+    public Client newClient(NewPersonDTO userDTO) {
         //DESDE CERO
-        this.userUtils.assertDoesNotExistsByEmail(userDTO.getEmail());
+        this.personUtils.assertDoesNotExistsByEmail(userDTO.getEmail());
         //TODO VER SI ES NECESARIO
         this.clientUtils.assertDoesNotExistsByUserEmail(userDTO.getEmail());
 
         //CREAR USER
         //CREA CLIENT Y LE ASIGNA USER
         //TODO IMPL
-        User user = this.userRepository.save(this.userBuilder.userFromDTO(userDTO));
+        Person person = this.userRepository.save(this.personBuilder.userFromDTO(userDTO));
 
         Client client = new Client();
-        client.setUser(user);
+        client.setUser(person);
 
         //TODO IMPL
         return this.clientRepository.save(client);

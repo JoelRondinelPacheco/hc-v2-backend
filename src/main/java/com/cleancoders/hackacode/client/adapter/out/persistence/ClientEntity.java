@@ -1,15 +1,11 @@
 package com.cleancoders.hackacode.client.adapter.out.persistence;
 
-import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
-import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import com.cleancoders.hackacode.person.adapter.out.persistence.PersonEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
 
 @Entity(name = "client")
 @Data
@@ -23,7 +19,7 @@ public class ClientEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
 
 }

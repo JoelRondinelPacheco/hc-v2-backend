@@ -1,7 +1,7 @@
 package com.cleancoders.hackacode.sale.adapter.out.persistence;
 
 import com.cleancoders.hackacode.client.adapter.out.persistence.ClientEntity;
-import com.cleancoders.hackacode.employee.adapter.out.persistence.EmployeeEntity;
+import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
 import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.PaymentMethodEntity;
 import com.cleancoders.hackacode.sale.domain.SaleType;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
@@ -25,7 +25,7 @@ public class SaleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
-    private EmployeeEntity employee;
+    private UserEntity employee;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

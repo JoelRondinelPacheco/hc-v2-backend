@@ -1,23 +1,20 @@
 package com.cleancoders.hackacode.client.domain;
 
-import com.cleancoders.hackacode.sale.domain.Sale;
-import com.cleancoders.hackacode.user.domain.User;
-
-import java.util.List;
+import com.cleancoders.hackacode.person.domain.Person;
 
 public class Client {
     private Long id;
-    private User user;
+    private Person person;
 
     public Client() {
     }
 
-    private Client(User user) {
-        this.user = user;
+    private Client(Person person) {
+        this.person = person;
     }
 
-    public static Client withUser(User user) {
-        return new Client(user);
+    public static Client withUser(Person person) {
+        return new Client(person);
     }
 
     public void setId(Long id) {
@@ -28,11 +25,11 @@ public class Client {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Person getUser() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Person person) {
+        this.person = person;
     }
 }

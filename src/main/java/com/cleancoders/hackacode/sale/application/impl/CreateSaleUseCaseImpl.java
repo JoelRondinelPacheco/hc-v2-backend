@@ -3,8 +3,8 @@ package com.cleancoders.hackacode.sale.application.impl;
 import com.cleancoders.hackacode.client.application.port.in.ClientSelector;
 import com.cleancoders.hackacode.client.domain.Client;
 import com.cleancoders.hackacode.common.UseCase;
-import com.cleancoders.hackacode.employee.application.port.in.EmployeeSelector;
-import com.cleancoders.hackacode.employee.domain.Employee;
+import com.cleancoders.hackacode.user.application.port.in.UserSelector;
+import com.cleancoders.hackacode.user.domain.User;
 import com.cleancoders.hackacode.sale.application.CreateSaleUseCase;
 import com.cleancoders.hackacode.sale.application.dto.NewSaleDTO;
 import com.cleancoders.hackacode.sale.application.port.out.SalePersistencePort;
@@ -32,7 +32,7 @@ public class CreateSaleUseCaseImpl implements CreateSaleUseCase {
 
     //EMPLOYEE
     @Autowired
-    private EmployeeSelector employeeSelector;
+    private UserSelector userSelector;
 
     //SERVICES
     private ServiceSelector serviceSelector;
@@ -40,14 +40,14 @@ public class CreateSaleUseCaseImpl implements CreateSaleUseCase {
     public String createSale(NewSaleDTO saleInfo) {
 
         Client client = this.clientSelector.byId(saleInfo.getClientId());
-        Employee employee = this.employeeSelector.byId(saleInfo.getEmployeeId());
+        User user = this.userSelector.byId(saleInfo.getEmployeeId());
 
         List<Service> services = this.serviceSelector.listById(saleInfo.getServicesId());
 
         SaleItem saleItem = this.saleItemService.createSaleItem(services);
 
         Sale sale = new Sale.Builder()
-                .employee(employee)
+                .employee(user)
                 .client(client)
                 .saleItem(saleItem)
                 .build();

@@ -1,32 +1,46 @@
 package com.cleancoders.hackacode.user.application.usecases.impl;
 
 import com.cleancoders.hackacode.common.UseCase;
-import com.cleancoders.hackacode.common.adapter.Mapper;
-import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import com.cleancoders.hackacode.user.application.dto.NewEmployeeDTO;
 import com.cleancoders.hackacode.user.application.port.in.UserPersistence;
 import com.cleancoders.hackacode.user.application.port.out.UserPersistencePort;
+import com.cleancoders.hackacode.user.application.usecases.EmployeeUtils;
 import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.person.application.port.in.PersonPersistence;
+import com.cleancoders.hackacode.person.application.port.in.PersonUtils;
+import com.cleancoders.hackacode.person.application.usecases.PersonBuilder;
+import com.cleancoders.hackacode.person.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @UseCase
 public class UserPersistenceImpl implements UserPersistence {
 
     @Autowired
-    private UserPersistencePort userRepository;
+    private UserPersistencePort userPersistencePort;
+    @Autowired
+    private PersonPersistence userRepository;
+
+    @Autowired
+    private PersonUtils personUtils;
+    @Autowired
+    private EmployeeUtils employeeUtils;
+    @Autowired
+    private PersonBuilder personBuilder;
 
     @Override
-    public User save(User user) {
-        return this.userRepository.save(user);
-    }
+    public User newEmployee(NewEmployeeDTO employeeDTO) {
+        //CHECKEA QUE EL USUARIO EXISTA USUARIO NO EXISTE
+        this.personUtils.assertDoesNotExistsByEmail(employeeDTO.getEmail());
+        //NO EXISTE EMPLEADO RELACIONADO A ESE USUARIO
+        this.employeeUtils.assertDoesNotExistsByUserEmail(employeeDTO.getEmail());
 
-    @Override
-    public User update(User user) {
-        return null;
-    }
+        //USER WITH ID
+        Person person = this.userRepository.save(this.personBuilder.userFromDTO(employeeDTO));
 
-    @Override
-    public String delete(Long userId) {
-        return null;
+        User user = new User();
+        user.setSalary(user.getSalary());
+        user.setPerson(person);
+
+        return this.userPersistencePort.save(user);
     }
 }
