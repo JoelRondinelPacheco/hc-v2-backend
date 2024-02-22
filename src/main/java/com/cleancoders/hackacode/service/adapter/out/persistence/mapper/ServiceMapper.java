@@ -23,6 +23,7 @@ public class ServiceMapper implements Mapper<Service, ServiceEntity> {
                 .price(serviceEntity.getPrice())
                 .build();
         service.setId(serviceEntity.getId());
+
         //TODO REFACTOR
 
         service.setCategory(this.categoryMapper.entityToDomain(serviceEntity.getCategory()));
@@ -31,14 +32,11 @@ public class ServiceMapper implements Mapper<Service, ServiceEntity> {
 
     @Override
     public ServiceEntity domainToEntity(Service service) {
-        ServiceEntity serviceEntity = ServiceEntity.builder()
+        return ServiceEntity.builder()
                 .code(service.getCode())
                 .name(service.getName())
                 .description(service.getDescription())
                 .price(service.getPrice())
                 .build();
-
-        //TODO HANDLE NULL ID
-        return serviceEntity;
     }
 }

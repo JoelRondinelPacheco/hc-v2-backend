@@ -6,6 +6,7 @@ import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
 import com.cleancoders.hackacode.service.application.port.in.ServicePersistence;
 import com.cleancoders.hackacode.service.application.port.out.CategoryPersistencePort;
 import com.cleancoders.hackacode.service.application.port.out.ServicePersistencePort;
+import com.cleancoders.hackacode.service.application.utils.CategoryUtil;
 import com.cleancoders.hackacode.service.application.utils.ServiceBuilder;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,15 @@ public class ServicePersistenceImpl implements ServicePersistence {
     @Autowired
     private CategoryPersistencePort categoryRepository;
 
+
+    @Autowired
+    private CategoryUtil categoryUtil;
+
     @Override
     public Service newService(NewServiceDTO serviceDTO) {
-        //CHECK CATEGORY EXISITS
+
+        this.categoryUtil.assertCategoryExistsById(serviceDTO.getCategoryId());
+
         Service service = this.serviceRepository.save(this.serviceBuilder.fromDTO(serviceDTO));
 
         return this.serviceRepository.save(service);

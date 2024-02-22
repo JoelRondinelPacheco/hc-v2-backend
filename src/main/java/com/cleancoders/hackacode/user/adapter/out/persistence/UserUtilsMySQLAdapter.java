@@ -14,4 +14,10 @@ public class UserUtilsMySQLAdapter implements UserUtilsPort {
     public boolean existsByEmail(String email) {
         return this.userRepository.existsByEmail(email);
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return this.userRepository.existsById(id);
+    }
+
 }

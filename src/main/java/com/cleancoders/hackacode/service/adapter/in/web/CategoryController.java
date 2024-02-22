@@ -22,10 +22,6 @@ public class CategoryController {
     @Autowired
     private CategoryPersistence categoryPersistence;
 
-    /*
-    TODO
-        Create service
-     */
     @PostMapping
     public ResponseEntity<Category> addService(@RequestBody NewCategoryDTO body) {
         return ResponseEntity.ok(this.categoryPersistence.newCategory(body));

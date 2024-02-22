@@ -10,8 +10,15 @@ public class ClientUtilsPersistenceAdapter implements ClientUtilsPort {
     @Autowired
     private ClientMySQLRepository clientRepository;
 
+
     @Override
     public boolean existsByUserEmail(String userEmail) {
         return this.clientRepository.existsByUser_Email(userEmail);
     }
+
+    @Override
+    public boolean existsByUserId(Long userId) {
+        return this.clientRepository.existsByUser_Id(userId);
+    }
+
 }

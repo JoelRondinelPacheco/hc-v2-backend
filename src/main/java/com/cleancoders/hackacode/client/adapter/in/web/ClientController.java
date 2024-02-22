@@ -1,6 +1,6 @@
 package com.cleancoders.hackacode.client.adapter.in.web;
 
-import com.cleancoders.hackacode.client.application.dto.NewUserDTO;
+import com.cleancoders.hackacode.user.application.dto.NewUserDTO;
 import com.cleancoders.hackacode.client.application.port.in.ClientPersistence;
 import com.cleancoders.hackacode.client.application.port.in.ClientSelector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class ClientController {
 
     @PostMapping
     private ResponseEntity<String> save(@RequestBody NewUserDTO userInfo) {
-        this.clientPersistence.save(userInfo);
+        this.clientPersistence.newClient(userInfo);
         return ResponseEntity.ok("");
     }
 }

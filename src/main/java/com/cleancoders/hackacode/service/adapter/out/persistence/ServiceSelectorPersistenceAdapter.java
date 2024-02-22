@@ -3,6 +3,7 @@ package com.cleancoders.hackacode.service.adapter.out.persistence;
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
+import com.cleancoders.hackacode.service.adapter.out.persistence.repository.ServiceMySQLRepository;
 import com.cleancoders.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;

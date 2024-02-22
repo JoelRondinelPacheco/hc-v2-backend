@@ -3,14 +3,12 @@ package com.cleancoders.hackacode.service.adapter.out.persistence;
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.CategoryEntity;
-import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
+import com.cleancoders.hackacode.service.adapter.out.persistence.repository.CategoryMySQLRepository;
+import com.cleancoders.hackacode.service.adapter.out.persistence.repository.ServiceMySQLRepository;
 import com.cleancoders.hackacode.service.application.port.out.CategoryPersistencePort;
 import com.cleancoders.hackacode.service.domain.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @PersistenceAdapter
 public class CategoryPersistenceAdapter implements CategoryPersistencePort {

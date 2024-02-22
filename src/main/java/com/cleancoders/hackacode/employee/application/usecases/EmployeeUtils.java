@@ -1,6 +1,7 @@
-package com.cleancoders.hackacode.client.application.port.in;
+package com.cleancoders.hackacode.employee.application.usecases;
 
-public interface ClientUtils {
+public interface EmployeeUtils {
+
     void assertExistsByUserEmail(String userEmail);
     void assertDoesNotExistsByUserEmail(String userEmail);
     void assertExistsByUserId(Long userId);

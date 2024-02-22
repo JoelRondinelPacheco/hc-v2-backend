@@ -1,15 +1,17 @@
 package com.cleancoders.hackacode.employee.adapter.out.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import jakarta.persistence.*;
 
 @Entity(name = "employee")
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 
 }

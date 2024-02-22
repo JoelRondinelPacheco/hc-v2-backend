@@ -118,7 +118,7 @@ public class Service implements SaleItem {
             return this;
         }
 
-        public ServiceBuilder category(Long categoryId) {
+        public ServiceBuilder categoryId(Long categoryId) {
             this.categoryId = categoryId;
             return this;
         }

@@ -6,6 +6,7 @@ import com.cleancoders.hackacode.service.application.dto.NewCategoryDTOb;
 import com.cleancoders.hackacode.service.application.port.in.CategoryPersistence;
 import com.cleancoders.hackacode.service.application.port.out.CategoryPersistencePort;
 import com.cleancoders.hackacode.service.application.utils.CategoryBuilder;
+import com.cleancoders.hackacode.service.application.utils.CategoryUtil;
 import com.cleancoders.hackacode.service.domain.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,14 +17,19 @@ public class CategoryPersistenceImpl implements CategoryPersistence {
 
     @Autowired
     private CategoryPersistencePort categoryPersistencePort;
+
     @Autowired
     private CategoryBuilder categoryBuilder;
-
+    @Autowired
+    private CategoryUtil categoryUtil;
 
     @Override
     public Category newCategory(NewCategoryDTO categoryDTO) {
+
+        this.categoryUtil.assertCategoryDoesNotExistByName(categoryDTO.getName());
+
         Category category = this.categoryBuilder.newCategory(categoryDTO);
-        //TOD CHECK CATEGORIA ALREADY EXISTS
+
         return this.categoryPersistencePort.save(category);
     }
 

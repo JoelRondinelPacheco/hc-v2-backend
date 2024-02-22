@@ -1,9 +1,11 @@
 package com.cleancoders.hackacode.user.domain;
 
 import com.cleancoders.hackacode.security.domain.Role;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class User {
     private Long id;
     private String name;

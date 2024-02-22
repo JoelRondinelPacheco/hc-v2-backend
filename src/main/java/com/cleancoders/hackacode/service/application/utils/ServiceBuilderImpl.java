@@ -14,7 +14,7 @@ public class ServiceBuilderImpl implements ServiceBuilder{
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
-                .category(dto.getCategoryId())
+                .categoryId(dto.getCategoryId())
                 .build();
     }
 }
