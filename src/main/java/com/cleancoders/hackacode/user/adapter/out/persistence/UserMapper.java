@@ -25,6 +25,15 @@ public class UserMapper implements Mapper<User, UserEntity> {
 
     @Override
     public UserEntity domainToEntity(User user) {
-        return null;
+        return   UserEntity.builder()
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .address(user.getAddress())
+                .dni(user.getDni())
+                .birthday(user.getBirthday())
+                .nationality(user.getNationality())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
     }
 }

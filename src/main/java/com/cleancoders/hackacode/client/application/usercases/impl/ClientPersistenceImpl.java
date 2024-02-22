@@ -40,7 +40,7 @@ public class ClientPersistenceImpl implements ClientPersistence {
         User user = this.userRepository.save(this.userBuilder.userFromDTO(userDTO));
 
         Client client = new Client();
-        client.setUserId(user.getId());
+        client.setUser(user);
 
         //TODO IMPL
         return this.clientRepository.save(client);

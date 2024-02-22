@@ -11,8 +11,8 @@ import java.util.List;
 public class Employee {
     private Long id;
     private User user;
-    private Long userId;
+    //private Long userId;
     private BigDecimal salary;
-    private List<Sale> sales;
+  //  private List<Sale> sales;
 
 }

@@ -6,6 +6,8 @@ import com.cleancoders.hackacode.employee.application.port.out.EmployeeSelectorP
 import com.cleancoders.hackacode.employee.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @UseCase
 public class EmployeeSelectorImpl implements EmployeeSelector {
 
@@ -20,5 +22,10 @@ public class EmployeeSelectorImpl implements EmployeeSelector {
     @Override
     public Employee byEmail(String email) {
         return this.employeeSelector.byEmail(email);
+    }
+
+    @Override
+    public List<Employee> getAll() {
+        return this.employeeSelector.getAll();
     }
 }

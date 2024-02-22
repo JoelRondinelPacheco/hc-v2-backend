@@ -34,12 +34,12 @@ public class EmployeePersistenceImpl implements EmployeePersistence {
         //NO EXISTE EMPLEADO RELACIONADO A ESE USUARIO
         this.employeeUtils.assertDoesNotExistsByUserEmail(employeeDTO.getEmail());
 
-        //TODO IMPL
+        //USER WITH ID
         User user = this.userRepository.save(this.userBuilder.userFromDTO(employeeDTO));
 
         Employee employee = new Employee();
         employee.setSalary(employee.getSalary());
-        employee.setUserId(user.getId());
+        employee.setUser(user);
 
         return this.employeePersistencePort.save(employee);
     }
