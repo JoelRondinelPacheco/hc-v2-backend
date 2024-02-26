@@ -11,7 +11,7 @@ public class PersonMapper implements Mapper<Person, PersonEntity> {
 
     @Override
     public Person entityToDomain(PersonEntity personEntity) {
-        return new Person.UserBuilder()
+        return  Person.builder()
                 .name(personEntity.getName())
                 .lastname(personEntity.getLastname())
                 .email(personEntity.getEmail())

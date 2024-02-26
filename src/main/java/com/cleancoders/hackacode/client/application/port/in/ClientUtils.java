@@ -5,4 +5,6 @@ public interface ClientUtils {
     void assertDoesNotExistsByUserEmail(String userEmail);
     void assertExistsByUserId(Long userId);
     void assertDoesNotExistsByUserId(Long userId);
+    void assertExistsById(Long id);
+    void assertDoesNotExistsById(Long id);
 }

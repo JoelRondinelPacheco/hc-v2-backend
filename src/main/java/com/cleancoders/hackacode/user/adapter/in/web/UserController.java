@@ -5,10 +5,7 @@ import com.cleancoders.hackacode.user.application.port.in.UserPersistence;
 import com.cleancoders.hackacode.user.application.port.in.UserSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employee")
@@ -20,7 +17,7 @@ public class UserController {
     private UserSelector userSelector;
 
     @PostMapping
-    public ResponseEntity<?> newEmployee(NewEmployeeDTO employeeDTO) {
+    public ResponseEntity<?> newEmployee(@RequestBody NewEmployeeDTO employeeDTO) {
         return ResponseEntity.ok(this.userPersistence.newEmployee(employeeDTO));
     }
 

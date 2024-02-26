@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Entity(name = "user_")
+@Entity(name = "person")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

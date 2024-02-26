@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class ClientMapper implements Mapper<Client, ClientEntity> {
 
     @Autowired
-    @Qualifier("userMapper")
-    private Mapper<Person, PersonEntity> userMapper;
+    @Qualifier("personMapper")
+    private Mapper<Person, PersonEntity> personMapper;
 
 
     @Override
     public Client entityToDomain(ClientEntity clientEntity) {
-        Person person = this.userMapper.entityToDomain(clientEntity.getUser());
-        person.setId(clientEntity.getUser().getId());
+        Person person = this.personMapper.entityToDomain(clientEntity.getPerson());
+        person.setId(clientEntity.getPerson().getId());
         Client client = Client.withUser(person);
         client.setId(clientEntity.getId());
         return client;
@@ -28,10 +28,10 @@ public class ClientMapper implements Mapper<Client, ClientEntity> {
 
     @Override
     public ClientEntity domainToEntity(Client client) {
-        PersonEntity personEntity = this.userMapper.domainToEntity(client.getUser());
+        PersonEntity personEntity = this.personMapper.domainToEntity(client.getUser());
         personEntity.setId(client.getUser().getId());
         return ClientEntity.builder()
-                .user(personEntity)
+                .person(personEntity)
                 .build();
     }
 }

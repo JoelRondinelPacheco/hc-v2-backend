@@ -23,9 +23,9 @@ public class CategoryBuilderImpl implements CategoryBuilder{
     }
 
     private Category category(String name, String description) {
-        Category category = new Category();
-        category.setName(name);
-        category.setDescription(description);
-        return category;
+        return Category.builder()
+                .name(name)
+                .description(description)
+                .build();
     }
 }

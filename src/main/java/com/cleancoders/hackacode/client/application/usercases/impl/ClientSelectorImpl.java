@@ -5,6 +5,8 @@ import com.cleancoders.hackacode.client.application.port.out.ClientSelectorPort;
 import com.cleancoders.hackacode.client.domain.Client;
 import com.cleancoders.hackacode.common.UseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @UseCase
 public class ClientSelectorImpl implements ClientSelector {
@@ -20,5 +22,10 @@ public class ClientSelectorImpl implements ClientSelector {
     @Override
     public Client byEmail(String email) {
         return this.clientSelector.byEmail(email);
+    }
+
+    @Override
+    public Page<Client> getClientsPaginated(Pageable pageable) {
+        return null;
     }
 }

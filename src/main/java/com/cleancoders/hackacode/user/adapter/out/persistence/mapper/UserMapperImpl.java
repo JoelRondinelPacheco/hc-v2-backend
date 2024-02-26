@@ -1,16 +1,17 @@
-package com.cleancoders.hackacode.user.adapter.out.persistence;
+package com.cleancoders.hackacode.user.adapter.out.persistence.mapper;
 
 import com.cleancoders.hackacode.common.PersistenceMapper;
 import com.cleancoders.hackacode.common.adapter.Mapper;
-import com.cleancoders.hackacode.user.domain.User;
 import com.cleancoders.hackacode.person.adapter.out.persistence.PersonEntity;
 import com.cleancoders.hackacode.person.domain.Person;
+import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 @PersistenceMapper
-@Qualifier("userMapper")
-public class UserMapper implements Mapper<User, UserEntity> {
+public class UserMapperImpl implements UserMapper {
 
     @Autowired
     @Qualifier("personMapper")
@@ -37,4 +38,5 @@ public class UserMapper implements Mapper<User, UserEntity> {
                 .person(user)
                 .build();
     }
+
 }

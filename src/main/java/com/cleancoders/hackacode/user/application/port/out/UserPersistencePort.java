@@ -1,8 +1,9 @@
 package com.cleancoders.hackacode.user.application.port.out;
 
 import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.user.domain.UserBase;
 
 public interface UserPersistencePort {
 
-    User save(User user);
+    UserBase registerUser(User user);
 }

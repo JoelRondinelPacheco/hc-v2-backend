@@ -9,7 +9,7 @@ import com.cleancoders.hackacode.person.domain.Person;
 public class PersonBuilderImpl implements PersonBuilder {
     @Override
     public Person userFromDTO(NewPersonDTO userDTO) {
-        return new Person.UserBuilder()
+        return Person.builder()
                 .name(userDTO.getName())
                 .lastname(userDTO.getLastname())
                 .email(userDTO.getEmail())

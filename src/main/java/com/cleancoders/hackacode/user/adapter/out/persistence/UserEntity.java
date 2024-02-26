@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Entity(name = "employee")
+@Entity(name = "user_table")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +24,6 @@ public class UserEntity {
     private PersonEntity person;
 
     private BigDecimal salary;
+    private String password;
 
 }

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserMySQLRepository extends JpaRepository<UserEntity, Long> {
 
-    boolean existsByUser_Email(String email);
-    boolean existsByUser_Id(Long id);
+    boolean existsByPerson_Email(String email);
+    boolean existsByPerson_Id(Long id);
 }

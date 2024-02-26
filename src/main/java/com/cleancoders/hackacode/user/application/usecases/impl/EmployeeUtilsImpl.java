@@ -31,4 +31,19 @@ public class EmployeeUtilsImpl implements EmployeeUtils {
     public void assertDoesNotExistsByUserId(Long userId) {
 
     }
+
+    @Override
+    public void assertExistsById(Long userId) {
+
+    }
+
+    @Override
+    public void assertDoesNotExistsById(Long userId) {
+
+    }
+
+    @Override
+    public String createRandomPassword() {
+        return "TOCORANDOMPASSWORD";
+    }
 }

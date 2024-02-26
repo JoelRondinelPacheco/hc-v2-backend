@@ -10,7 +10,7 @@ public class ServiceBuilderImpl implements ServiceBuilder{
 
     @Override
     public Service fromDTO(NewServiceDTO dto) {
-        return new Service.ServiceBuilder()
+        return Service.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())

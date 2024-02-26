@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
@@ -25,12 +26,14 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public Service byId(Long id) {
-        return null;
+        return this.serviceRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
     }
 
     @Override
     public List<Service> listById(List<Long> ids) {
-        return null;
+        return this.serviceRepository.findAllById(ids)
+                .stream().map(this.mapper::entityToDomain)
+                .collect(Collectors.toList());
     }
 
     @Override

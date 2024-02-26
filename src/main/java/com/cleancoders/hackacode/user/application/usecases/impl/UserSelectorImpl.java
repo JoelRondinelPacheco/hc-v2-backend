@@ -4,6 +4,7 @@ import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.user.application.port.in.UserSelector;
 import com.cleancoders.hackacode.user.application.port.out.UserSelectorPort;
 import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

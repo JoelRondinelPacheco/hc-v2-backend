@@ -2,8 +2,10 @@ package com.cleancoders.hackacode.user.adapter.out.persistence;
 
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
+import com.cleancoders.hackacode.user.adapter.out.persistence.mapper.UserMapper;
 import com.cleancoders.hackacode.user.application.port.out.UserSelectorPort;
 import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -15,8 +17,7 @@ public class UserSelectorAdapter implements UserSelectorPort {
     @Autowired
     private UserMySQLRepository userMySQLRepository;
     @Autowired
-    @Qualifier("userMapper")
-    private Mapper<User, UserEntity> mapper;
+    private UserMapper mapper;
 
     @Override
     public User byId(Long id) {

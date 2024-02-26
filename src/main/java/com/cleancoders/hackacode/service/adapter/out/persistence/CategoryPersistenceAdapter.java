@@ -23,7 +23,7 @@ public class CategoryPersistenceAdapter implements CategoryPersistencePort {
     private CategoryMapper mapper;
 
     @Override
-    public Category save(Category category) {
+    public Category newCategory(Category category) {
         CategoryEntity categoryEntity = this.mapper.domainToEntity(category);
         return this.mapper.entityToDomain(this.categoryRepository.save(categoryEntity));
     }

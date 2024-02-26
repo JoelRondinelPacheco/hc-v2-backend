@@ -11,11 +11,16 @@ public class UserUtilsPersistenceAdapter implements UserUtilsPort {
     private UserMySQLRepository userMySQLRepository;
     @Override
     public boolean existsByUserId(Long id) {
-        return this.userMySQLRepository.existsByUser_Id(id);
+        return this.userMySQLRepository.existsByPerson_Id(id);
     }
 
     @Override
     public boolean existsByUserEmail(String email) {
-        return this.userMySQLRepository.existsByUser_Email(email);
+        return this.userMySQLRepository.existsByPerson_Email(email);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return this.userMySQLRepository.existsById(id);
     }
 }

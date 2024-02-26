@@ -10,6 +10,7 @@ import com.cleancoders.hackacode.person.application.port.in.PersonPersistence;
 import com.cleancoders.hackacode.person.application.port.in.PersonUtils;
 import com.cleancoders.hackacode.person.application.usecases.PersonBuilder;
 import com.cleancoders.hackacode.person.domain.Person;
+import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UseCase
@@ -28,19 +29,21 @@ public class UserPersistenceImpl implements UserPersistence {
     private PersonBuilder personBuilder;
 
     @Override
-    public User newEmployee(NewEmployeeDTO employeeDTO) {
+    public UserBase newEmployee(NewEmployeeDTO employeeDTO) {
         //CHECKEA QUE EL USUARIO EXISTA USUARIO NO EXISTE
         this.personUtils.assertDoesNotExistsByEmail(employeeDTO.getEmail());
         //NO EXISTE EMPLEADO RELACIONADO A ESE USUARIO
         this.employeeUtils.assertDoesNotExistsByUserEmail(employeeDTO.getEmail());
 
-        //USER WITH ID
         Person person = this.userRepository.save(this.personBuilder.userFromDTO(employeeDTO));
+
+        String password = this.employeeUtils.createRandomPassword();
 
         User user = new User();
         user.setSalary(user.getSalary());
         user.setPerson(person);
+        user.setPassword(password);
 
-        return this.userPersistencePort.save(user);
+        return this.userPersistencePort.registerUser(user);
     }
 }

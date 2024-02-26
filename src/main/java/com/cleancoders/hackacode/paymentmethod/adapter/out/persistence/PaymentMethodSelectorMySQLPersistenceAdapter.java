@@ -1,9 +1,11 @@
 package com.cleancoders.hackacode.paymentmethod.adapter.out.persistence;
 
 import com.cleancoders.hackacode.common.PersistenceAdapter;
+import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.paymentmethod.application.port.out.PaymentMethodSelectorPort;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,6 +14,11 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
 
     @Autowired
     private PaymentMethodMySQLRepository paymentMethodRepository;
+
+    @Autowired
+    @Qualifier("paymentMethodMapper")
+    private Mapper<PaymentMethod, PaymentMethodEntity> mapper;
+
 
     @Override
     public PaymentMethod byId(Long id) {
@@ -25,6 +32,6 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
 
     @Override
     public Page<PaymentMethod> all(Pageable pageable) {
-        return this.paymentMethodRepository.findAll(pageable).map(PaymentMethodMapper::entityToDomain);
+        return this.paymentMethodRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 }
