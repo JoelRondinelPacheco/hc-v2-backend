@@ -1,13 +1,17 @@
 package com.cleancoders.hackacode.client.adapter.out.persistence;
 
-import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
-import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
+import com.cleancoders.hackacode.person.adapter.out.persistence.PersonEntity;
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "client")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ClientEntity {
 
     @Id
@@ -15,17 +19,7 @@ public class ClientEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
 
-    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
-    private List<SaleEntity> sales;
-
-    public Long getId() {
-        return id;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
 }

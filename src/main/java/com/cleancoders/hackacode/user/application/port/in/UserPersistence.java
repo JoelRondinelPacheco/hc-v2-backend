@@ -1,9 +1,9 @@
 package com.cleancoders.hackacode.user.application.port.in;
 
+import com.cleancoders.hackacode.user.application.dto.NewEmployeeDTO;
 import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.user.domain.UserBase;
 
 public interface UserPersistence {
-    User save(User user);
-    User update(User user);
-    String delete(Long userId);
+    UserBase newEmployee(NewEmployeeDTO employeeDTO);
 }

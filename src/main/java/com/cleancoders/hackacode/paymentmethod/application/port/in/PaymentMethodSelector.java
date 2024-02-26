@@ -10,4 +10,6 @@ public interface PaymentMethodSelector {
     PaymentMethod byId(Long id);
     PaymentMethod byName(String name);
     Page<PaymentMethod> all(Pageable pageable);
+
+    Page<PaymentMethod> getAll(Pageable pageable);
 }

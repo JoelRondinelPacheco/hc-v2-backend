@@ -1,59 +1,29 @@
 package com.cleancoders.hackacode.user.adapter.out.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.cleancoders.hackacode.person.adapter.out.persistence.PersonEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.math.BigDecimal;
 
-@Entity(name = "user_")
+@Entity(name = "user_table")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String lastname;
-    private String email;
-    private String address;
-    private Integer dni;
-    private Date birthday;
-    private String nationality;
-    private Integer phoneNumber;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
 
-    public String getName() {
-        return name;
-    }
+    private BigDecimal salary;
+    private String password;
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Integer getDni() {
-        return dni;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public Integer getPhoneNumber() {
-        return phoneNumber;
-    }
 }

@@ -1,37 +1,35 @@
 package com.cleancoders.hackacode.client.domain;
 
-import com.cleancoders.hackacode.sale.domain.Sale;
-import com.cleancoders.hackacode.user.domain.User;
-
-import java.util.List;
+import com.cleancoders.hackacode.person.domain.Person;
 
 public class Client {
     private Long id;
-    private User user;
-    private Long userId;
-    //TODO VER SI ES NECESARIO ESTE ATRIBUTO ACA
-    private List<Sale> sales;
+    private Person person;
 
     public Client() {
     }
 
-    public Long getUserId() {
-        return userId;
+    private Client(Person person) {
+        this.person = person;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    private Client(User user) {
-        this.user = user;
-    }
-
-    public static Client withUser(User user) {
-        return new Client(user);
+    public static Client withUser(Person person) {
+        return new Client(person);
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Person getUser() {
+        return person;
+    }
+
+    public void setUser(Person person) {
+        this.person = person;
     }
 }

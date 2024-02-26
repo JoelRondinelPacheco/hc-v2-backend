@@ -26,7 +26,7 @@ public class CategoryController {
     private CategorySelector categorySelector;
 
     @PostMapping
-    public ResponseEntity<Category> addService(@RequestBody NewCategoryDTO body) {
+    public ResponseEntity<Category> addCategory(@RequestBody NewCategoryDTO body) {
         return ResponseEntity.ok(this.categoryPersistence.newCategory(body));
     }
 
@@ -39,5 +39,20 @@ public class CategoryController {
         }
         return ResponseEntity.ok(categories.stream().toList());
     }
+
+    @GetMapping("/services")
+    public ResponseEntity<?> getAllWithServices(Pageable pageable) {
+        return this.categorySelector.getAllWithServices(pageable);
+    }
+
+    /*
+    TODO
+        GET ALL WITH SERVICES
+        BY ID / BY ID WITH SERVICES
+        BY NAME / BY NAME WITH SERVICES
+        EDIT CATEGORY
+        DELETE CATEGORY - DISABLE
+
+     */
 
 }

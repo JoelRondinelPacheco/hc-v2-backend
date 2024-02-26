@@ -24,13 +24,7 @@ public class ServiceSelectorImpl implements ServiceSelector {
 
     @Override
     public List<Service> listById(List<Long> ids) {
-        List<Service> services = new ArrayList<>();
-
-        for (Long id : ids) {
-            services.add(this.byId(id));
-        }
-
-        return services;
+        return this.serviceSelectorPort.listById(ids);
     }
 
     @Override

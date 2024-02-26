@@ -1,19 +1,33 @@
 package com.cleancoders.hackacode.sale.adapter.out.persistence;
 
 import com.cleancoders.hackacode.client.adapter.out.persistence.ClientEntity;
-import com.cleancoders.hackacode.employee.adapter.out.persistence.EmployeeEntity;
+import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
 import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.PaymentMethodEntity;
 import com.cleancoders.hackacode.sale.domain.SaleType;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "sale")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class SaleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @CreationTimestamp
+    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "payment_method_id")
@@ -25,7 +39,7 @@ public class SaleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
-    private EmployeeEntity employee;
+    private UserEntity employee;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -37,4 +51,6 @@ public class SaleEntity {
 
     @Enumerated(EnumType.STRING)
     private SaleType type;
+
+    private BigDecimal price;
 }

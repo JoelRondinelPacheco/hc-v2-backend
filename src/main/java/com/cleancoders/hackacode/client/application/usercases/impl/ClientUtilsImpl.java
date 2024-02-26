@@ -40,4 +40,18 @@ public class ClientUtilsImpl implements ClientUtils {
             throw new RuntimeException("TODO");
         }
     }
+
+    @Override
+    public void assertExistsById(Long id) {
+        if (!this.clientRepository.existsById(id)) {
+            throw new RuntimeException("TODO");
+        }
+    }
+
+    @Override
+    public void assertDoesNotExistsById(Long id) {
+        if (this.clientRepository.existsById(id)) {
+            throw new RuntimeException("TODO");
+        }
+    }
 }
