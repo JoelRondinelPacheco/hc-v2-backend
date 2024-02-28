@@ -5,6 +5,7 @@ import com.cleancoders.hackacode.paymentmethod.application.dto.NewPaymentMethodD
 import com.cleancoders.hackacode.paymentmethod.application.port.in.PaymentMethodPersistence;
 import com.cleancoders.hackacode.paymentmethod.application.port.out.PaymentMethodPersistencePort;
 import com.cleancoders.hackacode.paymentmethod.application.port.out.PaymentMethodSelectorPort;
+import com.cleancoders.hackacode.paymentmethod.application.usecases.PaymentMethodUtils;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,10 +16,14 @@ public class PaymentMethodPersistenceImpl implements PaymentMethodPersistence {
     private PaymentMethodPersistencePort paymentMethodPersistence;
     @Autowired
     private PaymentMethodSelectorPort paymentMethodSelector;
+    @Autowired
+    private PaymentMethodUtils paymentMethodUtils;
 
     @Override
     public PaymentMethod newPaymentMethod(NewPaymentMethodDTO paymentMethodDTO) {
-        //TODO CHECK IF ALREADY EXISTS
+
+        this.paymentMethodUtils.assertDoesNotExistsByName(paymentMethodDTO.getType());
+
         return this.paymentMethodPersistence.newPaymentMethod(
                 PaymentMethod.builder()
                         .type(paymentMethodDTO.getType())

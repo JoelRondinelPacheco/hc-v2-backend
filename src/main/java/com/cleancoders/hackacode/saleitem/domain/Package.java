@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Package implements SaleItem {
-    private Long id;
-    private String code;
     private List<Service> services;
     private BigDecimal price;
     private final BigDecimal discount = new BigDecimal("0.9");
@@ -33,6 +31,11 @@ public class Package implements SaleItem {
     @Override
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    @Override
+    public List<Service> getServices() {
+        return this.services;
     }
 
     @Override

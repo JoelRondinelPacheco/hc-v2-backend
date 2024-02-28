@@ -34,4 +34,8 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
     public Page<PaymentMethod> all(Pageable pageable) {
         return this.paymentMethodRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
+
+    public PaymentMethodEntity entityById(Long id) {
+        return this.paymentMethodRepository.findById(id).orElseThrow();
+    }
 }

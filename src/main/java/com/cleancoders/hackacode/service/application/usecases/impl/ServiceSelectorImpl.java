@@ -1,6 +1,7 @@
 package com.cleancoders.hackacode.service.application.usecases.impl;
 
 import com.cleancoders.hackacode.common.UseCase;
+import com.cleancoders.hackacode.service.application.dto.ServicePriceInfo;
 import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
 import com.cleancoders.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.cleancoders.hackacode.service.domain.Service;
@@ -25,6 +26,11 @@ public class ServiceSelectorImpl implements ServiceSelector {
     @Override
     public List<Service> listById(List<Long> ids) {
         return this.serviceSelectorPort.listById(ids);
+    }
+
+    @Override
+    public List<ServicePriceInfo> servicePriceList(List<Long> ids) {
+        return this.serviceSelectorPort.servicePrice(ids);
     }
 
     @Override

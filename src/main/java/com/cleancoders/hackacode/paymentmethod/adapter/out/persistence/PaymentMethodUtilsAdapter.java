@@ -13,4 +13,9 @@ public class PaymentMethodUtilsAdapter implements PaymentMethodUtilsPort {
     public boolean existsById(Long id) {
         return this.paymentMethodMySQLRepository.existsById(id);
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return this.paymentMethodMySQLRepository.existsByType(name);
+    }
 }
