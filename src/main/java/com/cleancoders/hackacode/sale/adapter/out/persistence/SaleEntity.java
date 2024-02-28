@@ -53,4 +53,7 @@ public class SaleEntity {
     private SaleType type;
 
     private BigDecimal price;
+    /*
+    TODO PREGUNTA, SI CONTRATA MAS DE UNA VEZ UN MISMO SERVICIO (EJM HABITACION MUCHOS DIAS) CUENTA COMO MUCHOS SERVICIOS O UNO SOLO
+     */
 }

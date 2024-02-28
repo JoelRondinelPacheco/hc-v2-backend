@@ -32,4 +32,8 @@ public class ClientSelectorAdapter implements ClientSelectorPort {
     public Client byEmail(String email) {
         return null;
     }
+
+    public ClientEntity entityById(Long id) {
+        return this.clientRepository.findById(id).orElseThrow();
+    }
 }

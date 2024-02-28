@@ -2,13 +2,13 @@ package com.cleancoders.hackacode.sale.application.usecases.impl;
 
 import com.cleancoders.hackacode.client.application.port.in.ClientSelector;
 import com.cleancoders.hackacode.client.application.port.in.ClientUtils;
-import com.cleancoders.hackacode.client.domain.Client;
 import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.paymentmethod.application.usecases.PaymentMethodUtils;
 import com.cleancoders.hackacode.sale.application.port.in.SalePersistence;
 import com.cleancoders.hackacode.sale.domain.Sale;
 import com.cleancoders.hackacode.sale.domain.SaleReference;
 import com.cleancoders.hackacode.sale.domain.SaleType;
+import com.cleancoders.hackacode.service.application.dto.ServicePriceInfo;
 import com.cleancoders.hackacode.user.application.port.in.UserSelector;
 import com.cleancoders.hackacode.user.application.usecases.EmployeeUtils;
 import com.cleancoders.hackacode.sale.application.dto.NewSaleDTO;
@@ -19,6 +19,7 @@ import com.cleancoders.hackacode.service.application.port.in.ServiceSelector;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @UseCase
@@ -57,13 +58,21 @@ public class SalePersistenceImpl implements SalePersistence {
         this.clientUtils.assertExistsById(saleInfo.getClientId());
         this.employeeUtils.assertExistsById(saleInfo.getEmployeeId());
 
-        List<Service> services = this.serviceSelector.listById(saleInfo.getServicesId());
+        //llamar a los servicios en la otra capa, para no buscar toda la entidad con fechas etc
+        List<ServicePriceInfo> servicesPrice = this.serviceSelector.servicePriceList(saleInfo.getServicesId());
 
+        //todo create method
+        List<Service> services = new ArrayList<>();
+        for (ServicePriceInfo s : servicesPrice) {
+            services.add(new Service(s.getId(), s.getPrice()));
+        }
         //solo enviar los ids
+        //crear sale itemos solo con el precio y id?
 
         SaleItem saleItem = this.saleItemService.createSaleItem(services);
 
-        Sale sale = SaleReference.builder()
+
+        SaleReference sale = SaleReference.builder()
                 //ref
                 .paymentMethod(saleInfo.getPaymentMethodId())
                 .client(saleInfo.getClientId())
@@ -75,7 +84,7 @@ public class SalePersistenceImpl implements SalePersistence {
                 .type(setSaleType(saleItem.getItemsSize()))
                 .build();
 
-        return this.saleRepository.save(sale);
+        return this.saleRepository.newSale(sale);
     }
 
     private SaleType setSaleType(int size) {

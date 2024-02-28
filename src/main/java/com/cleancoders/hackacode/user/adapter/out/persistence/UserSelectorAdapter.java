@@ -33,4 +33,8 @@ public class UserSelectorAdapter implements UserSelectorPort {
     public List<User> getAll() {
         return this.userMySQLRepository.findAll().stream().map(this.mapper::entityToDomain).toList();
     }
+
+    public UserEntity entityById(Long id) {
+        return this.userMySQLRepository.findById(id).orElseThrow();
+    }
 }

@@ -24,6 +24,8 @@ public class SaleController {
         GET SALES PAGE
         EDIT SALES
         DELETE SALE
+
+        RECIBE
      */
 
 }

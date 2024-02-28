@@ -4,6 +4,7 @@ import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
 import com.cleancoders.hackacode.service.adapter.out.persistence.repository.ServiceMySQLRepository;
+import com.cleancoders.hackacode.service.application.dto.ServicePriceInfo;
 import com.cleancoders.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.cleancoders.hackacode.service.domain.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,14 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
     @Override
     public Page<Service> getAll(Pageable pageable) {
         return this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
+    }
+
+    @Override
+    public List<ServicePriceInfo> servicePrice(List<Long> ids) {
+        return this.serviceRepository.findAllServicePriceInfo(ids);
+    }
+
+    public ServiceEntity entityById(Long id) {
+        return this.serviceRepository.findById(id).orElseThrow();
     }
 }

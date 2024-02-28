@@ -19,4 +19,25 @@ public class PaymentMethodUtilsImpl implements PaymentMethodUtils {
             throw new RuntimeException("TODO");
         }
     }
+
+    @Override
+    public void assertDoesNotExistsById(Long id) {
+        if (this.paymentMethodUtilsPort.existsById(id)) {
+            throw new RuntimeException("TODO");
+        }
+    }
+
+    @Override
+    public void assertExistsByName(String name) {
+        if (!this.paymentMethodUtilsPort.existsByName(name)) {
+            throw new RuntimeException("TODO EX");
+        }
+    }
+
+    @Override
+    public void assertDoesNotExistsByName(String name) {
+        if (this.paymentMethodUtilsPort.existsByName(name)) {
+            throw new RuntimeException("TODO EX");
+        }
+    }
 }
