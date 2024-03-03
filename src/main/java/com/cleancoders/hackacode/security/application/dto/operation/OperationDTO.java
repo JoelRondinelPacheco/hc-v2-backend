@@ -14,4 +14,5 @@ public class OperationDTO {
     private String path;
     private String httpMethod;
     private boolean permitAll;
+    private Long moduleId;
 }

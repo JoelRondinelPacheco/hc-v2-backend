@@ -28,13 +28,14 @@ public class ClientController {
         return ResponseEntity.ok(this.clientSelector.getClientsPaginated(pageable));
     }
 
-    @PutMapping("/{clientId}")
-    private ResponseEntity<Client> editClient(@PathVariable String clientId) {
-        return null;
+    @GetMapping("/{clientId}")
+    private ResponseEntity<Client> editClient(@PathVariable Long clientId) {
+        return ResponseEntity.ok(this.clientSelector.byId(clientId));
     }
 
     @DeleteMapping("/{clientId}")
-    private ResponseEntity<?> deleteClient(@PathVariable String clientId) {
-        return null;
+    private ResponseEntity<?> deleteClient(@PathVariable Long clientId) {
+        this.clientPersistence.delete(clientId);
+        return ResponseEntity.ok("Eliminado");
     }
 }

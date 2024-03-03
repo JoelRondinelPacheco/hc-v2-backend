@@ -6,12 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-
+/*
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
-@SuperBuilder
-public class ServicePriceInfo {
-    private Long id;
+@SuperBuilder*/
+public interface ServicePriceInfo {
+    Long getId();
+    BigDecimal getPrice();
+   /* private Long id;
     private BigDecimal price;
+
+    public ServicePriceInfo(Long id, BigDecimal price) {
+        this.id = id;
+        this.price = price;
+    }*/
 }

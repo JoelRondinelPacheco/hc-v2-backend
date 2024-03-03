@@ -4,8 +4,10 @@ import com.cleancoders.hackacode.common.PersistenceMapper;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.CategoryEntity;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
-import com.cleancoders.hackacode.service.domain.Category;
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
+import com.cleancoders.hackacode.service.domain.*;
+import com.cleancoders.hackacode.service.domain.ServiceBase;
+import com.cleancoders.hackacode.service.domain.ServiceData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -13,44 +15,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PersistenceMapper
-@Qualifier("serviceMapper")
 public class ServiceMapperImpl implements ServiceMapper {
 
     @Autowired
-    private Mapper<Category, CategoryEntity> categoryMapper;
+    private CategoryMapper categoryMapper;
+
     @Override
-    public Service entityToDomain(ServiceEntity serviceEntity) {
-        Service service = Service.builder()
-                .name(serviceEntity.getName())
-                .description(serviceEntity.getDescription())
-                .price(serviceEntity.getPrice())
+    public ServiceData entityToDomain(ServiceEntity entity) {
+        ServiceData service = ServiceData.builder()
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .price(entity.getPrice())
                 .build();
-        service.setId(serviceEntity.getId());
+        service.setId(entity.getId());
 
         //TODO REFACTOR
 
-        service.setCategory(this.categoryMapper.entityToDomain(serviceEntity.getCategory()));
+        service.setCategory(this.categoryMapper.entityToDomain(entity.getCategory()));
         return service;
     }
 
     @Override
-    public ServiceEntity domainToEntity(Service service) {
+    public ServiceEntity domainToEntity(ServiceData domain) {
         return ServiceEntity.builder()
-                .code(service.getCode())
-                .name(service.getName())
-                .description(service.getDescription())
-                .price(service.getPrice())
+                .code(domain.getCode())
+                .name(domain.getName())
+                .description(domain.getDescription())
+                .price(domain.getPrice())
                 .build();
     }
 
     @Override
-    public List<Service> entityToDomainList(List<ServiceEntity> services) {
-        List<Service> serv = new ArrayList<>();
+    public List<ServiceData> entityToDomainList(List<ServiceEntity> services) {
+        List<ServiceData> serv = new ArrayList<>();
 
         for (ServiceEntity s : services) {
             serv.add(this.entityToDomain(s));
         }
 
         return serv;
+    }
+
+    @Override
+    public ServiceEntity dtoToEntity(NewServiceDTO serviceDTO) {
+        return ServiceEntity.builder()
+                .code(serviceDTO.getCode())
+                .name(serviceDTO.getName())
+                .description(serviceDTO.getDescription())
+                .price(serviceDTO.getPrice())
+                .build();
     }
 }

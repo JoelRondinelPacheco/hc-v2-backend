@@ -6,15 +6,13 @@ import com.cleancoders.hackacode.security.application.dto.module.ModuleDTO;
 import com.cleancoders.hackacode.security.application.dto.operation.OperationDTO;
 import com.cleancoders.hackacode.security.application.dto.role.RoleDTO;
 import com.cleancoders.hackacode.security.application.port.in.SecurityConfigPersistence;
-import com.cleancoders.hackacode.security.application.port.out.SecurityConfigPersistencePort;
 import com.cleancoders.hackacode.security.domain.GrantedPermission;
 import com.cleancoders.hackacode.security.domain.Operation;
 import com.cleancoders.hackacode.security.domain.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @UseCase
-public class SecurityConfigPersistenceImpl implements SecurityConfigPersistence {
+public class SecurityPersistenceImpl implements SecurityConfigPersistence {
 /*
     @Autowired
     private SecurityConfigPersistencePort securityRepository;*/

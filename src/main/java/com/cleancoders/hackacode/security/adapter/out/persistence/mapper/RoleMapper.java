@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @Qualifier("roleMapper")
 public class RoleMapper implements Mapper<Role, RoleEntity> {
     @Override
-    public Role entityToDomain(RoleEntity roleEntity) {
+    public Role entityToDomain(RoleEntity entity) {
         Role role = new Role();
-        role.setId(roleEntity.getId());
-        role.setName(roleEntity.getName());
+        role.setId(entity.getId());
+        role.setName(entity.getName());
         return role;
     }
 
     @Override
-    public RoleEntity domainToEntity(Role role) {
+    public RoleEntity domainToEntity(Role domain) {
         return null;
     }
 }

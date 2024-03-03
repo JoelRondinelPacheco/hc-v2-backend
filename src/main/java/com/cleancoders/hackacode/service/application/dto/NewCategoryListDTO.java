@@ -1,7 +1,5 @@
 package com.cleancoders.hackacode.service.application.dto;
 
-import com.cleancoders.hackacode.service.domain.Service;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 

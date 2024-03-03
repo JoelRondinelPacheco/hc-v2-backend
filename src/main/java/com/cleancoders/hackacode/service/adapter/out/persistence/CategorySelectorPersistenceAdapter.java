@@ -5,6 +5,7 @@ import com.cleancoders.hackacode.service.adapter.out.persistence.mapper.Category
 import com.cleancoders.hackacode.service.adapter.out.persistence.repository.CategoryMySQLRepository;
 import com.cleancoders.hackacode.service.application.port.out.CategorySelectorPort;
 import com.cleancoders.hackacode.service.domain.Category;
+import com.cleancoders.hackacode.service.domain.CategoryInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

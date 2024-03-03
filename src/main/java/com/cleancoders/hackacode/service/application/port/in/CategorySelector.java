@@ -10,5 +10,5 @@ public interface CategorySelector {
 
     Page<Category> getPage(Pageable pageable);
 
-    ResponseEntity<CategoryInfo> getAllWithServices(Pageable pageable);
+    Page<CategoryInfo> getAllWithServices(Pageable pageable);
 }

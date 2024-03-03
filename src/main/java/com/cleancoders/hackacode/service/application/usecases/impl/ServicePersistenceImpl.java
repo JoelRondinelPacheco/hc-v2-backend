@@ -10,12 +10,11 @@ import com.cleancoders.hackacode.service.application.port.out.ServicePersistence
 import com.cleancoders.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.cleancoders.hackacode.service.application.utils.CategoryUtil;
 import com.cleancoders.hackacode.service.application.utils.ServiceBuilder;
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.domain.ServiceBase;
+import com.cleancoders.hackacode.service.domain.ServiceData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 @UseCase
 public class ServicePersistenceImpl implements ServicePersistence {
@@ -40,27 +39,26 @@ public class ServicePersistenceImpl implements ServicePersistence {
     private CategoryUtil categoryUtil;
 
     @Override
-    public Service newService(NewServiceDTO serviceDTO) {
+    public ServiceData newService(NewServiceDTO serviceDTO) {
 
+        //TODO CHECK NAME
         this.categoryUtil.assertCategoryExistsById(serviceDTO.getCategoryId());
 
-        Service service = this.serviceRepository.save(this.serviceBuilder.fromDTO(serviceDTO));
-
-        return this.serviceRepository.save(service);
+        return this.serviceRepository.newService(serviceDTO);
     }
 
     @Override
-    public Service update(EditServiceDTO serviceDTO) {
-        Service service = this.serviceSelectorPort.byId(serviceDTO.getId());
+    public ServiceData update(EditServiceDTO serviceDTO) {
+        ServiceData service = this.serviceSelectorPort.byId(serviceDTO.getId());
         service.setName(serviceDTO.getName());
         service.setDescription(serviceDTO.getDescription());
         service.setPrice(serviceDTO.getPrice());
 
-        return this.serviceRepository.save(service);
+        return this.serviceRepository.update(service);
     }
 
     @Override
-    public Page<Service> getByPage(Pageable pageable) {
+    public Page<ServiceData> getByPage(Pageable pageable) {
         return this.serviceSelectorPort.getAll(pageable);
     }
 
