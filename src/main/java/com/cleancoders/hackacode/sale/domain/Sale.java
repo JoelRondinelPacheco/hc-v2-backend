@@ -20,7 +20,6 @@ public class Sale {
     private final BigDecimal discount = new BigDecimal("0.9");
 
     private Long id;
-    private Date date;
     private BigDecimal price;
     private SaleType type;
 

@@ -3,6 +3,7 @@ package com.cleancoders.hackacode.security.adapter.out.persistence;
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.security.adapter.out.persistence.entity.RoleEntity;
+import com.cleancoders.hackacode.security.adapter.out.persistence.mapper.PermissionsRoleMapper;
 import com.cleancoders.hackacode.security.adapter.out.persistence.repository.RoleMySQLRepository;
 import com.cleancoders.hackacode.security.application.port.out.RolePersistencePort;
 import com.cleancoders.hackacode.security.application.port.out.RoleSelectorPort;
@@ -19,7 +20,6 @@ public class RolePersistenceAdapter implements RoleSelectorPort, RolePersistence
     @Autowired
     private RoleMySQLRepository roleMySQLRepository;
     @Autowired
-    @Qualifier("roleMapper")
-    private Mapper<Role, RoleEntity> mapper;
+    private PermissionsRoleMapper mapper;
 
 }

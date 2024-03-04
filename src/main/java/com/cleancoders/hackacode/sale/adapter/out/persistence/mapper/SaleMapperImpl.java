@@ -44,7 +44,7 @@ public class SaleMapperImpl implements SaleMapper {
 
         return SaleData.builder()
                 .id(entity.getId())
-                .date(entity.getCreatedAt())
+                .createdAt(entity.getCreatedAt())
                 .price(entity.getPrice())
                 .type(entity.getType())
                 .client(client)

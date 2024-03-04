@@ -3,6 +3,7 @@ package com.cleancoders.hackacode.security.adapter.out.persistence;
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.security.adapter.out.persistence.entity.GrantedPermissionEntity;
+import com.cleancoders.hackacode.security.adapter.out.persistence.mapper.PermissionsRoleMapper;
 import com.cleancoders.hackacode.security.adapter.out.persistence.repository.GrantedPermissionMySQLRepository;
 import com.cleancoders.hackacode.security.application.dto.grantedpermission.GrantedPermissionDTO;
 import com.cleancoders.hackacode.security.application.port.out.GrantedPermissionPersistencePort;
@@ -19,8 +20,7 @@ public class GrantedPermissionPersistenceAdapter implements GrantedPermissionPer
     @Autowired
     private GrantedPermissionMySQLRepository grantedPermissionMySQLRepository;
     @Autowired
-    @Qualifier("grantedPermissionMapper")
-    private Mapper<GrantedPermission, GrantedPermissionEntity> mapper;
+    private PermissionsRoleMapper mapper;
 
     @Override
     public GrantedPermission addGrantedPermission(GrantedPermissionDTO grantedPermission) {
