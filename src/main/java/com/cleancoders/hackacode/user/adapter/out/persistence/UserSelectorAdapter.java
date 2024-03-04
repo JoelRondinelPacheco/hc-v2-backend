@@ -8,6 +8,8 @@ import com.cleancoders.hackacode.user.domain.User;
 import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -30,8 +32,8 @@ public class UserSelectorAdapter implements UserSelectorPort {
     }
 
     @Override
-    public List<User> getAll() {
-        return this.userMySQLRepository.findAll().stream().map(this.mapper::entityToDomain).toList();
+    public Page<User> getPage(Pageable pageable) {
+        return this.userMySQLRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 
     public UserEntity entityById(Long id) {

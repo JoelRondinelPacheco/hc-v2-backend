@@ -64,6 +64,9 @@ public class SaleMapperImpl implements SaleMapper {
 
     @Override
     public SaleEntity domainRefToEntity(SaleDataReference sale) {
-        return null;
+        return SaleEntity.builder()
+                .type(sale.getType())
+                .price(sale.getPrice())
+                .build();
     }
 }

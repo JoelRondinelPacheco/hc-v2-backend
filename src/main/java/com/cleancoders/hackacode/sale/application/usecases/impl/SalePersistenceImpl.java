@@ -42,6 +42,7 @@ public class SalePersistenceImpl implements SalePersistence {
     private PaymentMethodUtils paymentMethodUtils;
 
     //SERVICES
+    @Autowired
     private ServiceSelector serviceSelector;
 
     @Override
