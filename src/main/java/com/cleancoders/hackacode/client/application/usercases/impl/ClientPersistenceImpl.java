@@ -42,7 +42,6 @@ public class ClientPersistenceImpl implements ClientPersistence {
         Client client = new Client();
         client.setPerson(person);
 
-        //TODO IMPL
         return this.clientRepository.save(client);
     }
 

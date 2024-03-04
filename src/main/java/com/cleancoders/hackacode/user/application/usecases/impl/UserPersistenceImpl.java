@@ -1,6 +1,8 @@
 package com.cleancoders.hackacode.user.application.usecases.impl;
 
 import com.cleancoders.hackacode.common.UseCase;
+import com.cleancoders.hackacode.mail.application.dto.Mail;
+import com.cleancoders.hackacode.mail.application.port.in.MailService;
 import com.cleancoders.hackacode.user.application.dto.NewEmployeeDTO;
 import com.cleancoders.hackacode.user.application.port.in.UserPersistence;
 import com.cleancoders.hackacode.user.application.port.out.UserPersistencePort;
@@ -28,6 +30,9 @@ public class UserPersistenceImpl implements UserPersistence {
     @Autowired
     private PersonBuilder personBuilder;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public UserBase newEmployee(NewEmployeeDTO employeeDTO) {
         //CHECKEA QUE EL USUARIO EXISTA USUARIO NO EXISTE
@@ -44,6 +49,17 @@ public class UserPersistenceImpl implements UserPersistence {
         user.setPerson(person);
         user.setPassword(password);
 
-        return this.userPersistencePort.registerUser(user);
+        UserBase userSaved = this.userPersistencePort.registerUser(user);
+
+
+        Mail mail = Mail.builder()
+                .to(userSaved.getPerson().getEmail())
+                .subject("user account")
+                .message("todo implement message")
+                .build();
+
+        this.mailService.send(mail);
+
+        return userSaved;
     }
 }

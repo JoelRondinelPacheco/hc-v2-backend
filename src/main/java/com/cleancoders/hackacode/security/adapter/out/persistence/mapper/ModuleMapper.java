@@ -11,11 +11,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class ModuleMapper implements Mapper<Module, ModuleEntity> {
     @Override
     public Module entityToDomain(ModuleEntity moduleEntity) {
-        return null;
+        return Module.builder()
+                .id(moduleEntity.getId())
+                .name(moduleEntity.getName())
+                .basePath(moduleEntity.getBasePath())
+                .build();
     }
 
     @Override
     public ModuleEntity domainToEntity(Module module) {
-        return null;
+        return ModuleEntity.builder()
+                .name(module.getName())
+                .basePath(module.getBasePath())
+                .build();
     }
 }
