@@ -10,6 +10,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class ServiceReference extends Service {
-    private Long categoryId;
+public class ServiceReference extends ServiceBase {
+    private Long category;
 }

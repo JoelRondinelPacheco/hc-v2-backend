@@ -1,9 +1,9 @@
 package com.cleancoders.hackacode.service.application.utils;
 
-import com.cleancoders.hackacode.service.application.dto.NewCategoryDTO;
 import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.domain.ServiceBase;
+import com.cleancoders.hackacode.service.domain.ServiceReference;
 
 public interface ServiceBuilder {
-    Service fromDTO(NewServiceDTO dto);
+    ServiceReference fromDTO(NewServiceDTO dto);
 }

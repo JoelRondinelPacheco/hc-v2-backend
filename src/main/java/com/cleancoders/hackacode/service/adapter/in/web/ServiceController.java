@@ -3,14 +3,13 @@ package com.cleancoders.hackacode.service.adapter.in.web;
 import com.cleancoders.hackacode.service.application.dto.EditServiceDTO;
 import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
 import com.cleancoders.hackacode.service.application.port.in.ServicePersistence;
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.domain.ServiceBase;
+import com.cleancoders.hackacode.service.domain.ServiceData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/service")
@@ -25,7 +24,7 @@ public class ServiceController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Service>> getAllServices(Pageable pageable) {
+    public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
         return ResponseEntity.ok(this.servicePersistence.getByPage(pageable));
     }
 

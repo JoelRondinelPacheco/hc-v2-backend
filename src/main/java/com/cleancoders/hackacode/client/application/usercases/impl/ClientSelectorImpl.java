@@ -26,6 +26,6 @@ public class ClientSelectorImpl implements ClientSelector {
 
     @Override
     public Page<Client> getClientsPaginated(Pageable pageable) {
-        return null;
+        return this.clientSelector.getPage(pageable);
     }
 }

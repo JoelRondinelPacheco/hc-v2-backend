@@ -18,23 +18,23 @@ public class UserMapperImpl implements UserMapper {
     private Mapper<Person, PersonEntity> personMapper;
 
     @Override
-    public User entityToDomain(UserEntity userEntity) {
-        Person person = this.personMapper.entityToDomain(userEntity.getPerson());
-        person.setId(userEntity.getPerson().getId());
+    public User entityToDomain(UserEntity entity) {
+        Person person = this.personMapper.entityToDomain(entity.getPerson());
+        person.setId(entity.getPerson().getId());
 
         User user = new User();
         user.setPerson(person);
-        user.setSalary(userEntity.getSalary());
-        user.setId(userEntity.getId());
+        user.setSalary(entity.getSalary());
+        user.setId(entity.getId());
         return user;
     }
 
     @Override
-    public UserEntity domainToEntity(User employee) {
-        PersonEntity user = this.personMapper.domainToEntity(employee.getPerson());
-        user.setId(employee.getPerson().getId());
+    public UserEntity domainToEntity(User domain) {
+        PersonEntity user = this.personMapper.domainToEntity(domain.getPerson());
+        user.setId(domain.getPerson().getId());
         return UserEntity.builder()
-                .salary(employee.getSalary())
+                .salary(domain.getSalary())
                 .person(user)
                 .build();
     }

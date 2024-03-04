@@ -10,19 +10,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class PaymentMethodMapper implements Mapper<PaymentMethod, PaymentMethodEntity> {
 
     @Override
-    public PaymentMethod entityToDomain(PaymentMethodEntity paymentMethodEntity) {
+    public PaymentMethod entityToDomain(PaymentMethodEntity entity) {
         return PaymentMethod.builder()
-                .id(paymentMethodEntity.getId())
-                .type(paymentMethodEntity.getType())
-                .interest(paymentMethodEntity.getInterest())
+                .id(entity.getId())
+                .type(entity.getType())
+                .interest(entity.getInterest())
                 .build();
     }
 
     @Override
-    public PaymentMethodEntity domainToEntity(PaymentMethod paymentMethod) {
+    public PaymentMethodEntity domainToEntity(PaymentMethod domain) {
         return PaymentMethodEntity.builder()
-                .type(paymentMethod.getType())
-                .interest(paymentMethod.getInterest())
+                .type(domain.getType())
+                .interest(domain.getInterest())
                 .build();
     }
 }

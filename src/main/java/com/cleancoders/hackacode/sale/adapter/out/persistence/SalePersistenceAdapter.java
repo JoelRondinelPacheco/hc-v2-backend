@@ -2,17 +2,16 @@ package com.cleancoders.hackacode.sale.adapter.out.persistence;
 
 import com.cleancoders.hackacode.client.adapter.out.persistence.ClientSelectorAdapter;
 import com.cleancoders.hackacode.common.PersistenceAdapter;
-import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.PaymentMethodSelectorMySQLPersistenceAdapter;
+import com.cleancoders.hackacode.sale.adapter.out.persistence.mapper.SaleMapper;
 import com.cleancoders.hackacode.sale.application.port.out.SalePersistencePort;
-import com.cleancoders.hackacode.sale.domain.Sale;
-import com.cleancoders.hackacode.sale.domain.SaleReference;
+import com.cleancoders.hackacode.sale.domain.SaleData;
+import com.cleancoders.hackacode.sale.domain.SaleDataReference;
 import com.cleancoders.hackacode.service.adapter.out.persistence.ServiceSelectorPersistenceAdapter;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
 import com.cleancoders.hackacode.service.domain.Service;
 import com.cleancoders.hackacode.user.adapter.out.persistence.UserSelectorAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +24,7 @@ public class SalePersistenceAdapter implements SalePersistencePort {
     @Autowired
     private ServiceSelectorPersistenceAdapter serviceMySQLRepository;
     @Autowired
-    @Qualifier("saleMapper")
-    private Mapper<Sale, SaleEntity> mapper;
+    private SaleMapper mapper;
 
 
     @Autowired
@@ -37,13 +35,13 @@ public class SalePersistenceAdapter implements SalePersistencePort {
     private PaymentMethodSelectorMySQLPersistenceAdapter paymentMethodSelector;
 
     @Override
-    public Sale newSale(SaleReference saleData) {
+    public SaleData newSale(SaleDataReference saleData) {
         List<ServiceEntity> serviceEntities = new ArrayList<>();
-        for (Service service : saleData.getSaleItem().getServices()) {
+        for (Service service : saleData.getServices()) {
             serviceEntities.add(this.serviceMySQLRepository.entityById(service.getId()));
         }
 
-        SaleEntity saleEntity = this.mapper.domainToEntity(saleData);
+        SaleEntity saleEntity = this.mapper.domainRefToEntity(saleData);
         saleEntity.setServices(serviceEntities);
         saleEntity.setClient(this.clientSelectorAdapter.entityById(saleData.getClient()));
         saleEntity.setEmployee(this.userSelectorAdapter.entityById(saleData.getEmployee()));

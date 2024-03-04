@@ -12,5 +12,5 @@ import java.util.List;
 @Data
 @SuperBuilder
 public class CategoryInfo extends Category {
-    private List<Service> services;
+    private List<ServiceBase> serviceBases;
 }

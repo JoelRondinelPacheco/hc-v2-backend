@@ -18,18 +18,19 @@ public class ClientMapper implements Mapper<Client, ClientEntity> {
 
 
     @Override
-    public Client entityToDomain(ClientEntity clientEntity) {
-        Person person = this.personMapper.entityToDomain(clientEntity.getPerson());
-        person.setId(clientEntity.getPerson().getId());
-        Client client = Client.withUser(person);
-        client.setId(clientEntity.getId());
+    public Client entityToDomain(ClientEntity entity) {
+        Person person = this.personMapper.entityToDomain(entity.getPerson());
+        person.setId(entity.getPerson().getId());
+        Client client = new Client();
+        client.setPerson(person);
+        client.setId(entity.getId());
         return client;
     }
 
     @Override
-    public ClientEntity domainToEntity(Client client) {
-        PersonEntity personEntity = this.personMapper.domainToEntity(client.getUser());
-        personEntity.setId(client.getUser().getId());
+    public ClientEntity domainToEntity(Client domain) {
+        PersonEntity personEntity = this.personMapper.domainToEntity(domain.getPerson());
+        personEntity.setId(domain.getPerson().getId());
         return ClientEntity.builder()
                 .person(personEntity)
                 .build();

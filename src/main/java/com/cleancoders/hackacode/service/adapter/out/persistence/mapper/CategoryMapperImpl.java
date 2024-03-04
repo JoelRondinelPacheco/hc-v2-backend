@@ -13,19 +13,19 @@ import java.util.List;
 public class CategoryMapperImpl implements CategoryMapper {
 
     @Override
-    public Category entityToDomain(CategoryEntity categoryEntity) {
+    public Category entityToDomain(CategoryEntity entity) {
         Category category = new Category();
-        category.setId(categoryEntity.getId());
-        category.setName(categoryEntity.getName());
-        category.setDescription(categoryEntity.getDescription());
+        category.setId(entity.getId());
+        category.setName(entity.getName());
+        category.setDescription(entity.getDescription());
         return category;
     }
 
     @Override
-    public CategoryEntity domainToEntity(Category category) {
+    public CategoryEntity domainToEntity(Category domain) {
         CategoryEntity categoryEntity = CategoryEntity.builder()
-                .name(category.getName())
-                .description(category.getDescription())
+                .name(domain.getName())
+                .description(domain.getDescription())
                 .build();
         return categoryEntity;
     }

@@ -40,9 +40,8 @@ public class ClientPersistenceImpl implements ClientPersistence {
         Person person = this.userRepository.save(this.personBuilder.userFromDTO(userDTO));
 
         Client client = new Client();
-        client.setUser(person);
+        client.setPerson(person);
 
-        //TODO IMPL
         return this.clientRepository.save(client);
     }
 
@@ -52,7 +51,7 @@ public class ClientPersistenceImpl implements ClientPersistence {
     }
 
     @Override
-    public String delete() {
+    public String delete(Long id) {
         return null;
     }
 }

@@ -4,10 +4,14 @@ import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.CategoryEntity;
 import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
+import com.cleancoders.hackacode.service.adapter.out.persistence.mapper.ServiceMapper;
 import com.cleancoders.hackacode.service.adapter.out.persistence.repository.CategoryMySQLRepository;
 import com.cleancoders.hackacode.service.adapter.out.persistence.repository.ServiceMySQLRepository;
+import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
 import com.cleancoders.hackacode.service.application.port.out.ServicePersistencePort;
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.domain.ServiceBase;
+import com.cleancoders.hackacode.service.domain.ServiceData;
+import com.cleancoders.hackacode.service.domain.ServiceReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -19,15 +23,13 @@ public class ServicePersistenceAdapter implements ServicePersistencePort {
     @Autowired
     private CategoryMySQLRepository categoryRepository;
     @Autowired
-    @Qualifier("serviceMapper")
-    private Mapper<Service, ServiceEntity> mapper;
+    private ServiceMapper mapper;
 
     @Override
-    public Service save(Service service) {
+    public ServiceData newService(NewServiceDTO serviceDTO) {
+        CategoryEntity category = this.categoryRepository.findById(serviceDTO.getCategoryId()).orElseThrow();
 
-        CategoryEntity category = this.categoryRepository.findById(service.getCategoryId()).orElseThrow();
-
-        ServiceEntity serviceEntity = this.mapper.domainToEntity(service);
+        ServiceEntity serviceEntity = this.mapper.dtoToEntity(serviceDTO);
 
         serviceEntity.setCategory(category);
 
@@ -35,7 +37,7 @@ public class ServicePersistenceAdapter implements ServicePersistencePort {
     }
 
     @Override
-    public Service update(Service service) {
+    public ServiceData update(ServiceData serviceBase) {
         return null;
     }
 }

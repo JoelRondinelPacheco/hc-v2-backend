@@ -7,6 +7,8 @@ import com.cleancoders.hackacode.common.PersistenceMapper;
 import com.cleancoders.hackacode.common.adapter.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -31,6 +33,11 @@ public class ClientSelectorAdapter implements ClientSelectorPort {
     @Override
     public Client byEmail(String email) {
         return null;
+    }
+
+    @Override
+    public Page<Client> getPage(Pageable pageable) {
+        return this.clientRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 
     public ClientEntity entityById(Long id) {

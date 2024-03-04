@@ -19,7 +19,7 @@ public class ClientPersistenceAdapter implements ClientPersistencePort {
     @Override
     public Client save(Client client) {
         ClientEntity clientEntity = this.clientMySQLRepository.save(this.mapper.domainToEntity(client));
-        clientEntity.setId(client.getUser().getId());
+        clientEntity.setId(client.getPerson().getId());
         return this.mapper.entityToDomain(clientEntity);
     }
 

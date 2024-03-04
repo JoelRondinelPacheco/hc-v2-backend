@@ -22,7 +22,9 @@ public class CategorySelectorImpl implements CategorySelector {
     }
 
     @Override
-    public ResponseEntity<CategoryInfo> getAllWithServices(Pageable pageable) {
+    public Page<CategoryInfo> getAllWithServices(Pageable pageable) {
+        //TODO IMPL
+        //return this.categorySelectorPort.getPage(pageable);
         return null;
     }
 }

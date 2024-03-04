@@ -1,8 +1,10 @@
 package com.cleancoders.hackacode.service.application.port.out;
 
-import com.cleancoders.hackacode.service.domain.Service;
+import com.cleancoders.hackacode.service.application.dto.NewServiceDTO;
+import com.cleancoders.hackacode.service.domain.ServiceData;
+import com.cleancoders.hackacode.service.domain.ServiceReference;
 
 public interface ServicePersistencePort {
-    Service save(Service service);
-    Service update(Service service);
+    ServiceData newService(NewServiceDTO serviceBase);
+    ServiceData update(ServiceData serviceBase);
 }
