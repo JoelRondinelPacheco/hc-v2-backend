@@ -21,6 +21,7 @@ public class SaleDataReference extends Sale {
     private SaleDataReference(List<Service> services) {
         this.services = services;
         super.setPrice(services);
+        super.setSaleType(services);
     }
 
     public static SaleDataReference withServices(List<Service> services) {

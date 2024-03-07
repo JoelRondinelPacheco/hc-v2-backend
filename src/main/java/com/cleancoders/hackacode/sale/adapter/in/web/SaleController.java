@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/sale")
 public class SaleController {
@@ -29,6 +32,11 @@ public class SaleController {
         return ResponseEntity.ok(this.saleSelector.getPage(pageable));
     }
 
+    @GetMapping("/day")
+    public ResponseEntity<String> getSalesByDay(@RequestParam LocalDate date) {
+        SaleData saleData = this.saleSelector.getSalesByMonth(date);
+        return ResponseEntity.ok("ok");
+    }
 
 
 }

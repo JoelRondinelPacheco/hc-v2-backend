@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/service")
 public class ServiceController {
 
+    /*
+    TODO Agregar atributos de multiplicador de servicio (ejm: aquiler es por dia, puede alquilar varios dias)
+     */
+
     @Autowired
     private ServicePersistence servicePersistence;
 

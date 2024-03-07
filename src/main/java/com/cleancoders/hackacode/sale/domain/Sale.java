@@ -39,4 +39,12 @@ public class Sale {
     private BigDecimal applyDiscount(BigDecimal price) {
         return price.multiply(this.discount);
     }
+
+    public void setSaleType(List<Service> services) {
+        if (services.size() > 1) {
+            setType(SaleType.PACKAGE);
+        } else {
+            setType(SaleType.SINGLE_SALE);
+        }
+    }
 }

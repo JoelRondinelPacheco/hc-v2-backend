@@ -11,8 +11,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +29,8 @@ public class SaleEntity {
     private Long id;
 
     @CreationTimestamp
-    private Date createdAt;
+    @Temporal(TemporalType.DATE)
+    private LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name = "payment_method_id")

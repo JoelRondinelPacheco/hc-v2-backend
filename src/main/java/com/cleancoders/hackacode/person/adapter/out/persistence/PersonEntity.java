@@ -1,9 +1,7 @@
 package com.cleancoders.hackacode.person.adapter.out.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.cleancoders.hackacode.security.adapter.out.persistence.entity.RoleEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +26,9 @@ public class PersonEntity {
     private Date birthday;
     private String nationality;
     private Integer phoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
 }
