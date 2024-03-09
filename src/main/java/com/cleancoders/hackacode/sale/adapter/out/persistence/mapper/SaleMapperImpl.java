@@ -9,6 +9,7 @@ import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
 import com.cleancoders.hackacode.sale.domain.SaleData;
 import com.cleancoders.hackacode.sale.domain.SaleDataReference;
+import com.cleancoders.hackacode.sale.domain.SaleItemData;
 import com.cleancoders.hackacode.service.adapter.out.persistence.mapper.ServiceMapper;
 import com.cleancoders.hackacode.service.domain.ServiceData;
 import com.cleancoders.hackacode.user.adapter.out.persistence.mapper.UserMapper;
@@ -30,6 +31,8 @@ public class SaleMapperImpl implements SaleMapper {
     @Autowired
     private ServiceMapper serviceMapper;
     @Autowired
+    private SaleItemMapper saleItemMapper;
+    @Autowired
     private UserMapper userMapper;
 
 
@@ -40,7 +43,7 @@ public class SaleMapperImpl implements SaleMapper {
         User employee = this.userMapper.entityToDomain(entity.getEmployee());
         PaymentMethod paymentMethod = this.paymentMethodMapper.entityToDomain(entity.getPaymentMethod());
 
-        List<ServiceData> services = this.serviceMapper.entityToDomainList(entity.getServices());
+        List<SaleItemData> saleItems = entity.getSaleItem().stream().map(this.saleItemMapper::entityToDomain).toList();
 
         return SaleData.builder()
                 .id(entity.getId())
@@ -50,7 +53,7 @@ public class SaleMapperImpl implements SaleMapper {
                 .client(client)
                 .user(employee)
                 .paymentMethod(paymentMethod)
-                .services(services)
+                .saleItem(saleItems)
                 .build();
     }
 

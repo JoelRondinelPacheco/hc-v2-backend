@@ -8,10 +8,14 @@ import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @SuperBuilder
 public class Service {
     private Long id;
     private BigDecimal price;
+
+    public Service(Long id, BigDecimal price) {
+        this.id = id;
+        this.price = price;
+    }
 }

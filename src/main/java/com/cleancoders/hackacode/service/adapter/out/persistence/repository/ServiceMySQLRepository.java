@@ -13,9 +13,9 @@ import java.util.List;
 public interface ServiceMySQLRepository extends JpaRepository<ServiceEntity, Long> {
     //@Query("SELECT new com.cleancoders.hackacode.service.application.dto.ServicePriceInfo(s.id, s.price) FROM ServiceEntity s WHERE s.id IN :ids")
   /*  @Query("SELECT s.id AS id, s.price AS price FROM ServiceEntity s WHERE s.id IN :ids")
-    List<ServicePriceInfo> findAllServicePriceInfo(@Param("ids") List<Long> ids);
-
-    @Query("SELECT s.id AS id, s.price AS price FROM ServiceEntity s WHERE s.id IN :ids")
-    List<ServicePriceInfoImpl> findAllServicePriceInfoProjections(@Param("ids") List<Long> ids);*/
-
+    List<ServicePriceInfo> findAllServicePriceInfo(@Param("ids") List<Long> ids);*/
+/*
+    @Query("SELECT s.id AS id, s.price AS price FROM ServiceEntity s WHERE s.id = :id")
+    ServicePriceInfoImpl findServiceProjection(@Param("id") Long id);
+*/
 }

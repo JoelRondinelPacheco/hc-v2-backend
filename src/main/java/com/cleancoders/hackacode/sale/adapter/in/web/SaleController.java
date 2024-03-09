@@ -32,10 +32,16 @@ public class SaleController {
         return ResponseEntity.ok(this.saleSelector.getPage(pageable));
     }
 
+    @GetMapping("/month")
+    public ResponseEntity<Page<SaleData>> getSalesByMonth(@RequestParam LocalDate date, Pageable pageable) {
+        Page<SaleData> saleData = this.saleSelector.getSalesByMonth(date, pageable);
+        return ResponseEntity.ok(saleData);
+    }
+
     @GetMapping("/day")
-    public ResponseEntity<String> getSalesByDay(@RequestParam LocalDate date) {
-        SaleData saleData = this.saleSelector.getSalesByMonth(date);
-        return ResponseEntity.ok("ok");
+    public ResponseEntity<Page<SaleData>> getSalesByDay(@RequestParam LocalDate date, Pageable pageable) {
+        Page<SaleData> saleData = this.saleSelector.getSalesByDay(date, pageable);
+        return ResponseEntity.ok(saleData);
     }
 
 

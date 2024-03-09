@@ -10,9 +10,9 @@ import java.util.Date;
 public interface SaleSelectorPort {
 
     Page<SaleData> getPage(Pageable pageable);
-    Page<SaleData> getSalesByMonth(Date date, Pageable pageable);
+    Page<SaleData> getSalesByMonth(LocalDate date, Pageable pageable);
 
-    public Page<SaleData> getSalesByDay(Date date, Pageable pageable);
+    public Page<SaleData> getSalesByDay(LocalDate date, Pageable pageable);
 
     SaleData saleByMonth(LocalDate localDate);
 }

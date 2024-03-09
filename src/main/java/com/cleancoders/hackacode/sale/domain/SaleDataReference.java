@@ -1,6 +1,5 @@
 package com.cleancoders.hackacode.sale.domain;
 
-import com.cleancoders.hackacode.service.domain.Service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,16 +15,16 @@ public class SaleDataReference extends Sale {
     private Long paymentMethod;
     private Long client;
     private Long employee;
-    private List<Service> services;
+    private List<SaleItemReference> saleItemReferences;
 
-    private SaleDataReference(List<Service> services) {
-        this.services = services;
-        super.setPrice(services);
-        super.setSaleType(services);
+    private SaleDataReference(List<SaleItemReference> saleItemReferences) {
+        this.saleItemReferences = saleItemReferences;
+        super.setPrice(saleItemReferences);
+        super.setSaleType(saleItemReferences);
     }
 
-    public static SaleDataReference withServices(List<Service> services) {
-        return new SaleDataReference(services);
+    public static SaleDataReference withSaleItemReferences(List<SaleItemReference> saleItemReferences) {
+        return new SaleDataReference(saleItemReferences);
     }
 
 }

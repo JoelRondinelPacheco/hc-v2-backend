@@ -10,7 +10,7 @@ import java.util.Date;
 public interface SaleSelector {
     Page<SaleData> getPage(Pageable pageable);
     SaleData getSalesByMonth(LocalDate date);
-    Page<SaleData> getSalesByMonth(Date date, Pageable pageable);
-    Page<SaleData> getSalesByDay(Date date, Pageable pageable);
-    Page<SaleData> getSalesByDay(Date date);
+    Page<SaleData> getSalesByMonth(LocalDate date, Pageable pageable);
+    Page<SaleData> getSalesByDay(LocalDate date, Pageable pageable);
+    Page<SaleData> getSalesByDay(LocalDate date);
 }

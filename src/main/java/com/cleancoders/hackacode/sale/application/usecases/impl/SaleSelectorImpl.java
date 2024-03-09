@@ -28,17 +28,17 @@ public class SaleSelectorImpl implements SaleSelector {
     }
 
     @Override
-    public Page<SaleData> getSalesByMonth(Date date, Pageable pageable) {
-        return null;
+    public Page<SaleData> getSalesByMonth(LocalDate date, Pageable pageable) {
+        return this.saleSelectorPort.getSalesByMonth(date, pageable);
     }
 
     @Override
-    public Page<SaleData> getSalesByDay(Date date, Pageable pageable) {
-        return null;
+    public Page<SaleData> getSalesByDay(LocalDate date, Pageable pageable) {
+        return this.saleSelectorPort.getSalesByDay(date, pageable);
     }
 
     @Override
-    public Page<SaleData> getSalesByDay(Date date) {
+    public Page<SaleData> getSalesByDay(LocalDate date) {
         return null;
     }
 }

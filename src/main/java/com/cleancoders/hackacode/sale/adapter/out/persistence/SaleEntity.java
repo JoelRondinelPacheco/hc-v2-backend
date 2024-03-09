@@ -4,18 +4,15 @@ import com.cleancoders.hackacode.client.adapter.out.persistence.ClientEntity;
 import com.cleancoders.hackacode.user.adapter.out.persistence.UserEntity;
 import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.PaymentMethodEntity;
 import com.cleancoders.hackacode.sale.domain.SaleType;
-import com.cleancoders.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity(name = "sale")
@@ -44,13 +41,8 @@ public class SaleEntity {
     @JoinColumn(name = "employee_id")
     private UserEntity employee;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "rel_sales_services",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
-    )
-    private List<ServiceEntity> services;
+    @OneToMany(mappedBy = "sale", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<SaleItemEntity> saleItem;
 
     @Enumerated(EnumType.STRING)
     private SaleType type;

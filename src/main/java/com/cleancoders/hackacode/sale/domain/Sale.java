@@ -1,13 +1,11 @@
 package com.cleancoders.hackacode.sale.domain;
 
-import com.cleancoders.hackacode.service.domain.Service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 
@@ -23,13 +21,19 @@ public class Sale {
     private BigDecimal price;
     private SaleType type;
 
-    public void setPrice(List<Service> services) {
+    public void setPrice(List<SaleItemReference> items) {
         BigDecimal sum = BigDecimal.ZERO;
 
-        for (Service service : services) {
-            sum = sum.add(service.getPrice());
+        for (SaleItemReference saleItemReference : items) {
+            BigDecimal priceItem = saleItemReference.getService().getPrice().multiply(saleItemReference.getQuantity());
+            sum = sum.add(priceItem);
         }
-        this.price = this.applyDiscount(sum);
+
+        if (items.size() > 1) {
+            this.price = this.applyDiscount(sum);
+        } else {
+            this.price = sum;
+        }
     }
 
     public void setPrice(BigDecimal price) {
@@ -40,8 +44,8 @@ public class Sale {
         return price.multiply(this.discount);
     }
 
-    public void setSaleType(List<Service> services) {
-        if (services.size() > 1) {
+    public void setSaleType(List<SaleItemReference> saleItemReferences) {
+        if (saleItemReferences.size() > 1) {
             setType(SaleType.PACKAGE);
         } else {
             setType(SaleType.SINGLE_SALE);

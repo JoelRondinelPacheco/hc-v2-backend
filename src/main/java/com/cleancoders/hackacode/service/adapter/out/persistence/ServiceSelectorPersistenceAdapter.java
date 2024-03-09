@@ -42,7 +42,7 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public Page<ServiceData> getAll(Pageable pageable) {
-        System.out.println("get all");
+        //TODO REFACTOR
         Page<ServiceData> s = this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
         System.out.println(s.getTotalElements());
         for(ServiceData se : s.getContent()) {
@@ -53,7 +53,7 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
     }
 
     @Override
-    public List<ServicePriceInfo> servicePrice(List<Long> ids) {
+    public List<ServicePriceInfo> servicePriceList(List<Long> ids) {
         //return this.serviceRepository.findAllServicePriceInfo(ids);
         List<ServiceEntity> serviceEntities = this.serviceRepository.findAllById(ids);
         //todo refactor
@@ -62,6 +62,12 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
             sr.add(new ServicePriceInfoImpl(s.getId(), s.getPrice()));
         }
         return sr;
+    }
+
+    @Override
+    public ServicePriceInfoImpl servicePrice(Long id) {
+        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow();
+        return new ServicePriceInfoImpl(s.getId(), s.getPrice());
     }
 
     public ServiceEntity entityById(Long id) {

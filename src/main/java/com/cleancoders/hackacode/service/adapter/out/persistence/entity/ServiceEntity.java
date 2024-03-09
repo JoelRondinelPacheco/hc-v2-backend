@@ -1,6 +1,7 @@
 package com.cleancoders.hackacode.service.adapter.out.persistence.entity;
 
 import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleEntity;
+import com.cleancoders.hackacode.sale.adapter.out.persistence.SaleItemEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,6 @@ public class ServiceEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
-    private List<SaleEntity> sales;
+    @OneToMany(mappedBy = "service", fetch = FetchType.LAZY)
+    private List<SaleItemEntity> saleItem;
 }
