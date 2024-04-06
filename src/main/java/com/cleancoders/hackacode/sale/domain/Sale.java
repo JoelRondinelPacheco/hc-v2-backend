@@ -1,47 +1,62 @@
 package com.cleancoders.hackacode.sale.domain;
 
+import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.List;
 
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @SuperBuilder
 public class Sale {
-
-    private final BigDecimal discount = new BigDecimal("0.9");
+    private PaymentMethod paymentMethod;
 
     private Long id;
-    private BigDecimal price;
+    private BigDecimal total;
     private SaleType type;
+    private BigDecimal interest;
+    private BigDecimal discount;
 
-    public void setPrice(List<SaleItemReference> items) {
-        BigDecimal sum = BigDecimal.ZERO;
+
+
+    public Sale() {
+        this.discount = new BigDecimal("0.10");
+    }
+    public void setTotal(List<SaleItemReference> items) {
+        BigDecimal total = BigDecimal.ZERO;
 
         for (SaleItemReference saleItemReference : items) {
             BigDecimal priceItem = saleItemReference.getService().getPrice().multiply(saleItemReference.getQuantity());
-            sum = sum.add(priceItem);
+            total = total.add(priceItem).setScale(2, RoundingMode.HALF_DOWN);
         }
 
-        if (items.size() > 1) {
-            this.price = this.applyDiscount(sum);
-        } else {
-            this.price = sum;
+        total = this.applyDiscount(total, items.size());
+        this.total = this.applyInterest(total);
+        System.out.println("total itneres");
+        System.out.println(this.total);
+    }
+
+    private BigDecimal applyDiscount(BigDecimal total, int itemsSize) {
+
+        if (itemsSize == 1) {
+            this.setDiscount(new BigDecimal("0.00"));
         }
+        return total.multiply(
+                new BigDecimal("1.0000").subtract(this.getDiscount()).setScale(4, RoundingMode.HALF_DOWN)
+        ).setScale(2, RoundingMode.HALF_DOWN);
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    private BigDecimal applyDiscount(BigDecimal price) {
-        return price.multiply(this.discount);
+    private BigDecimal applyInterest(BigDecimal total) {
+        return total.multiply(
+                new BigDecimal("1.0000").add(this.getPaymentMethod().getInterest()).setScale(4, RoundingMode.HALF_DOWN)
+        ).setScale(2, RoundingMode.HALF_DOWN);
     }
 
     public void setSaleType(List<SaleItemReference> saleItemReferences) {
@@ -51,4 +66,6 @@ public class Sale {
             setType(SaleType.SINGLE_SALE);
         }
     }
+
+
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CategoryPersistence {
     Category newCategory(NewCategoryDTO categoryDTO);
+    Category update(Category category);
 }

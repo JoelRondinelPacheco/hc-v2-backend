@@ -47,5 +47,7 @@ public class SaleEntity {
     @Enumerated(EnumType.STRING)
     private SaleType type;
 
-    private BigDecimal price;
+    private BigDecimal total;
+    private BigDecimal discount;
+    private BigDecimal interest;
 }

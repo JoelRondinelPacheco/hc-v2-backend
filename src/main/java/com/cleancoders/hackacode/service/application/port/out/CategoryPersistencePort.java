@@ -4,4 +4,5 @@ import com.cleancoders.hackacode.service.domain.Category;
 
 public interface CategoryPersistencePort {
     Category newCategory(Category category);
+    Category update(Category category);
 }

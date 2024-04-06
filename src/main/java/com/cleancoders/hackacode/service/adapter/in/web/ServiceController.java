@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/service")
 public class ServiceController {
@@ -28,7 +31,9 @@ public class ServiceController {
     }
 
     @GetMapping
+    //public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
     public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
+        System.out.println("llamo");
         return ResponseEntity.ok(this.servicePersistence.getByPage(pageable));
     }
 

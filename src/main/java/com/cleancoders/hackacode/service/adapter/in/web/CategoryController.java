@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -30,9 +32,9 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<Category>> getAll(Pageable pageable) {
         Page<Category> categories = this.categorySelector.getPage(pageable);
-        return ResponseEntity.ok(categories.stream().toList());
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/services")
@@ -41,14 +43,11 @@ public class CategoryController {
         return null;
     }
 
-    /*
-    TODO
-        GET ALL WITH SERVICES
-        BY ID / BY ID WITH SERVICES
-        BY NAME / BY NAME WITH SERVICES
-        EDIT CATEGORY
-        DELETE CATEGORY - DISABLE
-
-     */
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Category> updateCategory(@PathVariable int categoryId, @RequestBody Category category) {
+        System.out.println("EDITO: Id " + categoryId + " id: " + category.getId() + " name: " + category.getName());
+        Category categoryEdited = this.categoryPersistence.update(category);
+        return ResponseEntity.ok(categoryEdited);
+    }
 
 }

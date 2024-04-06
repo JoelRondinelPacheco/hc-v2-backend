@@ -38,4 +38,11 @@ public class CategoryMapperImpl implements CategoryMapper {
         }
         return categoryEntities;
     }
+
+    @Override
+    public CategoryEntity domainToEntityWithId(Category category) {
+        CategoryEntity cat = this.domainToEntity(category);
+        cat.setId(category.getId());
+        return cat;
+    }
 }

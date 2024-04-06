@@ -7,15 +7,15 @@ INSERT INTO role (name) VALUES ('OWNER');
 
 -- PAYMENT METHOD
 INSERT INTO payment_method (type, interest)
-VALUES ('EFECTIVO', 00.00);
+VALUES ('EFECTIVO', 00.0000);
 INSERT INTO payment_method (type, interest)
-VALUES ('DEBITO', 3.00);
+VALUES ('DEBITO', 0.0300);
 INSERT INTO payment_method (type, interest)
-VALUES ('CREDITO', 9.00);
+VALUES ('CREDITO', 0.0900);
 INSERT INTO payment_method (type, interest)
-VALUES ('MONEDERO_VIRTUAL', 00.00);
+VALUES ('MONEDERO_VIRTUAL', 00.0000);
 INSERT INTO payment_method (type, interest)
-VALUES ('TRANSEFERENCIA', 2.45);
+VALUES ('TRANSEFERENCIA', 0.0245);
 
 -- CATEGORIES
 INSERT INTO category (name, description) VALUES ('HOTEL', 'Habitaciones de hotel por noche');

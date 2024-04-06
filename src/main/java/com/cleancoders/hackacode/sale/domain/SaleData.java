@@ -18,7 +18,6 @@ import java.util.List;
 @SuperBuilder
 public class SaleData extends Sale {
     private LocalDate createdAt;
-    private PaymentMethod paymentMethod;
     private Client client;
     private User user;
     private List<SaleItemData> saleItem;

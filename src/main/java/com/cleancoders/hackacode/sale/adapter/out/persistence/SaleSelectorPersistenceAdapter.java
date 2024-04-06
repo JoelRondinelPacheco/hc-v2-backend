@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @PersistenceAdapter
 public class SaleSelectorPersistenceAdapter implements SaleSelectorPort {
@@ -35,7 +33,7 @@ public class SaleSelectorPersistenceAdapter implements SaleSelectorPort {
         System.out.println(s.getTotalElements());
         for (SaleEntity se : s.getContent()) {
             System.out.println(se.getId());
-            System.out.println(se.getPrice());
+            System.out.println(se.getTotal());
         }
         return this.saleMySQLRepository.fetchByMonthAndYearAndDay(date.getMonthValue(), date.getYear(), date.getDayOfMonth(), pageable).map(this.mapper::entityToDomain);
     }

@@ -1,11 +1,10 @@
 package com.cleancoders.hackacode.paymentmethod.adapter.out.persistence;
 
 import com.cleancoders.hackacode.common.PersistenceAdapter;
-import com.cleancoders.hackacode.common.adapter.Mapper;
+import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.mapper.PaymentMethodMapper;
 import com.cleancoders.hackacode.paymentmethod.application.port.out.PaymentMethodPersistencePort;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @PersistenceAdapter
 public class PaymentMethodPersistenceMySQLAdapter implements PaymentMethodPersistencePort {
@@ -14,8 +13,7 @@ public class PaymentMethodPersistenceMySQLAdapter implements PaymentMethodPersis
     private PaymentMethodMySQLRepository paymentMethodMySQLRepository;
 
     @Autowired
-    @Qualifier("paymentMethodMapper")
-    private Mapper<PaymentMethod, PaymentMethodEntity> mapper;
+    private PaymentMethodMapper mapper;
 
     @Override
     public PaymentMethod newPaymentMethod(PaymentMethod paymentMethod) {

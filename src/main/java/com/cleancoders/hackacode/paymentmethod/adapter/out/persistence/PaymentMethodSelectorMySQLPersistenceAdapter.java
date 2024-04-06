@@ -2,6 +2,7 @@ package com.cleancoders.hackacode.paymentmethod.adapter.out.persistence;
 
 import com.cleancoders.hackacode.common.PersistenceAdapter;
 import com.cleancoders.hackacode.common.adapter.Mapper;
+import com.cleancoders.hackacode.paymentmethod.adapter.out.persistence.mapper.PaymentMethodMapper;
 import com.cleancoders.hackacode.paymentmethod.application.port.out.PaymentMethodSelectorPort;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,15 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
     private PaymentMethodMySQLRepository paymentMethodRepository;
 
     @Autowired
-    @Qualifier("paymentMethodMapper")
-    private Mapper<PaymentMethod, PaymentMethodEntity> mapper;
+    private PaymentMethodMapper mapper;
 
 
     @Override
     public PaymentMethod byId(Long id) {
-        return null;
+        System.out.println(id);
+        PaymentMethodEntity paymentMethodEntity = this.paymentMethodRepository.findById(id).orElseThrow(() -> new RuntimeException("no existe payment"));
+        System.out.println(paymentMethodEntity.getId());
+        return this.mapper.entityToDomain(paymentMethodEntity);
     }
 
     @Override

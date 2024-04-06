@@ -30,4 +30,10 @@ public class CategoryPersistenceImpl implements CategoryPersistence {
         return this.categoryPersistencePort.newCategory(category);
     }
 
+    @Override
+    public Category update(Category category) {
+        //assert category exists
+        return this.categoryPersistencePort.update(category);
+    }
+
 }
