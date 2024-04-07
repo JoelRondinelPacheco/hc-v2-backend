@@ -32,7 +32,7 @@ public class ClientController {
         return ResponseEntity.ok(this.clientSelector.getClientsPaginated(pageable));
     }
 
-    @GetMapping
+    @GetMapping("/search")
     private ResponseEntity<Page<Client>> getClientByName(@RequestParam(value = "name") String name, Pageable pageable) {
         return ResponseEntity.ok(this.clientByName.get(name, pageable));
     }

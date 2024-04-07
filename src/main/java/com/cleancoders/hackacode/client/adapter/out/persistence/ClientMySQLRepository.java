@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 public interface ClientMySQLRepository extends JpaRepository<ClientEntity, Long> {
     boolean existsByPerson_Email(String email);
     boolean existsByPerson_Id(Long userId);
-
-    @Query("SELECT c FROM ClientEntity c WHERE CONCAT(e.person.name, ' ', e.person.lastname) LIKE :name")
+    @Query("SELECT c FROM client c WHERE CONCAT(c.person.name, ' ', c.person.lastname) LIKE %:name%")
     Page<ClientEntity> byName(@Param("name") String name, Pageable pageable);
+
 
 }
