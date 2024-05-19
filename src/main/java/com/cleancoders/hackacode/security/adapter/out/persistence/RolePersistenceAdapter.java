@@ -11,6 +11,8 @@ import com.cleancoders.hackacode.security.application.port.out.SecuritySelectorP
 import com.cleancoders.hackacode.security.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -22,4 +24,8 @@ public class RolePersistenceAdapter implements RoleSelectorPort, RolePersistence
     @Autowired
     private PermissionsRoleMapper mapper;
 
+    @Override
+    public Page<Role> getAll(Pageable pageable) {
+        return this.roleMySQLRepository.findAll(pageable).map(this.mapper::entityToDomainRole);
+    }
 }

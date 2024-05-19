@@ -17,5 +17,4 @@ public class ServiceBase extends Service {
     private String description;
     private Date createdAt;
     private Date updatedAt;
-
 }

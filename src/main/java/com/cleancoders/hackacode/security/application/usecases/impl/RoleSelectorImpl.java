@@ -16,6 +16,6 @@ public class RoleSelectorImpl implements RoleSelector {
 
     @Override
     public Page<Role> getPage(Pageable pageable) {
-        return null;
+        return this.roleSelectorPort.getAll(pageable);
     }
 }
