@@ -31,7 +31,6 @@ public class ServiceController {
     }
 
     @GetMapping
-    //public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
     public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
         System.out.println("llamo");
         return ResponseEntity.ok(this.servicePersistence.getByPage(pageable));

@@ -48,6 +48,8 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
         for(ServiceData se : s.getContent()) {
             System.out.println(se.getId());
             System.out.println(se.getName());
+            System.out.println(se.getCreatedAt());
+            System.out.println(se.getUpdatedAt());
         }
         return this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }

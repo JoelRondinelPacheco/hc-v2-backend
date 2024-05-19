@@ -13,7 +13,6 @@ import java.util.Date;
 @Data
 @SuperBuilder
 public class ServiceBase extends Service {
-    private String code;
     private String name;
     private String description;
     private Date createdAt;

@@ -26,6 +26,8 @@ public class ServiceMapperImpl implements ServiceMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getCreatedAt())
                 .build();
         service.setId(entity.getId());
 
@@ -38,7 +40,6 @@ public class ServiceMapperImpl implements ServiceMapper {
     @Override
     public ServiceEntity domainToEntity(ServiceData domain) {
         return ServiceEntity.builder()
-                .code(domain.getCode())
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .price(domain.getPrice())
@@ -59,7 +60,6 @@ public class ServiceMapperImpl implements ServiceMapper {
     @Override
     public ServiceEntity dtoToEntity(NewServiceDTO serviceDTO) {
         return ServiceEntity.builder()
-                .code(serviceDTO.getCode())
                 .name(serviceDTO.getName())
                 .description(serviceDTO.getDescription())
                 .price(serviceDTO.getPrice())
