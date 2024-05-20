@@ -19,6 +19,8 @@ public class SaleSelectorPersistenceAdapter implements SaleSelectorPort {
     private SaleMapper mapper;
     @Override
     public Page<SaleData> getPage(Pageable pageable) {
+        System.out.println(this.saleMySQLRepository.findAll(pageable).getContent().get(0).getId());
+        System.out.println(this.saleMySQLRepository.findAll(pageable).getContent().get(0).getPaymentMethod());
         return this.saleMySQLRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 
