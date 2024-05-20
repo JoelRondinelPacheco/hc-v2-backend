@@ -35,6 +35,10 @@ public class SecurityBeansInjector {
     @Bean
     public UserDetailsService userDetailsService() {
 
+        /*
+            Al llamar al service, tengo que retornar una entidad que sea de tipo user details
+         */
+
         return null;
         /*return (username) -> {
             return userRepository.findByUsername(username)
