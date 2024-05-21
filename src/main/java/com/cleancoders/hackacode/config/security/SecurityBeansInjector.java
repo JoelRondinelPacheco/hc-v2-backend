@@ -1,5 +1,7 @@
 package com.cleancoders.hackacode.config.security;
 
+import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityBeansInjector {
 
+    @Autowired
+    private CustomUsersDetailsUseCase userDetailsService;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -34,15 +38,6 @@ public class SecurityBeansInjector {
 
     @Bean
     public UserDetailsService userDetailsService() {
-
-        /*
-            Al llamar al service, tengo que retornar una entidad que sea de tipo user details
-         */
-
-        return null;
-        /*return (username) -> {
-            return userRepository.findByUsername(username)
-                    .orElseThrow(() -> new ObjectNotFoundException("User not found with username " + username));
-        };*/
+        return (email) -> this.userDetailsService.getUserDetails(email);
     }
 }

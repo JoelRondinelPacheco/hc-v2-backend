@@ -1,50 +1,77 @@
 -- ROLES
-INSERT INTO role (name) VALUES ('CLIENT');
-INSERT INTO role (name) VALUES ('EMPLOYEE');
-INSERT INTO role (name) VALUES ('ADMINISTRATOR');
-INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
-INSERT INTO role (name) VALUES ('OWNER');
+-- INSERT INTO role (name) VALUES ('CLIENT');
+--INSERT INTO role (name) VALUES ('EMPLOYEE');
+--INSERT INTO role (name) VALUES ('ADMINISTRATOR');
+--INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
+--INSERT INTO role (name) VALUES ('OWNER');
 
--- PAYMENT METHOD
-INSERT INTO payment_method (type, interest)
-VALUES ('EFECTIVO', 00.0000);
-INSERT INTO payment_method (type, interest)
-VALUES ('DEBITO', 0.0300);
-INSERT INTO payment_method (type, interest)
-VALUES ('CREDITO', 0.0900);
-INSERT INTO payment_method (type, interest)
-VALUES ('MONEDERO_VIRTUAL', 00.0000);
-INSERT INTO payment_method (type, interest)
-VALUES ('TRANSEFERENCIA', 0.0245);
 
--- CATEGORIES
-INSERT INTO category (name, description) VALUES ('HOTEL', 'Habitaciones de hotel por noche');
-INSERT INTO category (name, description) VALUES ('TRANSPORTE', 'Alquiler de autos y otros medios');
-INSERT INTO category (name, description) VALUES ('PASAJES', 'Pasajes de avion, tren, etc');
-INSERT INTO category (name, description) VALUES ('EXCURSIONES', 'Reserva de excursiones');
-INSERT INTO category (name, description) VALUES ('EVENTOS', 'Entradas a eventos');
+INSERT INTO module (name, base_path) VALUES ('PRODUCT', '/products');
+INSERT INTO module (name, base_path) VALUES ('CATEGORY', '/categories');
+INSERT INTO module (name, base_path) VALUES ('CUSTOMER', '/customers');
+INSERT INTO module (name, base_path) VALUES ('AUTH', '/auth');
 
--- SERVICES
-INSERT INTO service (created_at, updated_at, name, description, price, category_id)
-VALUES ('2024-03-04 12:34:56.000000', '2024-03-04 12:34:56.000000', 'Una habitacion', 'Hotel una habitacion', 100.00, 1);
-INSERT INTO service (created_at, updated_at, name, description, price, category_id)
-VALUES ('2024-03-03 12:34:56.000000', '2024-03-03 12:34:56.000000', 'Dos habitaciones', 'Hotel de dos habitaciones', 150.00, 1);
-INSERT INTO service (created_at, updated_at, name, description, price, category_id)
-VALUES ('2024-03-04 12:34:56.000000', '2024-03-04 12:34:56.000000', 'Automovil', 'Alquiler de automovil', 30.00, 2);
-INSERT INTO service (created_at, updated_at, name, description, price, category_id)
-VALUES ('2024-03-04 12:34:56.000000', '2024-03-04 12:34:56.000000', 'Motocicleta', 'Alquiler de motocicleta', 20.00, 2);
-INSERT INTO service (created_at, updated_at, name, description, price, category_id)
-VALUES ('2024-03-04 12:34:56.000000', '2024-03-04 12:34:56.000000', 'Bicicleta', 'Alquiler de bicicleta', 5.00, 2);
+-- CREACIÓN DE MÓDULO PARA RETO SECCION 11
+INSERT INTO module (name, base_path) VALUES ('PERMISSION', '/permissions');
 
--- PERSON
-INSERT INTO person (address, birthday, dni, email, name, lastname, nationality, phone_number, role_id)
-VALUES ('direccion', '1994-10-25 12:34:56.000000', 123, 'person1@email.com', 'personA', 'rp', 'ARG', 123, 1);
-INSERT INTO person (address, birthday, dni, email, name, lastname, nationality, phone_number, role_id)
-VALUES ('direccion', '1994-10-25 12:34:56.000000', 123, 'person2@email.com', 'personB', 'rp', 'ARG', 123, 2);
 
--- CLIENT
-INSERT INTO client (person_id) VALUES (1);
+-- CREACIÓN DE OPERACIONES
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ALL_PRODUCTS','', 'GET', false, 1);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_PRODUCT','/[0-9]*', 'GET', false, 1);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_ONE_PRODUCT','', 'POST', false, 1);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_ONE_PRODUCT','/[0-9]*', 'PUT', false, 1);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DISABLE_ONE_PRODUCT','/[0-9]*/disabled', 'PUT', false, 1);
 
--- EMPLOYEES
-INSERT INTO user_table (person_id, salary, password)
-VALUES (2, 100.00, 'password');
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ALL_CATEGORIES','', 'GET', false, 2);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_CATEGORY','/[0-9]*', 'GET', false, 2);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_ONE_CATEGORY','', 'POST', false, 2);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_ONE_CATEGORY','/[0-9]*', 'PUT', false, 2);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DISABLE_ONE_CATEGORY','/[0-9]*/disabled', 'PUT', false, 2);
+
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ALL_CUSTOMERS','', 'GET', false, 3);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('REGISTER_ONE','', 'POST', true, 3);
+
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('AUTHENTICATE','/authenticate', 'POST', true, 4);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('VALIDATE-TOKEN','/validate-token', 'GET', true, 4);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_MY_PROFILE','/profile','GET', false, 4);
+
+-- CREACIÓN DE OPERACIONES DE MÓDULO PARA RETO SECCION 11
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ALL_PERMISSIONS','','GET', false, 5);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_PERMISSION','/[0-9]*','GET', false, 5);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_ONE_PERMISSION','','POST', false, 5);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DELETE_ONE_PERMISSION','/[0-9]*','DELETE', false, 5);
+
+
+-- CREACIÓN DE ROLES
+-- INSERT INTO role (name) VALUES ('CUSTOMER');
+-- INSERT INTO role (name) VALUES ('ASSISTANT_ADMINISTRATOR');
+-- INSERT INTO role (name) VALUES ('ADMINISTRATOR');
+
+-- CREACIÓN DE PERMISOS
+INSERT INTO granted_permission (role_id, operation_id) VALUES (1, 15);
+
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 1);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 2);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 4);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 6);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 7);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 9);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 15);
+
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 1);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 2);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 3);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 4);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 5);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 6);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 7);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 8);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 9);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 10);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 15);
+
+-- CREACIÓN DE PERMISOS PARA RETO SECCION 11
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 16);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 17);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 18);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 19);

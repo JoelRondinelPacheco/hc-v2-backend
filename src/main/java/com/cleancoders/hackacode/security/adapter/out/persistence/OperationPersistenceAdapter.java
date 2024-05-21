@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @PersistenceAdapter
 public class OperationPersistenceAdapter implements OperationPersistencePort, OperationSelectorPort {
@@ -26,6 +29,11 @@ public class OperationPersistenceAdapter implements OperationPersistencePort, Op
     @Override
     public Operation createOperation(OperationDTO operation) {
         return null;
+    }
+
+    @Override
+    public List<Operation> findByPublicAccess() {
+        return this.operationMySQLRepository.findByPermitAll(true).stream().map(mapper::entityToDomain).collect(Collectors.toList());
     }
 
     @Override

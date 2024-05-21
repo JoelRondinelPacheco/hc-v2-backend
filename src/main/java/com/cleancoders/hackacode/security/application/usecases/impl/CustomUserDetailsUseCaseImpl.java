@@ -27,7 +27,6 @@ public class CustomUserDetailsUseCaseImpl implements CustomUsersDetailsUseCase {
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userDetails.getRole().getName()));
 
         userDetails.setAuthorities(authorities);
-
         return userDetails;
     }
 

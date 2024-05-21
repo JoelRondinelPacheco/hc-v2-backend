@@ -4,9 +4,10 @@ import com.cleancoders.hackacode.security.adapter.out.persistence.entity.RoleEnt
 import org.springframework.beans.factory.annotation.Value;
 
 public interface UserAuthInfo {
-    @Value("#{target.person.email")
+    @Value("#{target.person.email}")
     String getEmail();
     String getPassword();
-    @Value("#{target.person.role")
+    @Value("#{target.person.role}")
     RoleEntity getRole();
+    //Long getRole();
 }

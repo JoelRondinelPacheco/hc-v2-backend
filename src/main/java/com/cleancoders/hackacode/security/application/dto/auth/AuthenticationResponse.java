@@ -1,5 +1,4 @@
-package com.cleancoders.hackacode.security.domain;
-
+package com.cleancoders.hackacode.security.application.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class GrantedPermission {
-    private Long id;
-    private Operation operation;
-
+public class AuthenticationResponse {
+    private String authToken;
+    private String refreshToken;
 }

@@ -11,6 +11,7 @@ import com.cleancoders.hackacode.security.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @PersistenceMapper
@@ -40,9 +41,9 @@ public class PermissionsRoleMapperImpl implements PermissionsRoleMapper{
     public GrantedPermission entityToDomainGrantedPermission(GrantedPermissionEntity grantedPermissionEntity) {
         return GrantedPermission.builder()
                 .id(grantedPermissionEntity.getId())
-                .role(this.entityToDomainRole(grantedPermissionEntity.getRole()))
                 .operation(this.operationMapper.entityToDomain(grantedPermissionEntity.getOperation()))
                 .build();
+
     }
 
     @Override
