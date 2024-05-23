@@ -11,7 +11,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class JwtTokenMapper implements Mapper<JwtToken, JwtTokenEntity> {
     @Override
     public JwtToken entityToDomain(JwtTokenEntity jwtTokenEntity) {
-        return null;
+
+        return JwtToken.builder()
+                .id(jwtTokenEntity.getId())
+                .token(jwtTokenEntity.getToken())
+                .expiration(jwtTokenEntity.getExpiration())
+                .isValid(jwtTokenEntity.isValid())
+                .token(jwtTokenEntity.getToken())
+                .build();
     }
 
     @Override

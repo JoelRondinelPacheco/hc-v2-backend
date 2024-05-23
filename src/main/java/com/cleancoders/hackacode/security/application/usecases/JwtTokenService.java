@@ -1,5 +1,6 @@
 package com.cleancoders.hackacode.security.application.usecases;
 
+import com.cleancoders.hackacode.security.domain.JwtToken;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
@@ -21,4 +22,5 @@ public interface JwtTokenService {
     PublicKey loadPublicKey(Resource resource) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     String extractJwtFromRequest(HttpServletRequest request);
     Date extractExpiration(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
+    void invalidateToken(String jwt);
 }
