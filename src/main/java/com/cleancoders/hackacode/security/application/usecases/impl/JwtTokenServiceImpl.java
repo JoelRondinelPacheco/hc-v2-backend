@@ -3,6 +3,7 @@ package com.cleancoders.hackacode.security.application.usecases.impl;
 import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.security.application.port.out.JwtTokenOutPort;
 import com.cleancoders.hackacode.security.application.usecases.JwtTokenService;
+import com.cleancoders.hackacode.security.domain.JwtToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
@@ -108,5 +109,14 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Override
     public Date extractExpiration(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
             return extractAllClaims(jwt).getExpiration();
+    }
+
+    @Override
+    public void invalidateToken(String jwt) {
+        int token = this.jwtTokenOutPort.invalidateToken(jwt);
+        if (token == 0) {
+            //TODO THROW EXP
+        }
+
     }
 }

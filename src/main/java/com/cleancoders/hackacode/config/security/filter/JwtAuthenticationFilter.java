@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = this.jwtTokenService.extractJwtFromRequest(request);
 
         if (jwt == null || !StringUtils.hasText(jwt)) {
-            System.out.println("RECHAZO JWT PRIMERO");
             filterChain.doFilter(request, response);
             return;
         }

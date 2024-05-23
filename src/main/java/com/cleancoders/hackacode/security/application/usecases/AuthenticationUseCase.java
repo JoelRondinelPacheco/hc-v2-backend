@@ -3,10 +3,11 @@ package com.cleancoders.hackacode.security.application.usecases;
 import com.cleancoders.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.cleancoders.hackacode.security.application.dto.auth.AuthenticationResponse;
 import com.cleancoders.hackacode.user.domain.User;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface AuthenticationUseCase {
-    public User registerClient();
+    void logout(HttpServletRequest request);
 
-    public AuthenticationResponse login(AuthenticationRequest credentials);
+    AuthenticationResponse login(AuthenticationRequest credentials);
 
 }

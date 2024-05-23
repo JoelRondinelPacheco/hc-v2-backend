@@ -38,7 +38,6 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
         boolean isPublic = isPublic(url, httpMethod);
         if(isPublic){
-            System.out.println("IS PUBLICCCCCCCCCCCCCCC");
             return new AuthorizationDecision(true);
         }
 
