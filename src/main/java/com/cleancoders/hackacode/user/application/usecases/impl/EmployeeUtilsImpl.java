@@ -44,6 +44,6 @@ public class EmployeeUtilsImpl implements EmployeeUtils {
 
     @Override
     public String createRandomPassword() {
-        return "TOCORANDOMPASSWORD";
+        return "password";
     }
 }

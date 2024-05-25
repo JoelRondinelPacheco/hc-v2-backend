@@ -18,6 +18,7 @@ import com.cleancoders.hackacode.person.application.usecases.PersonBuilder;
 import com.cleancoders.hackacode.person.domain.Person;
 import com.cleancoders.hackacode.user.domain.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -45,6 +46,8 @@ public class UserPersistenceImpl implements UserPersistence {
     private JwtTokenService jwtTokenService;
     @Autowired
     private CustomUsersDetailsUseCase customUsersDetailsUseCase;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MailService mailService;
@@ -70,12 +73,13 @@ public class UserPersistenceImpl implements UserPersistence {
 
         Person person = this.personPersistence.save(newPersonDTO);
 
-        String password = this.employeeUtils.createRandomPassword();
+        String randomPassword = this.employeeUtils.createRandomPassword();
+        String finalPassword = this.passwordEncoder.encode(randomPassword);
 
         User user = new User();
         user.setSalary(employeeDTO.getSalary());
         user.setPerson(person);
-        user.setPassword(password);
+        user.setPassword(finalPassword);
 
         UserBase userSaved = this.userPersistencePort.registerUser(user);
 
@@ -92,6 +96,8 @@ TODO IMPLEMENT
 
         this.jwtTokenService.saveToken()
 */
+
+        //  todo implement
         Mail mail = Mail.builder()
                 .to(userSaved.getPerson().getEmail())
                 .subject("user account")
