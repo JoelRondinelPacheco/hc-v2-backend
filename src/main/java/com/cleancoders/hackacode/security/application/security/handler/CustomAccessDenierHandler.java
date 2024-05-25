@@ -1,6 +1,6 @@
-package com.cleancoders.hackacode.config.security.handler;
+package com.cleancoders.hackacode.security.application.security.handler;
 
-import com.cleancoders.hackacode.config.security.dto.ApiError;
+import com.cleancoders.hackacode.security.application.security.dto.ApiError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.ServletException;

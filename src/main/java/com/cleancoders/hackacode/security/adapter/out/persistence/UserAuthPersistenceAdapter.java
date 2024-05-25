@@ -20,9 +20,6 @@ public class UserAuthPersistenceAdapter implements UserAuthPort {
 
     @Override
     public UserDetailsDTO getUserDetails(String email) {
-        UserDetailsDTO uf =  this.usersAuthInfoRepository.findByPerson_Email(email).map(userAuthInfoMapper::entityToApplication).orElseThrow();
-        System.out.println(uf.toString());
-
-        return uf;
+        return this.usersAuthInfoRepository.findByPerson_Email(email).map(userAuthInfoMapper::entityToApplication).orElseThrow();
     }
 }

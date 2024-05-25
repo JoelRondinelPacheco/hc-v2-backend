@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.config.security;
+package com.cleancoders.hackacode.security.application.security;
 
 import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
 import org.springframework.beans.factory.annotation.Autowired;

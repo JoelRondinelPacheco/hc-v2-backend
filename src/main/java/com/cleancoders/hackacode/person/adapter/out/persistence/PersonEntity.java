@@ -24,7 +24,6 @@ public class PersonEntity {
     private String address;
     private Integer dni;
     private Date birthday;
-    private String nationality;
     private Integer phoneNumber;
 
     @ManyToOne

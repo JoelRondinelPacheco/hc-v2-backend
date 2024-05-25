@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.config.security.handler;
+package com.cleancoders.hackacode.security.application.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

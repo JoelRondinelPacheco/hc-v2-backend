@@ -1,6 +1,6 @@
-package com.cleancoders.hackacode.config.security;
+package com.cleancoders.hackacode.security.application.security;
 
-import com.cleancoders.hackacode.config.security.filter.JwtAuthenticationFilter;
+import com.cleancoders.hackacode.security.application.security.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

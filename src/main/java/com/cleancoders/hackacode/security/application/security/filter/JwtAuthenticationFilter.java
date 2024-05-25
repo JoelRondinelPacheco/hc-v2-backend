@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.config.security.filter;
+package com.cleancoders.hackacode.security.application.security.filter;
 
 import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
 import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;

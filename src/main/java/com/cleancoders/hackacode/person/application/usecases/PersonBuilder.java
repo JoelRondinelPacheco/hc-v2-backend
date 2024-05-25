@@ -5,4 +5,5 @@ import com.cleancoders.hackacode.person.domain.Person;
 
 public interface PersonBuilder {
     Person userFromDTO(NewPersonDTO userDTO);
+
 }

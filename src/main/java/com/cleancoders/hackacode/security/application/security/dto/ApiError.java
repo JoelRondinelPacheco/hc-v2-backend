@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.config.security.dto;
+package com.cleancoders.hackacode.security.application.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.config.security.authorization;
+package com.cleancoders.hackacode.security.application.security.authorization;
 
 import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
 import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
@@ -52,7 +52,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
             throw new AuthenticationCredentialsNotFoundException("User not logged in");
         }
 
-        List<Operation> operations = obtainOperations(authentication);
+        List<Operation> operations = this.obtainOperations(authentication);
 
         boolean isGranted = operations.stream().anyMatch(getOperationPredicate(url, httpMethod));
 
