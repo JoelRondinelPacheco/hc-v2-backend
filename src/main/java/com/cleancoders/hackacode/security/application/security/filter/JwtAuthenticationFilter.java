@@ -1,7 +1,7 @@
 package com.cleancoders.hackacode.security.application.security.filter;
 
-import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
-import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
+import com.cleancoders.hackacode.security.application.entity.CustomUserDetails;
+import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsService;
 import com.cleancoders.hackacode.security.application.usecases.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
-    private CustomUsersDetailsUseCase customUserService;
+    private CustomUsersDetailsService customUserService;
 
     @SneakyThrows
     @Override
@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String username = this.jwtTokenService.extractUsername(jwt);
-        UserDetailsDTO user = this.customUserService.getUserDetails(username);
+        CustomUserDetails user = this.customUserService.getUserDetails(username);
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 username, null, user.getAuthorities()

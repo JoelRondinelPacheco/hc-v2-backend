@@ -3,18 +3,15 @@ package com.cleancoders.hackacode.security.application.usecases.impl;
 import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.cleancoders.hackacode.security.application.dto.auth.AuthenticationResponse;
-import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
+import com.cleancoders.hackacode.security.application.entity.CustomUserDetails;
 import com.cleancoders.hackacode.security.application.usecases.AuthenticationUseCase;
-import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
+import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsService;
 import com.cleancoders.hackacode.security.application.usecases.JwtTokenService;
-import com.cleancoders.hackacode.security.domain.JwtToken;
-import com.cleancoders.hackacode.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -32,7 +29,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
-    private CustomUsersDetailsUseCase userDetailsService;
+    private CustomUsersDetailsService userDetailsService;
 
     @Override
     public void logout(HttpServletRequest request) {
@@ -47,7 +44,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
         Authentication authentication = new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword());
         this.authenticationManager.authenticate(authentication);
 
-        UserDetailsDTO userDetails = this.userDetailsService.getUserDetails(credentials.getEmail());
+        CustomUserDetails userDetails = this.userDetailsService.getUserDetails(credentials.getEmail());
 
         String jwt = this.jwtTokenService.generateToken(credentials.getEmail(), generateExtraClaims(userDetails));
 
@@ -57,7 +54,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
                 .build();
     }
 
-    private Map<String, Object> generateExtraClaims(UserDetailsDTO user) {
+    private Map<String, Object> generateExtraClaims(CustomUserDetails user) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name", user.getUsername());
         extraClaims.put("role", user.getRole().getName());

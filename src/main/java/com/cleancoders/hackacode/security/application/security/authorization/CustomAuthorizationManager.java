@@ -1,7 +1,7 @@
 package com.cleancoders.hackacode.security.application.security.authorization;
 
-import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
-import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
+import com.cleancoders.hackacode.security.application.entity.CustomUserDetails;
+import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsService;
 import com.cleancoders.hackacode.security.application.usecases.OperationService;
 import com.cleancoders.hackacode.security.domain.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
     @Autowired
     private OperationService operationService;
     @Autowired
-    private CustomUsersDetailsUseCase userService;
+    private CustomUsersDetailsService userService;
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext requestContext) {
@@ -76,7 +76,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
         UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) authentication;
         String username = (String) authToken.getPrincipal();
-        UserDetailsDTO user = userService.getUserDetails(username);
+        CustomUserDetails user = userService.getUserDetails(username);
 
         return user.getRole().getPermissions().stream()
                 .map(grantedPermission -> grantedPermission.getOperation())
