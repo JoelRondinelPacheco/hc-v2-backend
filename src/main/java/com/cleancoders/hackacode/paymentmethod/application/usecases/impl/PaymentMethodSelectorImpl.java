@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 @UseCase
 public class PaymentMethodSelectorImpl implements PaymentMethodSelector {
 
@@ -28,6 +26,11 @@ public class PaymentMethodSelectorImpl implements PaymentMethodSelector {
 
     @Override
     public Page<PaymentMethod> all(Pageable pageable) {
+        return this.paymentMethodSelector.all(pageable);
+    }
+
+    @Override
+    public Page<PaymentMethod> getAll(Pageable pageable) {
         return this.paymentMethodSelector.all(pageable);
     }
 }

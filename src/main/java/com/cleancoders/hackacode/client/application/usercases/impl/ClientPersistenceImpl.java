@@ -1,13 +1,15 @@
 package com.cleancoders.hackacode.client.application.usercases.impl;
 
-import com.cleancoders.hackacode.client.application.dto.NewUserDTO;
+import com.cleancoders.hackacode.person.application.dto.NewPersonDTO;
 import com.cleancoders.hackacode.client.application.port.in.ClientPersistence;
 import com.cleancoders.hackacode.client.application.port.in.ClientUtils;
 import com.cleancoders.hackacode.client.application.port.out.ClientPersistencePort;
 import com.cleancoders.hackacode.client.domain.Client;
 import com.cleancoders.hackacode.common.UseCase;
-import com.cleancoders.hackacode.user.application.port.in.UserUtils;
-import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.person.application.port.in.PersonPersistence;
+import com.cleancoders.hackacode.person.application.port.in.PersonUtils;
+import com.cleancoders.hackacode.person.application.usecases.PersonBuilder;
+import com.cleancoders.hackacode.person.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UseCase
@@ -16,19 +18,31 @@ public class ClientPersistenceImpl implements ClientPersistence {
     @Autowired
     private ClientPersistencePort clientRepository;
     @Autowired
-    private UserUtils userUtils;
+    private PersonPersistence userRepository;
+
+    @Autowired
+    private PersonUtils personUtils;
     @Autowired
     private ClientUtils clientUtils;
+    @Autowired
+    private PersonBuilder personBuilder;
 
     @Override
-    public Client save(NewUserDTO userDTO) {
+    public Client newClient(NewPersonDTO userDTO) {
+        //DESDE CERO
+        this.personUtils.assertDoesNotExistsByEmail(userDTO.getEmail());
+        //TODO VER SI ES NECESARIO
+        this.clientUtils.assertDoesNotExistsByUserEmail(userDTO.getEmail());
 
-        this.userUtils.existsByEmail(userDTO.getEmail());
-        this.clientUtils.existsByUserEmail(userDTO.getEmail());
+        //CREAR USER
+        //CREA CLIENT Y LE ASIGNA USER
+        //TODO IMPL
+        Person person = this.userRepository.save(userDTO);
 
-        User user = this.userUtils.userFromDTO(userDTO);
+        Client client = new Client();
+        client.setPerson(person);
 
-        return this.clientRepository.save(Client.withUser(user));
+        return this.clientRepository.save(client);
     }
 
     @Override
@@ -37,7 +51,7 @@ public class ClientPersistenceImpl implements ClientPersistence {
     }
 
     @Override
-    public String delete() {
+    public String delete(Long id) {
         return null;
     }
 }

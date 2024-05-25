@@ -1,2 +1,7 @@
-INSERT INTO service (code, name, description) VALUES ('ticket code', 'Ticket', 'Short description fro ticket');
-INSERT INTO category (name, service_id) VALUES ('Viaje', 1);
+-- ROLES
+INSERT INTO role (name) VALUES ('EMPLOYEE');
+INSERT INTO role (name) VALUES ('ADMINISTRATOR');
+INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
+INSERT INTO role (name) VALUES ('OWNER');
+
+-- PERMISSIONS

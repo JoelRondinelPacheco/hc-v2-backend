@@ -1,20 +1,16 @@
 package com.cleancoders.hackacode.client.domain;
 
-import com.cleancoders.hackacode.sale.domain.Sale;
-import com.cleancoders.hackacode.user.domain.User;
+import com.cleancoders.hackacode.person.domain.Person;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class Client {
     private Long id;
-    private User user;
-    private List<Sale> sales;
-
-    private Client(User user) {
-        this.user = user;
-    }
-
-    public static Client withUser(User user) {
-        return new Client(user);
-    }
+    private Person person;
 }

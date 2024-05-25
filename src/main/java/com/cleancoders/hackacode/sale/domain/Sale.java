@@ -1,60 +1,71 @@
 package com.cleancoders.hackacode.sale.domain;
 
-import com.cleancoders.hackacode.client.domain.Client;
-import com.cleancoders.hackacode.employee.domain.Employee;
 import com.cleancoders.hackacode.paymentmethod.domain.PaymentMethod;
-import com.cleancoders.hackacode.saleitem.domain.SaleItem;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.List;
 
+
+@AllArgsConstructor
+@Data
+@SuperBuilder
 public class Sale {
-    private Long id;
-    private String num_sale; //????
     private PaymentMethod paymentMethod;
-    private Client client;
-    private Employee employee;
-    private SaleItem saleItem;
+
+    private Long id;
+    private BigDecimal total;
     private SaleType type;
+    private BigDecimal interest;
+    private BigDecimal discount;
 
-    public Sale(Builder builder) {
-        this.client = builder.client;
-        this.employee = builder.employee;
-        this.saleItem = builder.saleItem;
-        this.type = builder.type;
+
+
+    public Sale() {
+        this.discount = new BigDecimal("0.10");
+    }
+    public void setTotal(List<SaleItemReference> items) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (SaleItemReference saleItemReference : items) {
+            BigDecimal priceItem = saleItemReference.getService().getPrice().multiply(saleItemReference.getQuantity());
+            total = total.add(priceItem).setScale(2, RoundingMode.HALF_DOWN);
+        }
+
+        total = this.applyDiscount(total, items.size());
+        this.total = this.applyInterest(total);
+        System.out.println("total itneres");
+        System.out.println(this.total);
     }
 
+    private BigDecimal applyDiscount(BigDecimal total, int itemsSize) {
 
-    public static class Builder {
-        private Client client;
-        private Employee employee;
-        private SaleItem saleItem;
-        private SaleType type;
+        if (itemsSize == 1) {
+            this.setDiscount(new BigDecimal("0.00"));
+        }
+        return total.multiply(
+                new BigDecimal("1.0000").subtract(this.getDiscount()).setScale(4, RoundingMode.HALF_DOWN)
+        ).setScale(2, RoundingMode.HALF_DOWN);
+    }
 
-        public Sale.Builder client(Client client) {
-            this.client = client;
-            return this;
-        }
-        public Sale.Builder employee(Employee employee) {
-            this.employee = employee;
-            return this;
-        }
-        public Sale.Builder saleItem(SaleItem saleItem) {
-            this.saleItem = saleItem;
-            this.setType(saleItem.getItemsSize());
-            return this;
-        }
+    private BigDecimal applyInterest(BigDecimal total) {
+        return total.multiply(
+                new BigDecimal("1.0000").add(this.getPaymentMethod().getInterest()).setScale(4, RoundingMode.HALF_DOWN)
+        ).setScale(2, RoundingMode.HALF_DOWN);
+    }
 
-        private void setType(int size) {
-            if (size > 1) {
-                this.type = SaleType.PACKAGE;
-            } else {
-                this.type = SaleType.SINGLE_SALE;
-            }
-        }
-
-        public Sale build(){
-            return new Sale(this);
+    public void setSaleType(List<SaleItemReference> saleItemReferences) {
+        if (saleItemReferences.size() > 1) {
+            setType(SaleType.PACKAGE);
+        } else {
+            setType(SaleType.SINGLE_SALE);
         }
     }
+
 
 }

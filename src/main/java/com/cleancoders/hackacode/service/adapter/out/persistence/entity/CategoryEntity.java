@@ -1,15 +1,27 @@
 package com.cleancoders.hackacode.service.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
+
 @Entity(name = "category")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private ServiceEntity service;
+    private String description;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    private List<ServiceEntity> services;
+
 }
