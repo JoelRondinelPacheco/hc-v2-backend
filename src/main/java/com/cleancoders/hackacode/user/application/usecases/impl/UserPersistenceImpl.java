@@ -4,9 +4,8 @@ import com.cleancoders.hackacode.common.UseCase;
 import com.cleancoders.hackacode.mail.application.dto.Mail;
 import com.cleancoders.hackacode.mail.application.port.in.MailService;
 import com.cleancoders.hackacode.person.application.dto.NewPersonDTO;
-import com.cleancoders.hackacode.security.application.usecases.CustomUsersDetailsUseCase;
 import com.cleancoders.hackacode.security.application.usecases.JwtTokenService;
-import com.cleancoders.hackacode.security.domain.JwtToken;
+import com.cleancoders.hackacode.security.application.utilities.AuthUtils;
 import com.cleancoders.hackacode.user.application.dto.NewEmployeeDTO;
 import com.cleancoders.hackacode.user.application.port.in.UserPersistence;
 import com.cleancoders.hackacode.user.application.port.out.UserPersistencePort;
@@ -45,7 +44,7 @@ public class UserPersistenceImpl implements UserPersistence {
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
-    private CustomUsersDetailsUseCase customUsersDetailsUseCase;
+    private AuthUtils authUtils;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -113,7 +112,7 @@ TODO IMPLEMENT
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name", person.getName());
         extraClaims.put("role", person.getRole().getName());
-        extraClaims.put("authorities", this.customUsersDetailsUseCase.getAuthorities(person.getRole()));
+        extraClaims.put("authorities", this.authUtils.getAuthorities(person.getRole()));
         return extraClaims;
     }
 }

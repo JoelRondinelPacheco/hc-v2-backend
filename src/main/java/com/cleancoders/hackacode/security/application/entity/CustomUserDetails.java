@@ -1,4 +1,4 @@
-package com.cleancoders.hackacode.security.application.dto.user;
+package com.cleancoders.hackacode.security.application.entity;
 
 import com.cleancoders.hackacode.security.domain.UserAuthInfo;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class UserDetailsDTO extends UserAuthInfo implements UserDetails {
+public class CustomUserDetails extends UserAuthInfo implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 

@@ -1,7 +1,7 @@
 package com.cleancoders.hackacode.security.application.port.out;
 
-import com.cleancoders.hackacode.security.application.dto.user.UserDetailsDTO;
+import com.cleancoders.hackacode.security.application.entity.CustomUserDetails;
 
 public interface UserAuthPort {
-    UserDetailsDTO getUserDetails(String email);
+    CustomUserDetails getUserDetails(String email);
 }
