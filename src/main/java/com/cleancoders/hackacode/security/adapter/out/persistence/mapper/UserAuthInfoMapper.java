@@ -27,16 +27,8 @@ public class UserAuthInfoMapper {
                 .email(userAuthInfo.getEmail())
                 .password(userAuthInfo.getPassword())
                 .authorities(authorities)
+                .role(role)
                 .build();
     }
 
-    public List<SimpleGrantedAuthority> getAuthorities(Role role) {
-        List<SimpleGrantedAuthority> authorities = role.getPermissions().stream()
-                .map(each -> each.getOperation().getName())
-                .map(each -> new SimpleGrantedAuthority(each))
-                .collect(Collectors.toList());
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-
-        return authorities;
-    }
 }
