@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Map;
 
 public interface JwtTokenService {
-    String generateToken(UserDetails user, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
+    String generateToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
     String extractUsername(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     Claims extractAllClaims(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     PrivateKey loadPrivateKey(Resource resource) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;

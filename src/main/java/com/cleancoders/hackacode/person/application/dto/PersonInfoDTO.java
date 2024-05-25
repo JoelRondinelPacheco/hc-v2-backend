@@ -1,6 +1,5 @@
-package com.cleancoders.hackacode.user.domain;
+package com.cleancoders.hackacode.person.application.dto;
 
-import com.cleancoders.hackacode.security.domain.JwtToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class User extends UserBase {
-    private String password;
+public class PersonInfoDTO extends PersonBaseDTO {
+    private Long id;
 }

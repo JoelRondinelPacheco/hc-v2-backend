@@ -18,7 +18,6 @@ public class PersonMapper implements Mapper<Person, PersonEntity> {
                 .address(entity.getAddress())
                 .dni(entity.getDni())
                 .birthday(entity.getBirthday())
-                .nationality(entity.getNationality())
                 .phoneNumber(entity.getPhoneNumber())
                 .build();
     }
@@ -32,7 +31,6 @@ public class PersonMapper implements Mapper<Person, PersonEntity> {
                 .address(domain.getAddress())
                 .dni(domain.getDni())
                 .birthday(domain.getBirthday())
-                .nationality(domain.getNationality())
                 .phoneNumber(domain.getPhoneNumber())
                 .build();
     }

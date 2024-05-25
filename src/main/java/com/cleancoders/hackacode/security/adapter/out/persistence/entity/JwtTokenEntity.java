@@ -8,8 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-@Entity(name = "jwt_token")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -21,10 +21,10 @@ public class JwtTokenEntity {
 
     @Column(length = 2048)
     private String token;
-    private LocalDate expiration;
+    private Date expiration;
     private boolean isValid;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+/*
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;*/
 }

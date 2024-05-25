@@ -16,7 +16,6 @@ public class PersonBuilderImpl implements PersonBuilder {
                 .address(userDTO.getAddress())
                 .dni(userDTO.getDni())
                 .birthday(userDTO.getBirthday())
-                .nationality(userDTO.getNationality())
                 .phoneNumber(userDTO.getPhoneNumber())
                 .build();
     }

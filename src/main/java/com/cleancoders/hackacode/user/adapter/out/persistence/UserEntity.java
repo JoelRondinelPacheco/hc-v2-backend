@@ -1,6 +1,8 @@
 package com.cleancoders.hackacode.user.adapter.out.persistence;
 
 import com.cleancoders.hackacode.person.adapter.out.persistence.PersonEntity;
+import com.cleancoders.hackacode.security.adapter.out.persistence.entity.JwtTokenEntity;
+import com.cleancoders.hackacode.security.domain.JwtToken;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

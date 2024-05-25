@@ -10,6 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/employee")
@@ -21,7 +25,7 @@ public class UserController {
     private UserSelector userSelector;
 
     @PostMapping
-    public ResponseEntity<?> newEmployee(@RequestBody NewEmployeeDTO employeeDTO) {
+    public ResponseEntity<?> newEmployee(@RequestBody NewEmployeeDTO employeeDTO) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
         return ResponseEntity.ok(this.userPersistence.newEmployee(employeeDTO));
     }
 

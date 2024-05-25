@@ -36,11 +36,9 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("${security.jwt.expiration-in-minutes}")
     private Long EXPIRATION_IN_MINUTES;
 
-    @Autowired
-    private JwtTokenOutPort jwtTokenOutPort;
 
     @Override
-    public String generateToken(UserDetails user, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public String generateToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
         Date issuedAt = new Date(System.currentTimeMillis());
         Date expiration = new Date((EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
 
@@ -48,7 +46,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
                 .header()
                     .type("JWT")
                     .and()
-                .subject(user.getUsername())
+                .subject(username)
                 .issuedAt(issuedAt)
                 .expiration(expiration)
                 .claims(extraClaims)
@@ -113,10 +111,14 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public void invalidateToken(String jwt) {
+
+        /*
+        TODO IMPLEMENT
         int token = this.jwtTokenOutPort.invalidateToken(jwt);
         if (token == 0) {
             //TODO THROW EXP
-        }
+        }*/
 
     }
+
 }
