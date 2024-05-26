@@ -1,17 +1,15 @@
 -- ROLES
--- INSERT INTO role (name) VALUES ('CLIENT');
---INSERT INTO role (name) VALUES ('EMPLOYEE');
---INSERT INTO role (name) VALUES ('ADMINISTRATOR');
---INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
---INSERT INTO role (name) VALUES ('OWNER');
+INSERT INTO role (name) VALUES ('CLIENT');
+INSERT INTO role (name) VALUES ('EMPLOYEE');
+INSERT INTO role (name) VALUES ('ADMINISTRATOR');
+INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
+INSERT INTO role (name) VALUES ('OWNER');
 
 
 INSERT INTO module (name, base_path) VALUES ('PRODUCT', '/products');
 INSERT INTO module (name, base_path) VALUES ('CATEGORY', '/categories');
 INSERT INTO module (name, base_path) VALUES ('CUSTOMER', '/customers');
 INSERT INTO module (name, base_path) VALUES ('AUTH', '/auth');
-
--- CREACIÓN DE MÓDULO PARA RETO SECCION 11
 INSERT INTO module (name, base_path) VALUES ('PERMISSION', '/permissions');
 
 
