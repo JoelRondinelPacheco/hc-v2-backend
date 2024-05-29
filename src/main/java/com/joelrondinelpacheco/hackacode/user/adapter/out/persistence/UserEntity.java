@@ -23,6 +23,7 @@ public class UserEntity {
     @JoinColumn(name = "person_id")
     private PersonEntity person;
 
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
     private String password;
 
