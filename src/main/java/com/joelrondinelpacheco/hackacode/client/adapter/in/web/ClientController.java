@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     @GetMapping("/{clientId}")
-    private ResponseEntity<Client> editClient(@PathVariable Long clientId) {
+    private ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
         return ResponseEntity.ok(this.clientSelector.byId(clientId));
     }
 

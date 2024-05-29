@@ -34,9 +34,4 @@ public class PaymentMethodController {
     public ResponseEntity<PaymentMethod> editMethod(@RequestBody PaymentMethod body) {
         return ResponseEntity.ok(this.paymentMethodPersistence.edit(body));
     }
-
-    /*
-    TODO EDIT
-     */
-
 }
