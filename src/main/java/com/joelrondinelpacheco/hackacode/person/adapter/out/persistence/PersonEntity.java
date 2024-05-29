@@ -23,6 +23,7 @@ public class PersonEntity {
     private String email;
     private String address;
     private Integer dni;
+    @Temporal(TemporalType.DATE)
     private Date birthday;
     private Integer phoneNumber;
 
