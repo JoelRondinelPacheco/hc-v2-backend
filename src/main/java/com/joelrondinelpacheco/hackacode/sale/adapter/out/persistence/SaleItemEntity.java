@@ -21,7 +21,7 @@ public class SaleItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal quantity;
+    private Long quantity;
 
     @Temporal(TemporalType.DATE)
     private LocalDate startDate;
