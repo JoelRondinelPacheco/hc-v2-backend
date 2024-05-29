@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity(name = "sale_item")
 @NoArgsConstructor
@@ -21,12 +22,12 @@ public class SaleItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long quantity;
+    private Integer quantity;
 
-    @Temporal(TemporalType.DATE)
-    private LocalDate startDate;
-    @Temporal(TemporalType.DATE)
-    private LocalDate endDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sale_id")

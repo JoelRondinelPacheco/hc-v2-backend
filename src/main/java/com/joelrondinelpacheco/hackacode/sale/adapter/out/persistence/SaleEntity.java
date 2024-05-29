@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "sale")
@@ -26,8 +27,8 @@ public class SaleEntity {
     private Long id;
 
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
-    private LocalDate createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "payment_method_id")

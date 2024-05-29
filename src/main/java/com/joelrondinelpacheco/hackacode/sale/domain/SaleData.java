@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 public class SaleData extends Sale {
-    private LocalDate createdAt;
+    private Date createdAt;
     private Client client;
     private User user;
     private List<SaleItemData> saleItem;

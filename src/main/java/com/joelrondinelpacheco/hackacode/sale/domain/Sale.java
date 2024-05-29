@@ -31,14 +31,12 @@ public class Sale {
         BigDecimal total = BigDecimal.ZERO;
 
         for (SaleItemReference saleItemReference : items) {
-            BigDecimal priceItem = saleItemReference.getService().getPrice().multiply(saleItemReference.getQuantity());
+            BigDecimal priceItem = saleItemReference.getService().getPrice().multiply(new BigDecimal(saleItemReference.getQuantity()));
             total = total.add(priceItem).setScale(2, RoundingMode.HALF_DOWN);
         }
 
         total = this.applyDiscount(total, items.size());
         this.total = this.applyInterest(total);
-        System.out.println("total itneres");
-        System.out.println(this.total);
     }
 
     private BigDecimal applyDiscount(BigDecimal total, int itemsSize) {

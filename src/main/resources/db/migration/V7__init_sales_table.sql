@@ -34,5 +34,5 @@ CREATE TABLE IF NOT EXISTS sale_item (
         REFERENCES sale(id),
     CONSTRAINT fk_service
             FOREIGN KEY (service_id)
-            REFERENCES service(id),
+            REFERENCES service(id)
 );

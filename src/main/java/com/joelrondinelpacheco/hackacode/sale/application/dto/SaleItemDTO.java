@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @Builder
 public class SaleItemDTO {
     private Long serviceId;
-    private BigDecimal quantity;
-    private LocalDate from;
-    private LocalDate to;
+    private Integer quantity;
+    private Date from;
+    private Date to;
 }
