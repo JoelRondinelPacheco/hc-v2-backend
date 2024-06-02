@@ -24,7 +24,9 @@ public class ClientController {
 
     @PostMapping
     private ResponseEntity<Client> save(@RequestBody NewPersonDTO userInfo) {
-        return ResponseEntity.ok(this.clientPersistence.newClient(userInfo));
+        //TODO IMPLEMENT
+        //return ResponseEntity.ok(this.clientPersistence.createClient(userInfo));
+        return null;
     }
 
     @GetMapping

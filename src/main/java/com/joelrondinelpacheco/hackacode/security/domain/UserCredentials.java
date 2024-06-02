@@ -11,8 +11,13 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class UserCredentials {
-    private String email;
-    private String password;
-    private Role role;
+    private Long id;
     private Person person;
+    private String password;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    private String token;
+    private Role role;
 }

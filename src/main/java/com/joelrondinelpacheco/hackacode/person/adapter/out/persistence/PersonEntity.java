@@ -29,6 +29,6 @@ public class PersonEntity {
     private Date birthday;
     private Integer phoneNumber;
     @OneToOne(mappedBy = "personEntity")
-    private UserCredentialsEntity credentialsEntity;
+    private UserCredentialsEntity userCredentialsEntity;
 
 }
