@@ -49,7 +49,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
     private boolean isGranted(String url, String httpMethod, Authentication authentication) {
 
         if( authentication == null || !(authentication instanceof UsernamePasswordAuthenticationToken)){
-            throw new AuthenticationCredentialsNotFoundException("User not logged in");
+            throw new AuthenticationCredentialsNotFoundException("Employee not logged in");
         }
 
         List<Operation> operations = this.obtainOperations(authentication);

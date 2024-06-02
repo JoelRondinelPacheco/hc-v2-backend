@@ -28,6 +28,7 @@ public class RolePersistenceAdapter implements RoleSelectorPort, RolePersistence
         return this.roleMySQLRepository.findByName(name).map(this.mapper::entityToDomainRole).orElseThrow();
     }
 
+
     @Override
     public Role findById(Long id) {
         return this.roleMySQLRepository.findById(id).map(this.mapper::entityToDomainRole).orElseThrow();

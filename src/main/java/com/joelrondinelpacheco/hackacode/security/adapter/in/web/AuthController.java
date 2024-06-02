@@ -5,7 +5,7 @@ import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Authentic
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.LogoutResponse;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.RegisterClientUseCase;
-import com.joelrondinelpacheco.hackacode.security.application.port.in.RegisterEmployeeUseCase;
+import com.joelrondinelpacheco.hackacode.employee.application.port.in.RegisterEmployeeUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

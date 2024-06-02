@@ -22,5 +22,4 @@ public class Person {
     private Integer dni;
     private Date birthday;
     private Integer phoneNumber;
-    private UserCredentials userCredentials;
 }

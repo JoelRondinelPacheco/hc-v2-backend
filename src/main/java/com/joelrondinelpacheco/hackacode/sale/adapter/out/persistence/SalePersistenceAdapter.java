@@ -12,7 +12,7 @@ import com.joelrondinelpacheco.hackacode.sale.domain.SaleReference;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleItemReference;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.ServiceSelectorPersistenceAdapter;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
-import com.joelrondinelpacheco.hackacode.user.adapter.out.persistence.UserSelectorAdapter;
+import com.joelrondinelpacheco.hackacode.employee.adapter.out.persistence.EmployeeSelectorAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class SalePersistenceAdapter implements SalePersistencePort {
     @Autowired
     private ClientSelectorAdapter clientSelectorAdapter;
     @Autowired
-    private UserSelectorAdapter userSelectorAdapter;
+    private EmployeeSelectorAdapter userSelectorAdapter;
     @Autowired
     private PaymentMethodSelectorMySQLPersistenceAdapter paymentMethodSelector;
 

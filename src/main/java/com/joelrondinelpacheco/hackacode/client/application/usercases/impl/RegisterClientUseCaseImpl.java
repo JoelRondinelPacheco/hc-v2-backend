@@ -18,9 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 public class RegisterClientUseCaseImpl implements RegisterClientUseCase {
 
-    @Value("${security.default.role}")
-    private String DEFAULT_ROLE;
-
     private final PersonPersistence personPersistence;
     private final RoleSelector roleSelector;
     private final UserCredentialsService userCredentialsService;
@@ -40,11 +37,12 @@ public class RegisterClientUseCaseImpl implements RegisterClientUseCase {
     public void createClient(NewPersonDTO body) {
         //TODO CHEKEAR EMAIL ANTES DE CREAR? (ya lo hace en las clases)
         Person person = this.personPersistence.create(body);
-        Role role = this.roleSelector.getByRoleName(DEFAULT_ROLE);
+
+        Role role = this.roleSelector.getById(body.getRoleId());
+
         Client client = this.clientPersistence.createClient(person);
 
         UserCredentials userCredentials = this.userCredentialsService.newUserCredentials(person, role, body.getPassword());
-        person.setUserCredentials(userCredentials);
 
         this.personPersistence.save(person);
         this.clientPersistence.saveClient(client);

@@ -11,8 +11,7 @@ import com.joelrondinelpacheco.hackacode.sale.domain.SaleData;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleReference;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleItemData;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.mapper.ServiceMapper;
-import com.joelrondinelpacheco.hackacode.user.adapter.out.persistence.mapper.UserMapper;
-import com.joelrondinelpacheco.hackacode.user.domain.User;
+import com.joelrondinelpacheco.hackacode.employee.adapter.out.persistence.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -31,14 +30,14 @@ public class SaleMapperImpl implements SaleMapper {
     @Autowired
     private SaleItemMapper saleItemMapper;
     @Autowired
-    private UserMapper userMapper;
+    private EmployeeMapper employeeMapper;
 
 
     @Override
     public SaleData entityToDomain(SaleEntity entity) {
 
         Client client = this.clientMapper.entityToDomain(entity.getClient());
-        User employee = this.userMapper.entityToDomain(entity.getEmployee());
+        User employee = this.employeeMapper.entityToDomain(entity.getEmployee());
         PaymentMethod paymentMethod = this.paymentMethodMapper.entityToDomain(entity.getPaymentMethod());
 
         List<SaleItemData> saleItems = entity.getSaleItem().stream().map(this.saleItemMapper::entityToDomain).toList();
@@ -51,7 +50,7 @@ public class SaleMapperImpl implements SaleMapper {
                 .interest(entity.getInterest())
                 .discount(entity.getDiscount())
                 .client(client)
-                .user(employee)
+                .employee(employee)
                 .paymentMethod(paymentMethod)
                 .saleItem(saleItems)
                 .build();
