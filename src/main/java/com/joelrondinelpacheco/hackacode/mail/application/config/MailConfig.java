@@ -16,9 +16,18 @@ public class MailConfig {
     @Bean
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        Integer port;
+
+        try {
+            port = Integer.getInteger(env.getProperty("spring.mail.port"));
+        } catch (NullPointerException ex) {
+            // todo set ex
+        } finally {
+            port = 587;
+        }
 
         mailSender.setHost(env.getProperty("spring.mail.host"));
-        mailSender.setPort(547);
+        mailSender.setPort(port);
         mailSender.setUsername(env.getProperty("spring.mail.username"));
         mailSender.setPassword(env.getProperty("spring.mail.password"));
 /*
