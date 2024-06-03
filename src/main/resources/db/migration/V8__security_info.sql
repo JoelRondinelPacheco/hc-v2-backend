@@ -4,14 +4,14 @@ INSERT INTO role (name) VALUES ('ADMINISTRATOR');
 INSERT INTO role (name) VALUES ('ASSISTANT_OWNER');
 INSERT INTO role (name) VALUES ('OWNER');
 
-INSERT INTO module (name, base_path) VALUES ('CLIENT', '/client');
-INSERT INTO module (name, base_path) VALUES ('PAYMENT METHOD', '/payment-method');
-INSERT INTO module (name, base_path) VALUES ('SALE', '/sale');
-INSERT INTO module (name, base_path) VALUES ('SERVICE', '/service');
-INSERT INTO module (name, base_path) VALUES ('CATEGORY', '/category');
-INSERT INTO module (name, base_path) VALUES ('EMPLOYEE', '/employee');
-INSERT INTO module (name, base_path) VALUES ('AUTH', '/auth');
-INSERT INTO module (name, base_path) VALUES ('SECURITY', '/security');
+INSERT INTO module_table (name, base_path) VALUES ('CLIENT', '/client');
+INSERT INTO module_table (name, base_path) VALUES ('PAYMENT METHOD', '/payment-method');
+INSERT INTO module_table (name, base_path) VALUES ('SALE', '/sale');
+INSERT INTO module_table (name, base_path) VALUES ('SERVICE', '/service');
+INSERT INTO module_table (name, base_path) VALUES ('CATEGORY', '/category');
+INSERT INTO module_table (name, base_path) VALUES ('EMPLOYEE', '/employee');
+INSERT INTO module_table (name, base_path) VALUES ('AUTH', '/auth');
+INSERT INTO module_table (name, base_path) VALUES ('SECURITY', '/security');
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_CLIENT', '', 'POST', false, 1);
 -- TODO VER SI ES NECESARIO ESPECIFICAR LOS QUERY PARAM EN LA PAGINACION

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS module (
+CREATE TABLE IF NOT EXISTS module_table (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     base_path VARCHAR(255) UNIQUE NOT NULL
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS operation (
     module_id BIGINT UNSIGNED,
     CONSTRAINT fk_module
         FOREIGN KEY (module_id)
-        REFERENCES module(id)
+        REFERENCES module_table(id)
         ON DELETE SET NULL
 );
 
