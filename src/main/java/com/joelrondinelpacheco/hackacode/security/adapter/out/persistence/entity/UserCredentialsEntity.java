@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "user_credential")
 @NoArgsConstructor
 @Data
 public class UserCredentialsEntity {
@@ -15,13 +15,14 @@ public class UserCredentialsEntity {
     @OneToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
     private PersonEntity personEntity;
+    @Column(nullable = false)
     private String password;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    private String token; //TODO string o otro tipo
+    private String emailToken; //TODO string o otro tipo
 
 
     @ManyToOne
