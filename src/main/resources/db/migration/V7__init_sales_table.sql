@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS sale (
         ON DELETE SET NULL,
     CONSTRAINT fk_employee
         FOREIGN KEY (employee_id)
-        REFERENCES user_table(id)
+        REFERENCES employee(id)
         ON DELETE SET NULL,
     CONSTRAINT fk_client
         FOREIGN KEY (client_id)

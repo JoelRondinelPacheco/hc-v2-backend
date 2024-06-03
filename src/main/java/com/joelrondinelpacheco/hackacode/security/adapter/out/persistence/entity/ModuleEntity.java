@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "module")
+@Entity(name = "module_table")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

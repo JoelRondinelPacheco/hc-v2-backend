@@ -11,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class NewPersonDTO extends PersonBaseDTO {
     private Long roleId;
+    private String password;
 }

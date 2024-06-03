@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.person.adapter.out.persistence;
 
-import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.entity.RoleEntity;
+import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.entity.UserCredentialsEntity;
+import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,15 +21,11 @@ public class PersonEntity {
     private Long id;
     private String name;
     private String lastname;
+    @Column(nullable = false, unique = true)
     private String email;
     private String address;
     private Integer dni;
     @Temporal(TemporalType.DATE)
     private Date birthday;
     private Integer phoneNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private RoleEntity role;
-
 }

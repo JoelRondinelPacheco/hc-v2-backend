@@ -1,6 +1,6 @@
 package com.joelrondinelpacheco.hackacode.security.application.entity;
 
-import com.joelrondinelpacheco.hackacode.security.domain.UserAuthInfo;
+import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class CustomUserDetails extends UserAuthInfo implements UserDetails {
+public class CustomUserDetails extends UserCredentials implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -30,7 +30,7 @@ public class CustomUserDetails extends UserAuthInfo implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getEmail();
+        return super.getPerson().getEmail();
     }
 
     @Override

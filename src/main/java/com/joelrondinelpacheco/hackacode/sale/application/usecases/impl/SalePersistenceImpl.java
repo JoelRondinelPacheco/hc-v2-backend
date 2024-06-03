@@ -11,8 +11,8 @@ import com.joelrondinelpacheco.hackacode.sale.application.port.in.SalePersistenc
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleData;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleItemReference;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleReference;
-import com.joelrondinelpacheco.hackacode.user.application.port.in.UserSelector;
-import com.joelrondinelpacheco.hackacode.user.application.usecases.EmployeeUtils;
+import com.joelrondinelpacheco.hackacode.employee.application.port.in.EmployeeSelector;
+import com.joelrondinelpacheco.hackacode.employee.application.usecases.EmployeeUtils;
 import com.joelrondinelpacheco.hackacode.sale.application.dto.NewSaleDTO;
 import com.joelrondinelpacheco.hackacode.sale.application.port.out.SalePersistencePort;
 import com.joelrondinelpacheco.hackacode.service.application.port.in.ServiceSelector;
@@ -38,7 +38,7 @@ public class SalePersistenceImpl implements SalePersistence {
 
     //EMPLOYEE
     @Autowired
-    private UserSelector userSelector;
+    private EmployeeSelector employeeSelector;
     @Autowired
     private EmployeeUtils employeeUtils;
 

@@ -23,7 +23,6 @@ public class UserAuthInfoMapper {
         List<SimpleGrantedAuthority> authorities = this.authUtils.getAuthorities(role);
 
         return CustomUserDetails.builder()
-                .email(userAuthInfo.getEmail())
                 .password(userAuthInfo.getPassword())
                 .authorities(authorities)
                 .role(role)

@@ -24,5 +24,5 @@ public class JwtTokenEntity {
 /*
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity userEntity;*/
+    private EmployeeEntity userEntity;*/
 }

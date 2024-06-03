@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.person.domain;
 
 import com.joelrondinelpacheco.hackacode.security.domain.Role;
+import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,4 @@ public class Person {
     private Integer dni;
     private Date birthday;
     private Integer phoneNumber;
-    private Role role;
 }

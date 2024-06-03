@@ -18,11 +18,12 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<GrantedPermissionEntity> permissions;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private List<PersonEntity> persons;
+    private List<UserCredentialsEntity> persons;
 }

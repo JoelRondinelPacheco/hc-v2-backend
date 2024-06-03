@@ -6,4 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface RoleSelector {
     Page<Role> getPage(Pageable pageable);
+    Role getByRoleName(String name);
+
+    Role getById(Long roleId);
 }
