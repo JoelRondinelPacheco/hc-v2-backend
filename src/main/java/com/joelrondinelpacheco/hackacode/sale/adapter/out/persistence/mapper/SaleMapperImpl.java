@@ -4,6 +4,7 @@ import com.joelrondinelpacheco.hackacode.client.adapter.out.persistence.ClientEn
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
 import com.joelrondinelpacheco.hackacode.common.adapter.Mapper;
+import com.joelrondinelpacheco.hackacode.employee.domain.Employee;
 import com.joelrondinelpacheco.hackacode.paymentmethod.adapter.out.persistence.mapper.PaymentMethodMapper;
 import com.joelrondinelpacheco.hackacode.paymentmethod.domain.PaymentMethod;
 import com.joelrondinelpacheco.hackacode.sale.adapter.out.persistence.SaleEntity;
@@ -37,7 +38,7 @@ public class SaleMapperImpl implements SaleMapper {
     public SaleData entityToDomain(SaleEntity entity) {
 
         Client client = this.clientMapper.entityToDomain(entity.getClient());
-        User employee = this.employeeMapper.entityToDomain(entity.getEmployee());
+        Employee employee = this.employeeMapper.entityToDomain(entity.getEmployee());
         PaymentMethod paymentMethod = this.paymentMethodMapper.entityToDomain(entity.getPaymentMethod());
 
         List<SaleItemData> saleItems = entity.getSaleItem().stream().map(this.saleItemMapper::entityToDomain).toList();

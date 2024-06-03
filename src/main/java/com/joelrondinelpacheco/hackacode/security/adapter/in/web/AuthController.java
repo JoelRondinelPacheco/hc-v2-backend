@@ -4,7 +4,7 @@ import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.LogoutResponse;
-import com.joelrondinelpacheco.hackacode.client.application.port.in.RegisterClientUseCase;
+import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.RegisterEmployeeUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,10 +21,10 @@ import java.security.spec.InvalidKeySpecException;
 public class AuthController {
 
     private final AuthenticationUseCase authService;
-    private final RegisterClientUseCase registerClientUserCase;
+    private final UserStarterUseCase registerClientUserCase;
     private final RegisterEmployeeUseCase registerEmployeeUseCase;
     @Autowired
-    public AuthController(AuthenticationUseCase authService, RegisterClientUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase) {
+    public AuthController(AuthenticationUseCase authService, UserStarterUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase) {
         this.authService = authService;
         this.registerClientUserCase = registerClientUserCase;
         this.registerEmployeeUseCase = registerEmployeeUseCase;
@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody NewPersonDTO body) {
-        this.registerClientUserCase.createClient(body);
+        this.registerClientUserCase.createUserStarter(body);
         this.registerEmployeeUseCase.createEmployee(body);
         return ResponseEntity.ok("Response");
     }

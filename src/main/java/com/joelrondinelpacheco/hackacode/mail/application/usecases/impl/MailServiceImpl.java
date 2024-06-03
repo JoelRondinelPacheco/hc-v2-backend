@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.mail.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
+import com.joelrondinelpacheco.hackacode.mail.application.dto.SendMailDTO;
 import com.joelrondinelpacheco.hackacode.mail.application.port.input.MailService;
 import com.joelrondinelpacheco.hackacode.mail.application.port.output.MailServicePort;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public String send(SimpleMailMessage mail) {
+    public String send(SendMailDTO mail) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
         String response = "";
         try {
-            this.mailServicePort.send(mail);
+            this.mailServicePort.send(mailMessage);
             response = "Mail ok";
         } catch (MailException e) {
             response = "Mail error";

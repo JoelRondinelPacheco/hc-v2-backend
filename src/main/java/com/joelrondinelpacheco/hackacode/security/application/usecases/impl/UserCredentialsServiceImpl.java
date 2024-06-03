@@ -23,6 +23,7 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
 
     @Override
     public UserCredentials newUserCredentials(Person person, Role role, String password) {
+        //TODO RANDOM PASSWORD EN EMPLOYEE UTILS
         UserCredentials userCredentials = UserCredentials.builder()
                 .person(person)
                 .password(this.encryptPassword(password))

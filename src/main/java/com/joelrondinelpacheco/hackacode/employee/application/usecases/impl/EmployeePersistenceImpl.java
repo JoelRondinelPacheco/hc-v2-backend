@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
@@ -28,54 +29,18 @@ public class EmployeePersistenceImpl implements EmployeePersistence {
     @Autowired
     private EmployeePersistencePort employeePersistencePort;
     @Autowired
-    private PersonPersistence userRepository;
-    @Autowired
-    private PersonPersistence personPersistence;
-
-    @Autowired
-    private PersonUtils personUtils;
-    @Autowired
     private EmployeeUtils employeeUtils;
-    @Autowired
-    private PersonBuilder personBuilder;
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
     private AuthUtils authUtils;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
-    public Employee newEmployee(NewEmployeeDTO employeeDTO) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        //CHECKEA QUE EL USUARIO EXISTA USUARIO NO EXISTE
-        this.personUtils.assertDoesNotExistsByEmail(employeeDTO.getEmail());
-        //NO EXISTE EMPLEADO RELACIONADO A ESE USUARIO
-        this.employeeUtils.assertDoesNotExistsByUserEmail(employeeDTO.getEmail());
-
-        //TODO CREATE BUILDER UTILS CLASS
-        NewPersonDTO newPersonDTO = NewPersonDTO.builder()
-                .name(employeeDTO.getName())
-                .lastname(employeeDTO.getLastname())
-                .email(employeeDTO.getName())
-                .address(employeeDTO.getAddress())
-                .dni(employeeDTO.getDni())
-                .birthday(employeeDTO.getBirthday())
-                .phoneNumber(employeeDTO.getPhoneNumber())
-                .roleId(employeeDTO.getRoleId())
-                .build();
-
-        Person person = this.personPersistence.save(newPersonDTO);
-
-        String randomPassword = this.employeeUtils.createRandomPassword();
-        String finalPassword = this.passwordEncoder.encode(randomPassword);
-
+    public Employee createEmployee(Person person, BigDecimal salary) {
+        this.employeeUtils.assertDoesNotExistsByUserEmail(person.getEmail());
         Employee employee = new Employee();
-        employee.setSalary(employeeDTO.getSalary());
+        employee.setSalary(salary);
         employee.setPerson(person);
-        employee.setPassword(finalPassword);
-
-        Employee employeeSaved = this.employeePersistencePort.registerUser(employee);
-
 /*
 TODO IMPLEMENT
         Map<String, Object> extraClaims = this.generateExtraClaims(person);
@@ -91,14 +56,20 @@ TODO IMPLEMENT
 */
 
 
-        return employeeSaved;
+        return employee;
+    }
+
+    @Override
+    public Employee save(Employee employee) {
+        return this.employeePersistencePort.registerUser(employee);
     }
 
     private Map<String, Object> generateExtraClaims(Person person) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name", person.getName());
-        extraClaims.put("role", person.getRole().getName());
-        extraClaims.put("authorities", this.authUtils.getAuthorities(person.getRole()));
+        //TODO IMPLEMENT
+        //extraClaims.put("role", person.getRole().getName());
+        //extraClaims.put("authorities", this.authUtils.getAuthorities(person.getRole()));
         return extraClaims;
     }
 }

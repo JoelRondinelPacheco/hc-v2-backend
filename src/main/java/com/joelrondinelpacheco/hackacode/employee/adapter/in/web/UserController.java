@@ -25,11 +25,13 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> newEmployee(@RequestBody NewEmployeeDTO employeeDTO) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        return ResponseEntity.ok(this.employeePersistence.newEmployee(employeeDTO));
+        //return ResponseEntity.ok(this.employeePersistence.createEmployee(employeeDTO));
+        //TODO IMPLEMENT
+        return null;
     }
 
     @GetMapping
-    public ResponseEntity<Page<User>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<?>> getAll(Pageable pageable) {
         return ResponseEntity.ok(this.employeeSelector.getPage(pageable));
     }
 }

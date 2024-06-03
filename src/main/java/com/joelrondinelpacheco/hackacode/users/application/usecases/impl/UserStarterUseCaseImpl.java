@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.client.application.usercases.impl;
+package com.joelrondinelpacheco.hackacode.users.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientPersistence;
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
@@ -6,46 +6,47 @@ import com.joelrondinelpacheco.hackacode.common.UseCase;
 import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.person.application.port.in.PersonPersistence;
 import com.joelrondinelpacheco.hackacode.person.domain.Person;
-import com.joelrondinelpacheco.hackacode.client.application.port.in.RegisterClientUseCase;
+import com.joelrondinelpacheco.hackacode.users.application.dto.UserStarterDTO;
+import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.RoleSelector;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.UserCredentialsService;
 import com.joelrondinelpacheco.hackacode.security.domain.Role;
 import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-public class RegisterClientUseCaseImpl implements RegisterClientUseCase {
+public class UserStarterUseCaseImpl implements UserStarterUseCase {
 
     private final PersonPersistence personPersistence;
     private final RoleSelector roleSelector;
     private final UserCredentialsService userCredentialsService;
-    private final ClientPersistence clientPersistence;
 
     @Autowired
-    public RegisterClientUseCaseImpl(PersonPersistence personPersistence, RoleSelector roleSelector, UserCredentialsService userCredentialsService, ClientPersistence clientPersistence) {
+    public UserStarterUseCaseImpl(PersonPersistence personPersistence, RoleSelector roleSelector, UserCredentialsService userCredentialsService) {
         this.personPersistence = personPersistence;
         this.roleSelector = roleSelector;
         this.userCredentialsService = userCredentialsService;
-        this.clientPersistence = clientPersistence;
     }
 
 
     @Override
-    @Transactional
-    public void createClient(NewPersonDTO body) {
+    public UserStarterDTO createUserStarter(NewPersonDTO body) {
         //TODO CHEKEAR EMAIL ANTES DE CREAR? (ya lo hace en las clases)
-        Person person = this.personPersistence.create(body);
 
         Role role = this.roleSelector.getById(body.getRoleId());
 
-        Client client = this.clientPersistence.createClient(person);
+        Person personSaved = this.personPersistence.save(
+                this.personPersistence.create(body)
+        );
 
-        UserCredentials userCredentials = this.userCredentialsService.newUserCredentials(person, role, body.getPassword());
+        UserCredentials userCredentials = this.userCredentialsService.saveUserCredentials(
+                this.userCredentialsService.newUserCredentials(personSaved, role, body.getPassword())
+        );
 
-        this.personPersistence.save(person);
-        this.clientPersistence.saveClient(client);
-        this.userCredentialsService.saveUserCredentials(userCredentials);
+        return UserStarterDTO.builder()
+                .person(personSaved)
+                .token(userCredentials.getToken())
+                .build();
     }
 }
