@@ -46,7 +46,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
 
         CustomUserDetails userDetails = this.userDetailsService.getUserDetails(credentials.getEmail());
 
-        String jwt = this.jwtTokenService.generateToken(credentials.getEmail(), generateExtraClaims(userDetails));
+        String jwt = this.jwtTokenService.generateAuthToken(credentials.getEmail(), generateExtraClaims(userDetails));
 
         return AuthenticationResponse.builder()
                 .authToken(jwt)

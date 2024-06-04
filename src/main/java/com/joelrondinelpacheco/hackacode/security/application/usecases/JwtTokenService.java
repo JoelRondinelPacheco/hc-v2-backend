@@ -13,12 +13,13 @@ import java.util.Date;
 import java.util.Map;
 
 public interface JwtTokenService {
-    String generateToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
-    String extractUsername(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
+    String generateAuthToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
+    String generateVerifyEmailToken(String username) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
+    String extractUsername(String jwt);
     Claims extractAllClaims(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     PrivateKey loadPrivateKey(Resource resource) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException;
     PublicKey loadPublicKey(Resource resource) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     String extractJwtFromRequest(HttpServletRequest request);
-    Date extractExpiration(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
+    Date extractExpiration(String jwt);
     void invalidateToken(String jwt);
 }

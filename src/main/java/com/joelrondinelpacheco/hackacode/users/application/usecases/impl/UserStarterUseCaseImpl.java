@@ -32,7 +32,6 @@ public class UserStarterUseCaseImpl implements UserStarterUseCase {
 
     @Override
     public UserStarterDTO createUserStarter(NewPersonDTO body) {
-        //TODO CHEKEAR EMAIL ANTES DE CREAR? (ya lo hace en las clases)
 
         Role role = this.roleSelector.getById(body.getRoleId());
 
@@ -46,7 +45,7 @@ public class UserStarterUseCaseImpl implements UserStarterUseCase {
 
         return UserStarterDTO.builder()
                 .person(personSaved)
-                .token(userCredentials.getToken())
+                .token(userCredentials.getEmailToken())
                 .build();
     }
 }

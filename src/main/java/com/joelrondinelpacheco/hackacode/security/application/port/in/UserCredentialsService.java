@@ -9,4 +9,7 @@ public interface UserCredentialsService {
     UserCredentials saveUserCredentials(UserCredentials userCredentials);
     void enableAccountByEmailConfirmation();
     void disableAccount();
+    void verifyCredentialsNonExpired(UserCredentials credentials);
+
+    void verifyAccountNonLocked(UserCredentials userCredentials);
 }

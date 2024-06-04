@@ -5,6 +5,7 @@ import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenS
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
@@ -29,14 +30,16 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("classpath:jwtKeys/private_key.pem") private Resource privateKeyResource;
     @Value("classpath:jwtKeys/public_key.pem") private Resource publicKeyResource;
 
-    @Value("${security.jwt.expiration-in-minutes}")
-    private Long EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.auth}")
+    private Long AUTH_EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.validate-account}")
+    private Long VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES;
 
 
     @Override
-    public String generateToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public String generateAuthToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
         Date issuedAt = new Date(System.currentTimeMillis());
-        Date expiration = new Date((EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
+        Date expiration = this.generateExpirationDate(issuedAt, AUTH_EXPIRATION_IN_MINUTES);
 
         return Jwts.builder()
                 .header()
@@ -51,13 +54,33 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public String extractUsername(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public String generateVerifyEmailToken(String username) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+        Date issuedAt = new Date(System.currentTimeMillis());
+        Date expiration = this.generateExpirationDate(issuedAt, VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES);
+
+        return Jwts.builder()
+                .header()
+                    .type("VALIDATE_ACCOUNT")
+                    .and()
+                .subject(username)
+                .issuedAt(issuedAt)
+                .expiration(expiration)
+                .signWith(loadPrivateKey(privateKeyResource))
+                .compact();
+    }
+
+    @Override
+    public String extractUsername(String jwt) {
         return extractAllClaims(jwt).getSubject();
     }
 
     @Override
-    public Claims extractAllClaims(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        return Jwts.parser().verifyWith(loadPublicKey(publicKeyResource)).build().parseSignedClaims(jwt).getPayload();
+    public Claims extractAllClaims(String jwt) {
+        try {
+            return Jwts.parser().verifyWith(loadPublicKey(publicKeyResource)).build().parseSignedClaims(jwt).getPayload();
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -101,8 +124,8 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public Date extractExpiration(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-            return extractAllClaims(jwt).getExpiration();
+    public Date extractExpiration(String jwt){
+            return this.extractAllClaims(jwt).getExpiration();
     }
 
     @Override
@@ -114,7 +137,10 @@ public class JwtTokenServiceImpl implements JwtTokenService {
         if (token == 0) {
             //TODO THROW EXP
         }*/
+    }
 
+    private Date generateExpirationDate(Date issuedAt, Long expirationInMinutes) {
+        return new Date((AUTH_EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
     }
 
 }
