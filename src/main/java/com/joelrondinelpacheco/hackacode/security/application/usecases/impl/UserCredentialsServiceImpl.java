@@ -75,10 +75,7 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
             throw new RuntimeException("todo invalid credentials");
         }
 
-        Date current = new Date();
-        Date expirationDate = this.jwtTokenService.extractExpiration(credentials.getEmailToken());
-
-        if (!current.before(expirationDate)) {
+        if (this.jwtTokenService.isExpired(credentials.getEmailToken())) {
             credentials.setCredentialsNonExpired(false);
             this.userCredentialsPersistencePort.save(credentials);
             throw new RuntimeException("todo invalid credentials");

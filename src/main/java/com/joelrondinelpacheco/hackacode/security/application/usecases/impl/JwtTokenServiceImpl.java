@@ -5,7 +5,6 @@ import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenS
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
@@ -129,6 +128,14 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
+    public boolean isExpired(String jwt) {
+        Date current = new Date();
+        Date expirationDate = this.extractExpiration(jwt);
+
+        return expirationDate.before(current);
+    }
+
+    @Override
     public void invalidateToken(String jwt) {
 
         /*
@@ -140,7 +147,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     private Date generateExpirationDate(Date issuedAt, Long expirationInMinutes) {
-        return new Date((AUTH_EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
+        return new Date((expirationInMinutes * 60 * 1000) + issuedAt.getTime());
     }
 
 }

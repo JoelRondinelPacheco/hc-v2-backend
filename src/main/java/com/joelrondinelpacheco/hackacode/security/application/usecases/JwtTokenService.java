@@ -21,5 +21,6 @@ public interface JwtTokenService {
     PublicKey loadPublicKey(Resource resource) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException;
     String extractJwtFromRequest(HttpServletRequest request);
     Date extractExpiration(String jwt);
+    boolean isExpired(String jwt);
     void invalidateToken(String jwt);
 }

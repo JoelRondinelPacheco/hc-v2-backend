@@ -23,7 +23,9 @@ public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String name;
+    @Column(nullable = false)
     private String description;
 
     @CreationTimestamp
@@ -34,6 +36,7 @@ public class ServiceEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
