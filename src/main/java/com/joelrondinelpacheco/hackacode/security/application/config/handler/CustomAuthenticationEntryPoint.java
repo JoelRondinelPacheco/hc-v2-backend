@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.security.handler;
+package com.joelrondinelpacheco.hackacode.security.application.config.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

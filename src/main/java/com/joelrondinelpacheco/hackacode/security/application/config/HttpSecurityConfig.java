@@ -1,6 +1,6 @@
-package com.joelrondinelpacheco.hackacode.security.application.security;
+package com.joelrondinelpacheco.hackacode.security.application.config;
 
-import com.joelrondinelpacheco.hackacode.security.application.security.filter.JwtAuthenticationFilter;
+import com.joelrondinelpacheco.hackacode.security.application.config.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

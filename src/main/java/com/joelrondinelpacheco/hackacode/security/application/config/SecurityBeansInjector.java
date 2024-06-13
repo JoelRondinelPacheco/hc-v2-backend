@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.security;
+package com.joelrondinelpacheco.hackacode.security.application.config;
 
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

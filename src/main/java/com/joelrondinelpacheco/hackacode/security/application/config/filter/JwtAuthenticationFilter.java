@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.security.filter;
+package com.joelrondinelpacheco.hackacode.security.application.config.filter;
 
 import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserDetails;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;

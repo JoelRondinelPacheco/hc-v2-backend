@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.security.authorization;
+package com.joelrondinelpacheco.hackacode.security.application.config.authorization;
 
 import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserDetails;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;

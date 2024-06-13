@@ -1,6 +1,6 @@
-package com.joelrondinelpacheco.hackacode.security.application.security.handler;
+package com.joelrondinelpacheco.hackacode.security.application.config.handler;
 
-import com.joelrondinelpacheco.hackacode.security.application.security.dto.ApiError;
+import com.joelrondinelpacheco.hackacode.security.application.config.dto.ApiError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.ServletException;

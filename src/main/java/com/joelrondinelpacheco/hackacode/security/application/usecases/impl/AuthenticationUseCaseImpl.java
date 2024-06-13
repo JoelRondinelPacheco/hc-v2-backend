@@ -23,13 +23,17 @@ import java.util.Map;
 @UseCase
 public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
+    private final CustomUsersDetailsService userDetailsService;
 
     @Autowired
-    private JwtTokenService jwtTokenService;
-    @Autowired
-    private CustomUsersDetailsService userDetailsService;
+    public AuthenticationUseCaseImpl(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CustomUsersDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenService = jwtTokenService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public void logout(HttpServletRequest request) {

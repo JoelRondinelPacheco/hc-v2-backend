@@ -36,7 +36,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
 
     @Override
-    public String generateAuthToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public String generateAuthToken(String username, Map<String, Object> extraClaims) {
         Date issuedAt = new Date(System.currentTimeMillis());
         Date expiration = this.generateExpirationDate(issuedAt, AUTH_EXPIRATION_IN_MINUTES);
 
@@ -53,7 +53,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public String generateVerifyEmailToken(String username) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public String generateVerifyEmailToken(String username) {
         Date issuedAt = new Date(System.currentTimeMillis());
         Date expiration = this.generateExpirationDate(issuedAt, VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES);
 
@@ -75,42 +75,50 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public Claims extractAllClaims(String jwt) {
-        try {
             return Jwts.parser().verifyWith(loadPublicKey(publicKeyResource)).build().parseSignedClaims(jwt).getPayload();
+    }
+
+    @Override
+    public PrivateKey loadPrivateKey(Resource resource) {
+        InputStream inputStream = null;
+        byte[] keyBytes = new byte[0];
+        KeyFactory keyFactory = null;
+        try {
+            inputStream = resource.getInputStream();
+            keyBytes = inputStream.readAllBytes();
+            keyFactory = KeyFactory.getInstance("RSA");
+            String privateKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
+                    .replace("-----BEGIN PRIVATE KEY-----", "")
+                    .replace("-----END PRIVATE KEY-----", "")
+                    .replaceAll("\\s", "");
+            byte[] decodeKey = Base64.getDecoder().decode(privateKeyPEM);
+            return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(decodeKey));
         } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            throw new SecurityException(e);
         }
+
     }
 
     @Override
-    public PrivateKey loadPrivateKey(Resource resource) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        InputStream inputStream = resource.getInputStream();
-        byte[] keyBytes = inputStream.readAllBytes();
+    public PublicKey loadPublicKey(Resource resource) {
+        InputStream inputStream = null;
+        byte[] keyBytes = new byte[0];
+        KeyFactory keyFactory = null;
+        try {
+            inputStream = resource.getInputStream();
+            keyBytes = inputStream.readAllBytes();
 
-        //keyBytes = Files.readAllBytes(Paths.get(resource.getURI()));
+            String publicKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
+                    .replace("-----BEGIN PUBLIC KEY-----", "")
+                    .replace("-----END PUBLIC KEY-----", "")
+                    .replaceAll("\\s", "");
 
-        String privateKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s", "");
-        byte[] decodeKey = Base64.getDecoder().decode(privateKeyPEM);
-
-        KeyFactory keyFactory =  KeyFactory.getInstance("RSA");
-        return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(decodeKey));
-    }
-
-    @Override
-    public PublicKey loadPublicKey(Resource resource) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        InputStream inputStream = resource.getInputStream();
-        byte[] keyBytes = inputStream.readAllBytes();
-        String publicKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
-                .replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\\s", "");
-
-        byte[] decodeKey = Base64.getDecoder().decode(publicKeyPEM);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePublic(new X509EncodedKeySpec(decodeKey));
+            byte[] decodeKey = Base64.getDecoder().decode(publicKeyPEM);
+            keyFactory = KeyFactory.getInstance("RSA");
+            return keyFactory.generatePublic(new X509EncodedKeySpec(decodeKey));
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new SecurityException(e);
+        }
     }
 
     @Override

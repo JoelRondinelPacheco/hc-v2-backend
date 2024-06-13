@@ -23,7 +23,7 @@ public class SaleController {
     private SaleSelector saleSelector;
 
     @PostMapping
-    public ResponseEntity<?> newSale(@RequestBody NewSaleDTO body) {
+    public ResponseEntity<SaleData> newSale(@RequestBody NewSaleDTO body) {
         return ResponseEntity.ok(this.salePersistence.createSale(body));
     }
 
