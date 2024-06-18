@@ -21,5 +21,4 @@ public class ClientEntity {
     @OneToOne
     @JoinColumn(name = "person_id")
     private PersonEntity person;
-
 }

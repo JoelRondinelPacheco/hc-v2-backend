@@ -1,5 +1,6 @@
 package com.joelrondinelpacheco.hackacode.users.application.usecases.impl;
 
+import com.joelrondinelpacheco.hackacode.common.UseCase;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.UserCredentialsSelector;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.UserCredentialsService;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
+@UseCase
 public class VerifyAccountUseCaseImpl implements VerifyAccountUseCase {
 
     private final JwtTokenService jwtTokenService;

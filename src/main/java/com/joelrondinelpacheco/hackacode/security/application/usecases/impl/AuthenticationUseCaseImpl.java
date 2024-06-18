@@ -55,6 +55,8 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
         return AuthenticationResponse.builder()
                 .authToken(jwt)
                 .refreshToken("")
+                .email(userDetails.getUsername())
+                .role(userDetails.getRole().getName().toUpperCase())
                 .build();
     }
 

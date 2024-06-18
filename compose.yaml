@@ -1,0 +1,32 @@
+name: hackacode_v2
+
+services:
+  hcv2_backend:
+    container_name: hcv2_backend
+    image: hcv2_backend:1.0.0
+    build: .
+    environment:
+      HC_V2_API_VERSION: v1
+      HCV2_APP_PORT: 8081
+      HCV2_DB_PASSWORD: password_secret
+      HCV2_DB_URL: jdbc:mysql://hcv2_db:3306/hcv2?createDatabaseIfNotExist=true&serverTimezone=UTC
+      HCV2_DB_USERNAME: joel
+      HCV2_JWT_EXPIRATION_IN_MINUTES: 60
+      HCV2_MAIL_PASSWORD: 123
+      HCV2_MAIL_PORT: 587
+      HCV2_MAIL_USERNAME: email
+      HCV2_URL_FRONT: http://localhost:5173
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.4.0
+    container_name: hcv2_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password_secret
+      MYSQL_USER: joel
+      MYSQL_PASSWORD: password_secret
+      MYSQL_DATABASE: hcv2
+    ports:
+      - 3307:3306

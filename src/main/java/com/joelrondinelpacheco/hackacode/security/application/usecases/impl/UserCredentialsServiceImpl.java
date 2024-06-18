@@ -32,16 +32,8 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
     @Override
     public UserCredentials newUserCredentials(Person person, Role role, String password) {
         //TODO RANDOM PASSWORD EN EMPLOYEE UTILS
-        String emailToken = null;
-        try {
-            emailToken = this.jwtTokenService.generateVerifyEmailToken(person.getEmail());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        String emailToken = this.jwtTokenService.generateVerifyEmailToken(person.getEmail());
+
         UserCredentials userCredentials = UserCredentials.builder()
                 .person(person)
                 .password(this.encryptPassword(password))
