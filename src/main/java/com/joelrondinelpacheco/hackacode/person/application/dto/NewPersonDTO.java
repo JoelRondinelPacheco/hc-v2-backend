@@ -1,5 +1,7 @@
 package com.joelrondinelpacheco.hackacode.person.application.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +14,9 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class NewPersonDTO extends PersonBaseDTO {
+
+    @NotNull
+    @NotEmpty
     private Long roleId;
     private String password;
 }

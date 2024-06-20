@@ -12,6 +12,7 @@ services:
       HCV2_DB_URL: jdbc:mysql://hcv2_db:3306/hcv2?createDatabaseIfNotExist=true&serverTimezone=UTC
       HCV2_DB_USERNAME: joel
       HCV2_JWT_EXPIRATION_IN_MINUTES: 60
+      HCV2_JWT_REFRESH_EXPIRATION_IN_MINUTES: 600
       HCV2_MAIL_PASSWORD: 123
       HCV2_MAIL_PORT: 587
       HCV2_MAIL_USERNAME: email

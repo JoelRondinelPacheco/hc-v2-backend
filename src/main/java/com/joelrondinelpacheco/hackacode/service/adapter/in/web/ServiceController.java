@@ -4,7 +4,6 @@ import com.joelrondinelpacheco.hackacode.service.application.dto.EditServiceDTO;
 import com.joelrondinelpacheco.hackacode.service.application.dto.NewServiceDTO;
 import com.joelrondinelpacheco.hackacode.service.application.port.in.ServicePersistence;
 import com.joelrondinelpacheco.hackacode.service.domain.ServiceData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,11 @@ public class ServiceController {
     /*
     TODO Agregar atributos de multiplicador de servicio (ejm: aquiler es por dia, puede alquilar varios dias)
      */
+    private final ServicePersistence servicePersistence;
 
-    @Autowired
-    private ServicePersistence servicePersistence;
+    public ServiceController(ServicePersistence servicePersistence) {
+        this.servicePersistence = servicePersistence;
+    }
 
 
     @PostMapping

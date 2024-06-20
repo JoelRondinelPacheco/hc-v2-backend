@@ -9,7 +9,6 @@ import com.joelrondinelpacheco.hackacode.security.domain.Module;
 import com.joelrondinelpacheco.hackacode.security.domain.Operation;
 import com.joelrondinelpacheco.hackacode.security.domain.Role;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,25 +18,38 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/security")
 public class SecurityController {
 
-    @Autowired
-    private ModulePersistence modulePersistence;
-    @Autowired
-    private ModuleSelector moduleSelector;
 
-    @Autowired
-    private OperationPersistence operationPersistence;
-    @Autowired
-    private OperationSelector operationSelector;
+    private final ModulePersistence modulePersistence;
+    private final ModuleSelector moduleSelector;
 
-    @Autowired
-    private GrantedPermissionPersistence grantedPermissionPersistence;
-    @Autowired
-    private GrantedPermissionSelector grantedPermissionSelector;
 
-    @Autowired
-    private RolePersistence rolePersistence;
-    @Autowired
-    private RoleSelector roleSelector;
+    private final OperationPersistence operationPersistence;
+    private final OperationSelector operationSelector;
+
+    private final GrantedPermissionPersistence grantedPermissionPersistence;
+    private final GrantedPermissionSelector grantedPermissionSelector;
+
+    private final RolePersistence rolePersistence;
+    private final RoleSelector roleSelector;
+
+    public SecurityController(
+            ModulePersistence modulePersistence,
+            ModuleSelector moduleSelector,
+            OperationPersistence operationPersistence,
+            OperationSelector operationSelector,
+            GrantedPermissionPersistence grantedPermissionPersistence,
+            GrantedPermissionSelector grantedPermissionSelector,
+            RolePersistence rolePersistence,
+            RoleSelector roleSelector) {
+        this.modulePersistence = modulePersistence;
+        this.moduleSelector = moduleSelector;
+        this.operationPersistence = operationPersistence;
+        this.operationSelector = operationSelector;
+        this.grantedPermissionPersistence = grantedPermissionPersistence;
+        this.grantedPermissionSelector = grantedPermissionSelector;
+        this.rolePersistence = rolePersistence;
+        this.roleSelector = roleSelector;
+    }
 
     @PostMapping("/module")
     public ResponseEntity<Module> addModule(@RequestBody ModuleDTO body) {

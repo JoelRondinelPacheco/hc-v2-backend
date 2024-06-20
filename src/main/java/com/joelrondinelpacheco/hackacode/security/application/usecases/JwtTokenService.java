@@ -15,6 +15,7 @@ import java.util.Map;
 public interface JwtTokenService {
     String generateAuthToken(String username, Map<String, Object> extraClaims);
     String generateVerifyEmailToken(String username);
+    String generateRefreshToken(String username);
     String extractUsername(String jwt);
     Claims extractAllClaims(String jwt);
     PrivateKey loadPrivateKey(Resource resource);

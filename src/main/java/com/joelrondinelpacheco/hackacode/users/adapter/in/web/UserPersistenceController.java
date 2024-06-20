@@ -16,7 +16,6 @@ public class UserPersistenceController {
 
     private final RegisterUserUseCase registerUserUseCase;
 
-    @Autowired
     public UserPersistenceController(RegisterUserUseCase registerUserUseCase) {
         this.registerUserUseCase = registerUserUseCase;
     }

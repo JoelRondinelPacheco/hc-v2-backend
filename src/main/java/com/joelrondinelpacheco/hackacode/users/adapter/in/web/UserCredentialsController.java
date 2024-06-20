@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserCredentialsController {
     private final VerifyAccountUseCase verifyAccountUseCase;
 
-    @Autowired
     public UserCredentialsController(VerifyAccountUseCase verifyAccountUseCase) {
         this.verifyAccountUseCase = verifyAccountUseCase;
     }

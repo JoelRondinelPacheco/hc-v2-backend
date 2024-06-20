@@ -1,5 +1,7 @@
 package com.joelrondinelpacheco.hackacode.person.application.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,8 @@ import java.util.Date;
 public class PersonBaseDTO {
     private String name;
     private String lastname;
+    @NotEmpty
+    @NotNull
     private String email;
     private String address;
     private Integer dni;

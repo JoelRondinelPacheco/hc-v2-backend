@@ -31,6 +31,8 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Value("${security.jwt.expiration-in-minutes.auth}")
     private Long AUTH_EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.refresh}")
+    private Long HCV2_JWT_REFRESH_EXPIRATION_IN_MINUTES;
     @Value("${security.jwt.expiration-in-minutes.validate-account}")
     private Long VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES;
 
@@ -66,6 +68,12 @@ public class JwtTokenServiceImpl implements JwtTokenService {
                 .expiration(expiration)
                 .signWith(loadPrivateKey(privateKeyResource))
                 .compact();
+    }
+
+    @Override
+    public String generateRefreshToken(String username) {
+
+        return null;
     }
 
     @Override
