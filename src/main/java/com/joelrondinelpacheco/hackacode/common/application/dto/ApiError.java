@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.apache.catalina.LifecycleState;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class ApiError {
+public class ApiError implements Serializable {
         private HttpStatus status;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         private LocalDateTime timestamp;

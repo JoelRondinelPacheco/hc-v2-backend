@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class CustomAccessDenierHandler implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         ApiError apiError = ApiError.builder()
                 .backendMessage(accessDeniedException.getLocalizedMessage())
                 //.url(request.getRequestURL().toString())
@@ -27,6 +27,7 @@ public class CustomAccessDenierHandler implements AccessDeniedHandler {
                 .message("Acceso denegado. No tienes los permisos necesarios para acceder a esta función. " +
                         "Por favor, contacta al administrador si crees que esto es un error.")
                 .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED)
                 .build();
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
