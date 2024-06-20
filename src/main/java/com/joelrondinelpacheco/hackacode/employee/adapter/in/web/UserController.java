@@ -20,9 +20,9 @@ public class UserController {
 
     private final EmployeePersistence employeePersistence;
     private final EmployeeSelector employeeSelector;
-    private final ObjectsValidator validator;
+    private final ObjectsValidator<NewEmployeeDTO> validator;
 
-    public UserController(EmployeePersistence employeePersistence, EmployeeSelector employeeSelector, ObjectsValidator validator) {
+    public UserController(EmployeePersistence employeePersistence, EmployeeSelector employeeSelector, ObjectsValidator<NewEmployeeDTO> validator) {
         this.employeePersistence = employeePersistence;
         this.employeeSelector = employeeSelector;
         this.validator = validator;
