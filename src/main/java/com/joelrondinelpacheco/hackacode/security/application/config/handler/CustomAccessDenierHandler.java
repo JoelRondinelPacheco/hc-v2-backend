@@ -1,8 +1,8 @@
 package com.joelrondinelpacheco.hackacode.security.application.config.handler;
 
-import com.joelrondinelpacheco.hackacode.security.application.config.dto.ApiError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,8 +21,8 @@ public class CustomAccessDenierHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         ApiError apiError = ApiError.builder()
-                .backendMessage(accessDeniedException.getLocalizedMessage())
-                .url(request.getRequestURL().toString())
+                //.backendMessage(accessDeniedException.getLocalizedMessage())
+                //.url(request.getRequestURL().toString())
                 .method(request.getMethod())
                 .message("Acceso denegado. No tienes los permisos necesarios para acceder a esta función. " +
                         "Por favor, contacta al administrador si crees que esto es un error.")
