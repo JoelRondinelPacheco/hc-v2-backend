@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.apache.catalina.LifecycleState;
 import org.springframework.http.HttpStatus;
 
@@ -14,13 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 public class ApiError {
         private HttpStatus status;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         private LocalDateTime timestamp;
         private String message;
-        private List<ApiSubError> subErrors;
+        private String backendMessage;
         /*
         url??
         backendmessage??

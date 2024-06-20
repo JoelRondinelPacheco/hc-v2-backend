@@ -21,9 +21,9 @@ public class CustomAccessDenierHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         ApiError apiError = ApiError.builder()
-                //.backendMessage(accessDeniedException.getLocalizedMessage())
+                .backendMessage(accessDeniedException.getLocalizedMessage())
                 //.url(request.getRequestURL().toString())
-                .method(request.getMethod())
+                //.method(request.getMethod())
                 .message("Acceso denegado. No tienes los permisos necesarios para acceder a esta función. " +
                         "Por favor, contacta al administrador si crees que esto es un error.")
                 .timestamp(LocalDateTime.now())

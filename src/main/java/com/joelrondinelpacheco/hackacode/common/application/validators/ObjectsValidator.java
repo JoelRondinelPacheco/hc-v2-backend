@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.common.application.validators;
 
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
+import com.joelrondinelpacheco.hackacode.common.application.dto.ApiErrorValidation;
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiSubError;
 import com.joelrondinelpacheco.hackacode.common.application.exceptions.ObjectNotValidException;
 import io.jsonwebtoken.lang.Collections;
@@ -34,7 +35,7 @@ public class ObjectsValidator<T> {
                             .rejectedValue(v.getInvalidValue())
                             .build()
                     ).toList();
-            ApiError apiError = ApiError.builder()
+            ApiError apiError = ApiErrorValidation.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("Validation errors")
                     .timestamp(LocalDateTime.now())
