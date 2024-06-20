@@ -5,24 +5,25 @@ import com.joelrondinelpacheco.hackacode.service.application.port.in.CategoryPer
 import com.joelrondinelpacheco.hackacode.service.application.port.in.CategorySelector;
 import com.joelrondinelpacheco.hackacode.service.application.port.in.ServiceSelector;
 import com.joelrondinelpacheco.hackacode.service.domain.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
-
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
-    private ServiceSelector serviceSelector;
-    @Autowired
-    private CategoryPersistence categoryPersistence;
-    @Autowired
-    private CategorySelector categorySelector;
+
+    private final ServiceSelector serviceSelector;
+    private final CategoryPersistence categoryPersistence;
+    private final CategorySelector categorySelector;
+
+    public CategoryController(ServiceSelector serviceSelector, CategoryPersistence categoryPersistence, CategorySelector categorySelector) {
+        this.serviceSelector = serviceSelector;
+        this.categoryPersistence = categoryPersistence;
+        this.categorySelector = categorySelector;
+    }
 
     @PostMapping
     public ResponseEntity<Category> addCategory(@RequestBody NewCategoryDTO body) {

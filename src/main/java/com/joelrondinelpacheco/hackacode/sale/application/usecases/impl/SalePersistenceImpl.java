@@ -56,7 +56,7 @@ public class SalePersistenceImpl implements SalePersistence {
     @Override
     public SaleData createSale(NewSaleDTO saleInfo) {
 
-
+        // TODO Eliminar y solo manejar expeciones?
         this.paymentMethodUtils.assertExistsById(saleInfo.getPaymentMethodId());
         this.clientUtils.assertExistsById(saleInfo.getClientId());
         this.employeeUtils.assertExistsById(saleInfo.getEmployeeId());

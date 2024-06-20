@@ -25,6 +25,4 @@ public class EmployeeEntity {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
-    private String password;
-
 }

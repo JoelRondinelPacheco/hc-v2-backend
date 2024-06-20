@@ -3,11 +3,13 @@ package com.joelrondinelpacheco.hackacode.sale.domain;
 import com.joelrondinelpacheco.hackacode.paymentmethod.domain.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -27,5 +29,4 @@ public class SaleReference extends Sale {
     public static SaleReference withSaleItemReferencesAndPaymentMethod(List<SaleItemReference> saleItemReferences, PaymentMethod paymentMethod) {
         return new SaleReference(saleItemReferences, paymentMethod);
     }
-
 }

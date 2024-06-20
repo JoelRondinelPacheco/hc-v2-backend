@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailServiceAdapter implements MailServicePort {
 
-    @Autowired
     private final MailSender mailSender;
 
     @Autowired

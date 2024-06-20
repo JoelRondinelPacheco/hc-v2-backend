@@ -29,14 +29,18 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("classpath:jwtKeys/private_key.pem") private Resource privateKeyResource;
     @Value("classpath:jwtKeys/public_key.pem") private Resource publicKeyResource;
 
-    @Value("${security.jwt.expiration-in-minutes}")
-    private Long EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.auth}")
+    private Long AUTH_EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.refresh}")
+    private Long HCV2_JWT_REFRESH_EXPIRATION_IN_MINUTES;
+    @Value("${security.jwt.expiration-in-minutes.validate-account}")
+    private Long VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES;
 
 
     @Override
-    public String generateToken(String username, Map<String, Object> extraClaims) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public String generateAuthToken(String username, Map<String, Object> extraClaims) {
         Date issuedAt = new Date(System.currentTimeMillis());
-        Date expiration = new Date((EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
+        Date expiration = this.generateExpirationDate(issuedAt, AUTH_EXPIRATION_IN_MINUTES);
 
         return Jwts.builder()
                 .header()
@@ -51,44 +55,78 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public String extractUsername(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public String generateVerifyEmailToken(String username) {
+        Date issuedAt = new Date(System.currentTimeMillis());
+        Date expiration = this.generateExpirationDate(issuedAt, VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES);
+
+        return Jwts.builder()
+                .header()
+                    .type("VALIDATE_ACCOUNT")
+                    .and()
+                .subject(username)
+                .issuedAt(issuedAt)
+                .expiration(expiration)
+                .signWith(loadPrivateKey(privateKeyResource))
+                .compact();
+    }
+
+    @Override
+    public String generateRefreshToken(String username) {
+
+        return null;
+    }
+
+    @Override
+    public String extractUsername(String jwt) {
         return extractAllClaims(jwt).getSubject();
     }
 
     @Override
-    public Claims extractAllClaims(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        return Jwts.parser().verifyWith(loadPublicKey(publicKeyResource)).build().parseSignedClaims(jwt).getPayload();
+    public Claims extractAllClaims(String jwt) {
+            return Jwts.parser().verifyWith(loadPublicKey(publicKeyResource)).build().parseSignedClaims(jwt).getPayload();
     }
 
     @Override
-    public PrivateKey loadPrivateKey(Resource resource) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        InputStream inputStream = resource.getInputStream();
-        byte[] keyBytes = inputStream.readAllBytes();
+    public PrivateKey loadPrivateKey(Resource resource) {
+        InputStream inputStream = null;
+        byte[] keyBytes = new byte[0];
+        KeyFactory keyFactory = null;
+        try {
+            inputStream = resource.getInputStream();
+            keyBytes = inputStream.readAllBytes();
+            keyFactory = KeyFactory.getInstance("RSA");
+            String privateKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
+                    .replace("-----BEGIN PRIVATE KEY-----", "")
+                    .replace("-----END PRIVATE KEY-----", "")
+                    .replaceAll("\\s", "");
+            byte[] decodeKey = Base64.getDecoder().decode(privateKeyPEM);
+            return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(decodeKey));
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new SecurityException(e);
+        }
 
-        //keyBytes = Files.readAllBytes(Paths.get(resource.getURI()));
-
-        String privateKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s", "");
-        byte[] decodeKey = Base64.getDecoder().decode(privateKeyPEM);
-
-        KeyFactory keyFactory =  KeyFactory.getInstance("RSA");
-        return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(decodeKey));
     }
 
     @Override
-    public PublicKey loadPublicKey(Resource resource) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        InputStream inputStream = resource.getInputStream();
-        byte[] keyBytes = inputStream.readAllBytes();
-        String publicKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
-                .replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\\s", "");
+    public PublicKey loadPublicKey(Resource resource) {
+        InputStream inputStream = null;
+        byte[] keyBytes = new byte[0];
+        KeyFactory keyFactory = null;
+        try {
+            inputStream = resource.getInputStream();
+            keyBytes = inputStream.readAllBytes();
 
-        byte[] decodeKey = Base64.getDecoder().decode(publicKeyPEM);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePublic(new X509EncodedKeySpec(decodeKey));
+            String publicKeyPEM = new String(keyBytes, StandardCharsets.UTF_8)
+                    .replace("-----BEGIN PUBLIC KEY-----", "")
+                    .replace("-----END PUBLIC KEY-----", "")
+                    .replaceAll("\\s", "");
+
+            byte[] decodeKey = Base64.getDecoder().decode(publicKeyPEM);
+            keyFactory = KeyFactory.getInstance("RSA");
+            return keyFactory.generatePublic(new X509EncodedKeySpec(decodeKey));
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new SecurityException(e);
+        }
     }
 
     @Override
@@ -101,8 +139,16 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public Date extractExpiration(String jwt) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-            return extractAllClaims(jwt).getExpiration();
+    public Date extractExpiration(String jwt){
+            return this.extractAllClaims(jwt).getExpiration();
+    }
+
+    @Override
+    public boolean isExpired(String jwt) {
+        Date current = new Date();
+        Date expirationDate = this.extractExpiration(jwt);
+
+        return expirationDate.before(current);
     }
 
     @Override
@@ -114,7 +160,10 @@ public class JwtTokenServiceImpl implements JwtTokenService {
         if (token == 0) {
             //TODO THROW EXP
         }*/
+    }
 
+    private Date generateExpirationDate(Date issuedAt, Long expirationInMinutes) {
+        return new Date((expirationInMinutes * 60 * 1000) + issuedAt.getTime());
     }
 
 }

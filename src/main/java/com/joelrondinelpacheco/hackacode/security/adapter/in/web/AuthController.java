@@ -23,7 +23,7 @@ public class AuthController {
     private final AuthenticationUseCase authService;
     private final UserStarterUseCase registerClientUserCase;
     private final RegisterEmployeeUseCase registerEmployeeUseCase;
-    @Autowired
+
     public AuthController(AuthenticationUseCase authService, UserStarterUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase) {
         this.authService = authService;
         this.registerClientUserCase = registerClientUserCase;
@@ -39,7 +39,7 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest body) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-
+        System.out.println(body);
         return ResponseEntity.ok(this.authService.login(body));
     }
 

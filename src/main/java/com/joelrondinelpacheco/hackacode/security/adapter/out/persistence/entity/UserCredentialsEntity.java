@@ -2,12 +2,16 @@ package com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.entit
 
 import com.joelrondinelpacheco.hackacode.person.adapter.out.persistence.PersonEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "user_credential")
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 public class UserCredentialsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

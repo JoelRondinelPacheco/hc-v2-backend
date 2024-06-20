@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.security.dto;
+package com.joelrondinelpacheco.hackacode.security.application.config.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

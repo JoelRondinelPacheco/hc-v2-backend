@@ -18,6 +18,6 @@ public class UserCredentials {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    private String token;
+    private String emailToken;
     private Role role;
 }

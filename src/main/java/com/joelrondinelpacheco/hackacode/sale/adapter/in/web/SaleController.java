@@ -4,7 +4,6 @@ import com.joelrondinelpacheco.hackacode.sale.application.dto.NewSaleDTO;
 import com.joelrondinelpacheco.hackacode.sale.application.port.in.SalePersistence;
 import com.joelrondinelpacheco.hackacode.sale.application.port.in.SaleSelector;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/sale")
 public class SaleController {
 
-    @Autowired
-    private SalePersistence salePersistence;
-    @Autowired
-    private SaleSelector saleSelector;
+
+    private final SalePersistence salePersistence;
+    private final  SaleSelector saleSelector;
+
+    public SaleController(SalePersistence salePersistence, SaleSelector saleSelector) {
+        this.salePersistence = salePersistence;
+        this.saleSelector = saleSelector;
+    }
 
     @PostMapping
-    public ResponseEntity<?> newSale(@RequestBody NewSaleDTO body) {
+    public ResponseEntity<SaleData> newSale(@RequestBody NewSaleDTO body) {
         return ResponseEntity.ok(this.salePersistence.createSale(body));
     }
 

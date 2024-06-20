@@ -64,6 +64,7 @@ INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 4);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 6);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 7);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 9);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 14);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 15);
 
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 1);
@@ -76,6 +77,8 @@ INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 7);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 8);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 9);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 10);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 13);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 14);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 15);
 
 -- CREACIÓN DE PERMISOS PARA RETO SECCION 11
