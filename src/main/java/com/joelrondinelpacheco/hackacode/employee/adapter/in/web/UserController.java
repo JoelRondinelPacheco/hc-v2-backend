@@ -1,5 +1,6 @@
 package com.joelrondinelpacheco.hackacode.employee.adapter.in.web;
 
+import com.joelrondinelpacheco.hackacode.common.adapter.validators.ObjectsValidator;
 import com.joelrondinelpacheco.hackacode.employee.application.dto.NewEmployeeDTO;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.EmployeePersistence;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.EmployeeSelector;
@@ -10,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employee")
@@ -21,18 +20,24 @@ public class UserController {
 
     private final EmployeePersistence employeePersistence;
     private final EmployeeSelector employeeSelector;
+    private final ObjectsValidator validator;
 
-    public UserController(EmployeePersistence employeePersistence, EmployeeSelector employeeSelector) {
+    public UserController(EmployeePersistence employeePersistence, EmployeeSelector employeeSelector, ObjectsValidator validator) {
         this.employeePersistence = employeePersistence;
         this.employeeSelector = employeeSelector;
+        this.validator = validator;
     }
 
     @PostMapping
     public ResponseEntity<?> newEmployee(@RequestBody @Valid NewEmployeeDTO employeeDTO, BindingResult bindingResult) {
         //return ResponseEntity.ok(this.employeePersistence.createEmployee(employeeDTO));
+        var violations = validator.validate(employeeDTO);
+        if (!violations.isEmpty()) {
+            return ResponseEntity.ok(violations.stream().collect(Collectors.joining(" | ")));
+        }
         System.out.println(bindingResult);
         //TODO IMPLEMENT
-        return null;
+        return ResponseEntity.ok("Todo bien");
     }
 
     @GetMapping
