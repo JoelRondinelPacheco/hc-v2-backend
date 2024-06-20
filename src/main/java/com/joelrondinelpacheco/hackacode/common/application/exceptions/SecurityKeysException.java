@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.security.application.exceptions;
+package com.joelrondinelpacheco.hackacode.common.application.exceptions;
 
 public class SecurityKeysException extends RuntimeException {
 

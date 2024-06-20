@@ -1,5 +1,6 @@
-package com.joelrondinelpacheco.hackacode.common.adapter.validators;
+package com.joelrondinelpacheco.hackacode.common.application.validators;
 
+import com.joelrondinelpacheco.hackacode.common.application.exceptions.ObjectNotValidException;
 import io.jsonwebtoken.lang.Collections;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -16,16 +17,15 @@ public class ObjectsValidator<T> {
     private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = factory.getValidator();
 
-    public Set<String> validate(T objectToValidate) {
+    public void validate(T objectToValidate) {
         Set<ConstraintViolation<T>> violations = validator.validate(objectToValidate);
         if (!violations.isEmpty()) {
-            return violations
+            var errorMessages = violations
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toSet());
+            throw new ObjectNotValidException(errorMessages);
         }
-
-        return Collections.emptySet();
     }
 
 

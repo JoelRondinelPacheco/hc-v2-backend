@@ -1,27 +1,33 @@
 package com.joelrondinelpacheco.hackacode.paymentmethod.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
+import com.joelrondinelpacheco.hackacode.common.application.validators.ObjectsValidator;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.dto.NewPaymentMethodDTO;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.port.in.PaymentMethodPersistence;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.port.out.PaymentMethodPersistencePort;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.port.out.PaymentMethodSelectorPort;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.usecases.PaymentMethodUtils;
 import com.joelrondinelpacheco.hackacode.paymentmethod.domain.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @UseCase
 public class PaymentMethodPersistenceImpl implements PaymentMethodPersistence {
 
-    @Autowired
-    private PaymentMethodPersistencePort paymentMethodPersistence;
-    @Autowired
-    private PaymentMethodSelectorPort paymentMethodSelector;
-    @Autowired
-    private PaymentMethodUtils paymentMethodUtils;
+
+    private final PaymentMethodPersistencePort paymentMethodPersistence;
+    private final PaymentMethodSelectorPort paymentMethodSelector;
+    private final PaymentMethodUtils paymentMethodUtils;
+    private final ObjectsValidator<NewPaymentMethodDTO> validator;
+
+    public PaymentMethodPersistenceImpl(PaymentMethodPersistencePort paymentMethodPersistence, PaymentMethodSelectorPort paymentMethodSelector, PaymentMethodUtils paymentMethodUtils, ObjectsValidator<NewPaymentMethodDTO> validator) {
+        this.paymentMethodPersistence = paymentMethodPersistence;
+        this.paymentMethodSelector = paymentMethodSelector;
+        this.paymentMethodUtils = paymentMethodUtils;
+        this.validator = validator;
+    }
 
     @Override
     public PaymentMethod newPaymentMethod(NewPaymentMethodDTO paymentMethodDTO) {
-
+        validator.validate(paymentMethodDTO);
         this.paymentMethodUtils.assertDoesNotExistsByName(paymentMethodDTO.getType());
 
         return this.paymentMethodPersistence.newPaymentMethod(
