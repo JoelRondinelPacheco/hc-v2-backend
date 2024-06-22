@@ -27,15 +27,13 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
-    private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
 
     private final JwtTokenService jwtTokenService;
     private final CustomUsersDetailsService customUserService;
 
-    public JwtAuthenticationFilter(AccessDeniedHandler accessDeniedHandler, AuthenticationEntryPoint authenticationEntryPoint, JwtTokenService jwtTokenService, CustomUsersDetailsService customUserService) {
-        this.accessDeniedHandler = accessDeniedHandler;
+    public JwtAuthenticationFilter(AuthenticationEntryPoint authenticationEntryPoint, JwtTokenService jwtTokenService, CustomUsersDetailsService customUserService) {
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.jwtTokenService = jwtTokenService;
         this.customUserService = customUserService;

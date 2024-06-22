@@ -26,12 +26,20 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        System.out.println(authException);
+
+        String backendMessage = "";
+        if (authException.getCause() != null) {
+            backendMessage = authException.getCause().getMessage();
+        } else {
+            backendMessage = "No throwable";
+        }
         //accessDeniedHandler.handle(request, response, new AccessDeniedException(authException.getMessage()));
         ApiError err = ApiError.builder()
                 .status(HttpStatus.valueOf(response.getStatus()))
                 .timestamp(LocalDateTime.now())
                 .message(authException.getMessage())
-                .backendMessage(authException.getCause().getMessage())
+                .backendMessage(backendMessage)
                 .build();
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
