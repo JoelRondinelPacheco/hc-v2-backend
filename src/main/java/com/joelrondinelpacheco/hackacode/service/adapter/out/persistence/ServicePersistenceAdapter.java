@@ -9,17 +9,21 @@ import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.reposit
 import com.joelrondinelpacheco.hackacode.service.application.dto.NewServiceDTO;
 import com.joelrondinelpacheco.hackacode.service.application.port.out.ServicePersistencePort;
 import com.joelrondinelpacheco.hackacode.service.domain.ServiceData;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 @PersistenceAdapter
 public class ServicePersistenceAdapter implements ServicePersistencePort {
 
-    @Autowired
-    private ServiceMySQLRepository serviceRepository;
-    @Autowired
-    private CategoryMySQLRepository categoryRepository;
-    @Autowired
-    private ServiceMapper mapper;
+    private final ServiceMySQLRepository serviceRepository;
+    private final CategoryMySQLRepository categoryRepository;
+    private final ServiceMapper mapper;
+
+    public ServicePersistenceAdapter(ServiceMySQLRepository serviceRepository, CategoryMySQLRepository categoryRepository, ServiceMapper mapper) {
+        this.serviceRepository = serviceRepository;
+        this.categoryRepository = categoryRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public ServiceData newService(NewServiceDTO serviceDTO) {
@@ -34,6 +38,12 @@ public class ServicePersistenceAdapter implements ServicePersistencePort {
 
     @Override
     public ServiceData update(ServiceData serviceBase) {
-        return null;
+        ServiceEntity serviceEntity = this.serviceRepository.findById(serviceBase.getId()).orElseThrow();
+            serviceEntity.setName(serviceBase.getName());
+            serviceEntity.setDescription(serviceBase.getDescription());
+            serviceEntity.setPrice(serviceBase.getPrice());
+            serviceEntity = this.serviceRepository.save(serviceEntity);
+            return this.mapper.entityToDomain(serviceEntity);
+
     }
 }

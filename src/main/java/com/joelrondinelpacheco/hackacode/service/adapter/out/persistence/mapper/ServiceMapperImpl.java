@@ -18,16 +18,13 @@ public class ServiceMapperImpl implements ServiceMapper {
     @Override
     public ServiceData entityToDomain(ServiceEntity entity) {
         ServiceData service = ServiceData.builder()
+                .id(entity.getId())
+                .price(entity.getPrice())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .price(entity.getPrice())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getCreatedAt())
                 .build();
-        service.setId(entity.getId());
-
-        //TODO REFACTOR
-
         service.setCategory(this.categoryMapper.entityToDomain(entity.getCategory()));
         return service;
     }
@@ -35,9 +32,10 @@ public class ServiceMapperImpl implements ServiceMapper {
     @Override
     public ServiceEntity domainToEntity(ServiceData domain) {
         return ServiceEntity.builder()
+                .id(domain.getId())
+                .price(domain.getPrice())
                 .name(domain.getName())
                 .description(domain.getDescription())
-                .price(domain.getPrice())
                 .build();
     }
 

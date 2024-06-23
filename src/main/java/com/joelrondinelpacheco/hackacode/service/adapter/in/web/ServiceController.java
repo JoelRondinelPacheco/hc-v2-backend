@@ -34,7 +34,8 @@ public class ServiceController {
     }
 
     @PutMapping("/{serviceId}")
-    public ResponseEntity<?> editService(@PathVariable EditServiceDTO serviceDTO) {
+    public ResponseEntity<ServiceData> editService(@PathVariable Long serviceId, @RequestBody EditServiceDTO serviceDTO) {
+        System.out.println(serviceDTO);
         return ResponseEntity.ok(this.servicePersistence.update(serviceDTO));
     }
 
