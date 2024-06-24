@@ -18,4 +18,5 @@ public class NewPersonDTO extends PersonBaseDTO {
     @NotNull
     @NotEmpty
     private Long roleId;
+    private String password;
 }

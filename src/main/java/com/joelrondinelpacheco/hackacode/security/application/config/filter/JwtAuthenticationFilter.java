@@ -3,14 +3,19 @@ package com.joelrondinelpacheco.hackacode.security.application.config.filter;
 import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserDetails;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,12 +26,19 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtTokenService jwtTokenService;
-    @Autowired
-    private CustomUsersDetailsService customUserService;
 
-    @SneakyThrows
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+
+
+    private final JwtTokenService jwtTokenService;
+    private final CustomUsersDetailsService customUserService;
+
+    public JwtAuthenticationFilter(AuthenticationEntryPoint authenticationEntryPoint, JwtTokenService jwtTokenService, CustomUsersDetailsService customUserService) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.jwtTokenService = jwtTokenService;
+        this.customUserService = customUserService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -36,17 +48,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+    //TODO VERIFICAR QUE SEA AUTH TOKEN
+        try {
+            String username = this.jwtTokenService.extractUsername(jwt);
+            CustomUserDetails user = this.customUserService.getUserDetails(username);
 
-        String username = this.jwtTokenService.extractUsername(jwt);
-        CustomUserDetails user = this.customUserService.getUserDetails(username);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    username, null, user.getAuthorities()
+            );
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                username, null, user.getAuthorities()
-        );
+            authToken.setDetails(new WebAuthenticationDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        authToken.setDetails(new WebAuthenticationDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authToken);
-
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        } catch (ExpiredJwtException ex) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            authenticationEntryPoint.commence(request, response, new CredentialsExpiredException("JWT token expired", ex));
+        }
+        catch (JwtException ex) {
+            //TODO delete refresh token?
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            authenticationEntryPoint.commence(request, response, new BadCredentialsException("Invalid JWT token", ex));
+        }
     }
 }

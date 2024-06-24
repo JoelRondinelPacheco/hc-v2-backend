@@ -22,8 +22,16 @@ public class CategoryPersistenceAdapter implements CategoryPersistencePort {
 
     @Override
     public Category newCategory(Category category) {
+        System.out.println("En category");
+        try {
         CategoryEntity categoryEntity = this.mapper.domainToEntity(category);
         return this.mapper.entityToDomain(this.categoryRepository.save(categoryEntity));
+        } catch (RuntimeException ex) {
+            System.out.println("Al guardar ");
+            System.out.println(ex);
+            throw ex;
+        }
+
     }
 
     @Override

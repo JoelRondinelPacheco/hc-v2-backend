@@ -18,27 +18,27 @@ INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_CLIENT', '', 'GET', false, 1);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_CLIENT_BY_USERNAME','/[aA-zZ]*', 'GET', false, 1);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_CLIENT_BY_ID','/[0-9]*', 'GET', false, 1);
-INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DELETE_ONE_CLIENT_BY_ID','/[0-9]*', 'DELETE', false, 1);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DELETE_ONE_CLIENT_BY_ID','/[0-9]*', 'DELETE', false, 1); -- id 5
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_ONE_PAYMENT_METHOD','', 'POST', false, 2);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_PAYMENT_METHOD','', 'GET', true, 2);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_ONE_PAYMENT_METHOD','', 'PUT', false, 2);
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_SALE','', 'POST', false, 3);
-INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_SALE','', 'GET', false, 3);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_SALE','', 'GET', false, 3); -- id 10
 -- TODO VER COMO ESPECIFICAR DATE
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_SALE_BY_MONTH','', 'GET', false, 3);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_SALE_BY_DAY','', 'GET', false, 3);
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_SERVICE','', 'POST', false, 4);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_SERVICE','', 'GET', false, 4);
-INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_SERVICE','', 'PUT', false, 4);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_SERVICE','/[0-9]*', 'PUT', false, 4); -- id 15
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('DELETE_SERVICE','/[0-9]*', 'DELETE', false, 4);
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_CATEGORY','', 'POST', false, 5);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_CATEGORY','', 'GET', false, 5);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_SERVICES_BY_CATEGORY','', 'GET', false, 5);
-INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_CATEGORY','/[0-9]*', 'PUT', false, 5);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('UPDATE_CATEGORY','/[0-9]*', 'PUT', false, 5); -- id 20
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_EMPLOYEE','','POST', false, 6);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_EMPLOYEE','','GET', false, 6);
@@ -57,15 +57,17 @@ INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('
 
 
 
-INSERT INTO granted_permission (role_id, operation_id) VALUES (1, 15);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 1);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 2);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 3);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 4);
-INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 6);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 7);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 9);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 10);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 11);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 12);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 14);
-INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 15);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (2, 18);
 
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 1);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 2);
@@ -77,9 +79,15 @@ INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 7);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 8);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 9);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 10);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 11);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 12);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 13);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 14);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 15);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 17);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 18);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 19);
+INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 20);
 
 -- CREACIÓN DE PERMISOS PARA RETO SECCION 11
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 16);

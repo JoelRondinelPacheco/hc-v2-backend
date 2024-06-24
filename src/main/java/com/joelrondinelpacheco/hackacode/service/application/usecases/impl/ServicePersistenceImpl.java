@@ -48,12 +48,13 @@ public class ServicePersistenceImpl implements ServicePersistence {
 
     @Override
     public ServiceData update(EditServiceDTO serviceDTO) {
-        ServiceData service = this.serviceSelectorPort.byId(serviceDTO.getId());
-        service.setName(serviceDTO.getName());
-        service.setDescription(serviceDTO.getDescription());
-        service.setPrice(serviceDTO.getPrice());
-
-        return this.serviceRepository.update(service);
+        ServiceData s = ServiceData.builder()
+                .id(serviceDTO.getId())
+                .name(serviceDTO.getName())
+                .description(serviceDTO.getDescription())
+                .price(serviceDTO.getPrice())
+                .build();
+        return this.serviceRepository.update(s);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.security.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
+import com.joelrondinelpacheco.hackacode.common.application.exceptions.LoadKeysException;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +26,8 @@ import java.util.Map;
 
 @UseCase
 public class JwtTokenServiceImpl implements JwtTokenService {
+
+    //TODO MANEJAR REFRESH Y MAIL TOKEN DISTINTO Y CAPTURAR Y LANZAR EXCEPCIONES DISTINTAS
 
     @Value("classpath:jwtKeys/private_key.pem") private Resource privateKeyResource;
     @Value("classpath:jwtKeys/public_key.pem") private Resource publicKeyResource;
@@ -102,7 +105,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
             byte[] decodeKey = Base64.getDecoder().decode(privateKeyPEM);
             return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(decodeKey));
         } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new SecurityException(e);
+            throw new LoadKeysException(e);
         }
 
     }
@@ -125,7 +128,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
             keyFactory = KeyFactory.getInstance("RSA");
             return keyFactory.generatePublic(new X509EncodedKeySpec(decodeKey));
         } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new SecurityException(e);
+            throw new LoadKeysException(e);
         }
     }
 

@@ -2,10 +2,7 @@ package com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.entity
 
 import com.joelrondinelpacheco.hackacode.sale.adapter.out.persistence.SaleItemEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +14,10 @@ import java.util.List;
 @Entity(name = "service")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"category", "saleItem"})
+@ToString(exclude = {"category", "saleItem"})
 @Builder
 public class ServiceEntity {
     @Id

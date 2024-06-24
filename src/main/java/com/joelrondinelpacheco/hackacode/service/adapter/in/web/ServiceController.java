@@ -30,11 +30,14 @@ public class ServiceController {
 
     @GetMapping
     public ResponseEntity<Page<ServiceData>> getAllServices(Pageable pageable) {
-        return ResponseEntity.ok(this.servicePersistence.getByPage(pageable));
+        Page<ServiceData> s = this.servicePersistence.getByPage(pageable);
+        System.out.println(s);
+        return ResponseEntity.ok(s);
     }
 
     @PutMapping("/{serviceId}")
-    public ResponseEntity<?> editService(@PathVariable EditServiceDTO serviceDTO) {
+    public ResponseEntity<ServiceData> editService(@PathVariable Long serviceId, @RequestBody EditServiceDTO serviceDTO) {
+        System.out.println(serviceDTO);
         return ResponseEntity.ok(this.servicePersistence.update(serviceDTO));
     }
 

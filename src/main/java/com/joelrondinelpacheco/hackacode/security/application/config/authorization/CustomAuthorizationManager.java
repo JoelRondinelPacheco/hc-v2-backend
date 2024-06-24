@@ -40,10 +40,19 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
         if(isPublic){
             return new AuthorizationDecision(true);
         }
+/*
+        if (this.isPermitAllRole(authentication)) {
+            return new AuthorizationDecision(true);
+        }*/
 
         boolean isGranted = isGranted(url, httpMethod, authentication.get());
-        System.out.println("De nuevo: " + isGranted);
         return new AuthorizationDecision(isGranted);
+    }
+
+    private boolean isPermitAllRole(Supplier<Authentication> authentication) {
+        CustomUserDetails user = this.getUserDetailsFromAuthentication(authentication.get());
+        //TODO ALL PERMISIONS ROLE
+        return user.getRole().getName().equals("OWNER");
     }
 
     private boolean isGranted(String url, String httpMethod, Authentication authentication) {
@@ -56,7 +65,6 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
         boolean isGranted = operations.stream().anyMatch(getOperationPredicate(url, httpMethod));
 
-        System.out.println("IS GRANTED: " + isGranted);
         return isGranted;
     }
 
@@ -74,13 +82,18 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
     private List<Operation> obtainOperations(Authentication authentication) {
 
-        UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) authentication;
-        String username = (String) authToken.getPrincipal();
-        CustomUserDetails user = userService.getUserDetails(username);
+        CustomUserDetails user = this.getUserDetailsFromAuthentication(authentication);
 
         return user.getRole().getPermissions().stream()
                 .map(grantedPermission -> grantedPermission.getOperation())
                 .collect(Collectors.toList());
+
+    }
+
+    private CustomUserDetails getUserDetailsFromAuthentication(Authentication auth) {
+        UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) auth;
+        String username = (String) authToken.getPrincipal();
+        return this.userService.getUserDetails(username);
 
     }
 
@@ -89,9 +102,6 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
         List<Operation> publicAccessEndpoints = this.operationService.findByPublicAccess();
 
         boolean isPublic = publicAccessEndpoints.stream().anyMatch(getOperationPredicate(url, httpMethod));
-
-
-        System.out.println("IS PUBLIC: " + isPublic);
 
         return isPublic;
     }

@@ -27,7 +27,9 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public ServiceData byId(Long id) {
-        return this.serviceRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
+        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow();
+        ServiceData sd = this.mapper.entityToDomain(s);
+        return sd;
     }
 
     @Override
@@ -40,7 +42,9 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
     @Override
     public Page<ServiceData> getAll(Pageable pageable) {
         //TODO REFACTOR
-        return this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
+        Page<ServiceData> s = this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
+        System.out.println(s);
+        return s;
     }
 
     @Override
