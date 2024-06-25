@@ -1,7 +1,6 @@
 package com.joelrondinelpacheco.hackacode.security.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
-import com.joelrondinelpacheco.hackacode.common.adapter.Mapper;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.entity.UserCredentialsEntity;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.mapper.UserCredentialsMapper;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.repository.UserCredentialsRepository;
@@ -10,8 +9,6 @@ import com.joelrondinelpacheco.hackacode.security.application.port.out.UserCrede
 import com.joelrondinelpacheco.hackacode.security.application.port.out.UserCredentialsSelectorPort;
 import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
@@ -30,6 +27,10 @@ public class UserCredentialsPersistenceAdapter implements UserCredentialsPersist
     @Override
     public UserCredentials save(UserCredentials userCredentials) {
         UserCredentialsEntity u = this.mapper.domainToEntity(userCredentials);
+        System.out.println(u);
+        System.out.println(u.getPersonEntity());
+        System.out.println(u.getRole());
+        System.out.println(u.getPersonEntity());
         u = this.userCredentialsRepository.save(u);
         return this.mapper.entityToDomain(u);
     }

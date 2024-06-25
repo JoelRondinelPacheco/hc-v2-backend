@@ -7,17 +7,20 @@ import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.common.UseCase;
 import com.joelrondinelpacheco.hackacode.person.application.usecases.PersonBuilder;
 import com.joelrondinelpacheco.hackacode.person.domain.Person;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.joelrondinelpacheco.hackacode.users.application.dto.UserStarterDTO;
 
 @UseCase
 public class ClientPersistenceImpl implements ClientPersistence {
 
-    @Autowired
-    private ClientPersistencePort clientRepository;
-    @Autowired
-    private ClientUtils clientUtils;
-    @Autowired
-    private PersonBuilder personBuilder;
+    private final ClientPersistencePort clientRepository;
+    private final ClientUtils clientUtils;
+    private final PersonBuilder personBuilder;
+
+    public ClientPersistenceImpl(ClientPersistencePort clientRepository, ClientUtils clientUtils, PersonBuilder personBuilder) {
+        this.clientRepository = clientRepository;
+        this.clientUtils = clientUtils;
+        this.personBuilder = personBuilder;
+    }
 
     @Override
     public Client createClient(Person person) {
@@ -29,9 +32,9 @@ public class ClientPersistenceImpl implements ClientPersistence {
     }
 
     @Override
-    public Client saveClient(Client client) {
-        this.clientUtils.assertDoesNotExistsByUserEmail(client.getPerson().getEmail());
-        return this.clientRepository.save(client);
+    public Client saveClient(UserStarterDTO userInfo) {
+        return this.clientRepository.create(userInfo);
+
     }
 
     @Override

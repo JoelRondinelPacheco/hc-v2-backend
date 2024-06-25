@@ -9,6 +9,7 @@ import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserD
 import com.joelrondinelpacheco.hackacode.security.application.utilities.AuthUtils;
 import com.joelrondinelpacheco.hackacode.security.domain.Role;
 import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
+import com.joelrondinelpacheco.hackacode.security.domain.UserCredentialsReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +34,19 @@ public class UserCredentialsMapperImpl implements UserCredentialsMapper{
 
     @Override
     public UserCredentials entityToDomain(UserCredentialsEntity userCredentialsEntity) {
-        return null;
+        return UserCredentials.builder()
+                .id(userCredentialsEntity.getId())
+                .person(
+                        this.personMapper.entityToDomain(userCredentialsEntity.getPersonEntity())
+                )
+                .password(userCredentialsEntity.getPassword()) //TODO DELETE PASSWORD RETURN
+                .accountNonLocked(userCredentialsEntity.isAccountNonLocked())
+                .accountNonExpired(userCredentialsEntity.isAccountNonExpired())
+                .credentialsNonExpired(userCredentialsEntity.isCredentialsNonExpired())
+                .enabled(userCredentialsEntity.isEnabled())
+                .emailToken(userCredentialsEntity.getEmailToken())
+                //.role
+                .build();
     }
 
     @Override
@@ -74,6 +87,19 @@ public class UserCredentialsMapperImpl implements UserCredentialsMapper{
                 .emailToken(userCredentials.getEmailToken())
                 .role(role)
                 .authorities(authorities)
+                .build();
+    }
+
+    @Override
+    public UserCredentialsEntity domainReferenceToEntity(UserCredentialsReference userCredentials) {
+        return UserCredentialsEntity.builder()
+                .id(userCredentials.getId() != null ? userCredentials.getId() : null )
+                .password(userCredentials.getPassword())
+                .accountNonExpired(userCredentials.isAccountNonExpired())
+                .accountNonLocked(userCredentials.isAccountNonLocked())
+                .credentialsNonExpired(userCredentials.isAccountNonExpired())
+                .enabled(userCredentials.isEnabled())
+                .emailToken(userCredentials.getEmailToken())
                 .build();
     }
 }

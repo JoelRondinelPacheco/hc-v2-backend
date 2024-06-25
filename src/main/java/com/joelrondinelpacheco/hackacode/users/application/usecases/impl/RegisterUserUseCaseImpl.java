@@ -37,18 +37,22 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
     @Override
     @Transactional
     public String registerClient(NewPersonDTO body) {
+        if (body.getPassword().isEmpty()) {
+            body.setPassword(this.generateRandomPassword());
+        }
+        //TODO CAMBIAR COMO SE SELECCIONA EL ROL ID
+        body.setRoleId(1L);
         UserStarterDTO userStarter = this.userStarterUseCase.createUserStarter(body);
-        Client clientSaved = this.clientPersistence.saveClient(
-                this.clientPersistence.createClient(userStarter.getPerson())
-        );
+        Client client = this.clientPersistence.saveClient(userStarter);
 
         //  TODO refactor
+        /*
         this.mailService.send(
                 SendMailDTO.builder()
                         .token(userStarter.getToken())
                         .mailType(MailType.NEW_ACCOUNT)
                         .build()
-        );
+        );*/
 
         return this.getRegisterOkMessage();
 
@@ -69,12 +73,13 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         );
 
         //  TODO refactor
+        /*
         this.mailService.send(
                 SendMailDTO.builder()
                         .token(userStarter.getToken())
                         .mailType(MailType.NEW_ACCOUNT)
                         .build()
-        );
+        );*/
 
         return this.getRegisterOkMessage();
     }
@@ -87,5 +92,9 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         return NewPersonDTO.builder()
                 .email(employee.getEmail())
                 .build();
+    }
+
+    private String generateRandomPassword() {
+        return "secret_password";
     }
 }

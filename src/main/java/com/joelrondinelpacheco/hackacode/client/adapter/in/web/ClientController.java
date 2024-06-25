@@ -5,6 +5,8 @@ import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientPersistence;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientSelector;
+import com.joelrondinelpacheco.hackacode.users.application.dto.RegisterResponse;
+import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +20,23 @@ public class ClientController {
     private final ClientSelector clientSelector;
     private final ClientPersistence clientPersistence;
     private final ClientByName clientByName;
+    private final RegisterUserUseCase registerUserUseCase;
 
-    public ClientController(ClientSelector clientSelector, ClientPersistence clientPersistence, ClientByName clientByName) {
+    public ClientController(ClientSelector clientSelector, ClientPersistence clientPersistence, ClientByName clientByName, RegisterUserUseCase registerUserUseCase) {
         this.clientSelector = clientSelector;
         this.clientPersistence = clientPersistence;
         this.clientByName = clientByName;
+        this.registerUserUseCase = registerUserUseCase;
     }
 
     @PostMapping
-    private ResponseEntity<Client> save(@RequestBody NewPersonDTO userInfo) {
-        //TODO IMPLEMENT
-        //return ResponseEntity.ok(this.clientPersistence.createClient(userInfo));
-        return null;
+    private ResponseEntity<RegisterResponse> save(@RequestBody NewPersonDTO userInfo) {
+        System.out.println(userInfo);
+        return ResponseEntity.ok(
+                new RegisterResponse(
+                        this.registerUserUseCase.registerClient(userInfo)
+                )
+        );
     }
 
     @GetMapping

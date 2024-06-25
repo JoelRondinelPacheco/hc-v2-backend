@@ -7,6 +7,7 @@ import com.joelrondinelpacheco.hackacode.security.application.port.out.UserCrede
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
 import com.joelrondinelpacheco.hackacode.security.domain.Role;
 import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
+import com.joelrondinelpacheco.hackacode.security.domain.UserCredentialsReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -30,11 +31,11 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
     }
 
     @Override
-    public UserCredentials newUserCredentials(Person person, Role role, String password) {
+    public UserCredentialsReference newUserCredentialsReference(Person person, Long roleId, String password) {
         //TODO RANDOM PASSWORD EN EMPLOYEE UTILS
         String emailToken = this.jwtTokenService.generateVerifyEmailToken(person.getEmail());
 
-        UserCredentials userCredentials = UserCredentials.builder()
+        UserCredentialsReference userCredentials = UserCredentialsReference.builder()
                 .person(person)
                 .password(this.encryptPassword(password))
                 .accountNonExpired(true)
@@ -42,6 +43,7 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
                 .credentialsNonExpired(true)
                 .enabled(false)
                 .emailToken(emailToken)
+                .role(roleId)
                 .build();
         return userCredentials;
     }

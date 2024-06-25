@@ -25,6 +25,7 @@ public class PersonMapper implements Mapper<Person, PersonEntity> {
     @Override
     public PersonEntity domainToEntity(Person domain) {
         return   PersonEntity.builder()
+                .id(domain.getId() != null ? domain.getId() : null)
                 .name(domain.getName())
                 .lastname(domain.getLastname())
                 .email(domain.getEmail())
