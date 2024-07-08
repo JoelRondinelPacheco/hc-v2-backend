@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public interface EmployeePersistencePort {
 
-    Employee registerUser(Employee employee);
+    Employee saveEmployee(Employee employee);
 
     Employee saveEmployeeFromAdmin(UserStarterDTO employee, BigDecimal salary);
 }

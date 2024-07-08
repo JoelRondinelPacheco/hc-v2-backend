@@ -48,7 +48,7 @@ public class EmployeePersistenceAdapter implements EmployeePersistencePort {
 
 
     @Override
-    public Employee registerUser(Employee employee) {
+    public Employee saveEmployee(Employee employee) {
 
         EmployeeEntity employeeEntity = this.mapper.domainToEntity(employee);
 
