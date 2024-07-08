@@ -28,13 +28,13 @@ public class UserStarterUseCaseImpl implements UserStarterUseCase {
 
     @Override
     public UserStarterDTO createUserStarter(NewPersonDTO body) {
-        Person person = this.personPersistence.create(body);
+        Person person = this.personPersistence.createLogin(body);
 
         UserCredentialsReference userCredentials = this.userCredentialsService.newUserCredentialsReference(person, body.getRoleId(), body.getPassword());
-
         return UserStarterDTO.builder()
                 .person(person)
                 .userCredentials(userCredentials)
                 .build();
     }
+
 }

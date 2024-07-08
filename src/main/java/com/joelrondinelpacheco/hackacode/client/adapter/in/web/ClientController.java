@@ -2,9 +2,9 @@ package com.joelrondinelpacheco.hackacode.client.adapter.in.web;
 
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientByName;
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientPersistence;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientSelector;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.users.application.dto.RegisterResponse;
 import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
 import org.springframework.data.domain.Page;
@@ -30,32 +30,35 @@ public class ClientController {
     }
 
     @PostMapping
-    private ResponseEntity<RegisterResponse> save(@RequestBody NewPersonDTO userInfo) {
+    public ResponseEntity<RegisterResponse> save(@RequestBody NewPersonDTO userInfo) {
+    ///public ResponseEntity<RegisterResponse> save(@RequestBody TestR userInfo) {
+        System.out.println("zdasd");
         System.out.println(userInfo);
         return ResponseEntity.ok(
                 new RegisterResponse(
-                        this.registerUserUseCase.registerClient(userInfo)
+                        //this.registerUserUseCase.registerClient(userInfo)
+                        "okk"
                 )
         );
     }
 
     @GetMapping
-    private ResponseEntity<Page<Client>> getClientsPaginated(Pageable pageable) {
+    public ResponseEntity<Page<Client>> getClientsPaginated(Pageable pageable) {
         return ResponseEntity.ok(this.clientSelector.getClientsPaginated(pageable));
     }
 
     @GetMapping("/search")
-    private ResponseEntity<Page<Client>> getClientByName(@RequestParam(value = "name") String name, Pageable pageable) {
+    public ResponseEntity<Page<Client>> getClientByName(@RequestParam(value = "name") String name, Pageable pageable) {
         return ResponseEntity.ok(this.clientByName.get(name, pageable));
     }
 
     @GetMapping("/{clientId}")
-    private ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
+    public ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
         return ResponseEntity.ok(this.clientSelector.byId(clientId));
     }
 
     @DeleteMapping("/{clientId}")
-    private ResponseEntity<?> deleteClient(@PathVariable Long clientId) {
+    public ResponseEntity<?> deleteClient(@PathVariable Long clientId) {
         this.clientPersistence.delete(clientId);
         return ResponseEntity.ok("Eliminado");
     }

@@ -37,7 +37,9 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
     @Override
     @Transactional
     public String registerClient(NewPersonDTO body) {
-        if (body.getPassword().isEmpty()) {
+        if (body.getPassword() == null) {
+            body.setPassword(this.generateRandomPassword());
+        } else if (body.getPassword().isEmpty() || body.getPassword().isBlank()) {
             body.setPassword(this.generateRandomPassword());
         }
         //TODO CAMBIAR COMO SE SELECCIONA EL ROL ID

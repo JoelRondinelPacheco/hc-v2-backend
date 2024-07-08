@@ -36,6 +36,11 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
+    @GetMapping("/{categoryId}")
+    ResponseEntity<Category> getById(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(this.categorySelector.getById(categoryId));
+    }
+
     @GetMapping("/services")
     public ResponseEntity<?> getAllWithServices(Pageable pageable) {
         //TODO IMPL

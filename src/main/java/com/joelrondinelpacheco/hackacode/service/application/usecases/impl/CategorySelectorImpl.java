@@ -26,4 +26,9 @@ public class CategorySelectorImpl implements CategorySelector {
         //return this.categorySelectorPort.getPage(pageable);
         return null;
     }
+
+    @Override
+    public Category getById(Long categoryId) {
+        return this.categorySelectorPort.getById(categoryId);
+    }
 }

@@ -51,7 +51,6 @@ public class SecurityBeansInjector {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(URL_FRONTEND, "http://localhost:5173/"));
         configuration.setAllowedMethods(Arrays.asList("*"));

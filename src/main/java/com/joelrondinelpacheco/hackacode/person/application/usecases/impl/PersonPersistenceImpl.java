@@ -35,6 +35,16 @@ public class PersonPersistenceImpl implements PersonPersistence {
     }
 
     @Override
+    public Person createLogin(NewPersonDTO person) {
+        return Person.builder()
+                .name(person.getName())
+                .lastname(person.getLastname())
+                .email(person.getEmail())
+                .birthday(person.getBirthday())
+                .build();
+    }
+
+    @Override
     public Person save(Person person) {
         this.personUtils.assertDoesNotExistsByEmail(person.getEmail());
         return this.personPersistencePort.save(person);

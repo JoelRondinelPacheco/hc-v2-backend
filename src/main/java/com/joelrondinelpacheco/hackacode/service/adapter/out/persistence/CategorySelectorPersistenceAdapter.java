@@ -21,4 +21,9 @@ public class CategorySelectorPersistenceAdapter implements CategorySelectorPort 
     public Page<Category> getPage(Pageable pageable) {
         return this.categoryMySQLRepository.findAll(pageable).map(this.categoryMapper::entityToDomain);
     }
+
+    @Override
+    public Category getById(Long categoryId) {
+        return this.categoryMySQLRepository.findById(categoryId).map(this.categoryMapper::entityToDomain).orElseThrow();
+    }
 }

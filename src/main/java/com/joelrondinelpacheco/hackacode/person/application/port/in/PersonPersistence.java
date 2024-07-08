@@ -6,6 +6,7 @@ import com.joelrondinelpacheco.hackacode.person.domain.Person;
 public interface PersonPersistence {
 
     Person create(NewPersonDTO personDTO);
+    Person createLogin(NewPersonDTO personDTO);
     Person save(Person person);
     Person update(Person person);
     String delete(Long userId);

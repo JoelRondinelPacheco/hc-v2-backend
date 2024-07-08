@@ -16,4 +16,5 @@ public class EditServiceDTO {
     private String name;
     private String description;
     private BigDecimal price;
+    private Long categoryId;
 }

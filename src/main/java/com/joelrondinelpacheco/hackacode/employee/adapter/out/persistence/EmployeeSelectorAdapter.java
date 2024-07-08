@@ -18,7 +18,7 @@ public class EmployeeSelectorAdapter implements EmployeeSelectorPort {
 
     @Override
     public Employee byId(Long id) {
-        return null;
+        return this.employeeMySQLRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
     }
 
     @Override
