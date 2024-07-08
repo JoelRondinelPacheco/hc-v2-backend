@@ -38,10 +38,13 @@ public class ServicePersistenceAdapter implements ServicePersistencePort {
 
     @Override
     public ServiceData update(ServiceData serviceBase) {
+        CategoryEntity category = this.categoryRepository.findById(serviceBase.getCategory().getId()).orElseThrow();
+
         ServiceEntity serviceEntity = this.serviceRepository.findById(serviceBase.getId()).orElseThrow();
             serviceEntity.setName(serviceBase.getName());
             serviceEntity.setDescription(serviceBase.getDescription());
             serviceEntity.setPrice(serviceBase.getPrice());
+            serviceEntity.setCategory(category);
             serviceEntity = this.serviceRepository.save(serviceEntity);
             return this.mapper.entityToDomain(serviceEntity);
 

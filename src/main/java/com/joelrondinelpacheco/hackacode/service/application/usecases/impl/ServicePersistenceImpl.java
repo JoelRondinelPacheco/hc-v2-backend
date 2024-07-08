@@ -10,6 +10,7 @@ import com.joelrondinelpacheco.hackacode.service.application.port.out.ServicePer
 import com.joelrondinelpacheco.hackacode.service.application.port.out.ServiceSelectorPort;
 import com.joelrondinelpacheco.hackacode.service.application.utils.CategoryUtil;
 import com.joelrondinelpacheco.hackacode.service.application.utils.ServiceBuilder;
+import com.joelrondinelpacheco.hackacode.service.domain.Category;
 import com.joelrondinelpacheco.hackacode.service.domain.ServiceData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,6 +54,11 @@ public class ServicePersistenceImpl implements ServicePersistence {
                 .name(serviceDTO.getName())
                 .description(serviceDTO.getDescription())
                 .price(serviceDTO.getPrice())
+                .category(
+                        Category.builder()
+                                .id(serviceDTO.getId())
+                                .build()
+                )
                 .build();
         return this.serviceRepository.update(s);
     }

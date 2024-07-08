@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface CategorySelectorPort {
     Page<Category> getPage(Pageable pageable);
+    Category getById(Long categoryId);
 }

@@ -32,6 +32,7 @@ public class PermissionsRoleMapperImpl implements PermissionsRoleMapper{
     @Override
     public RoleEntity domainToEntityRole(Role role) {
         return RoleEntity.builder()
+                .id(role.getId() != null ? role.getId() : null)
                 .name(role.getName())
                 .build();
     }

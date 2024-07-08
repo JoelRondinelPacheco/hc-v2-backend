@@ -1,6 +1,5 @@
 package com.joelrondinelpacheco.hackacode.security.domain;
 
-import com.joelrondinelpacheco.hackacode.person.domain.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +11,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class UserCredentials extends UserCredentialsBase{
-    private Role role;
+public class UserCredentialsReference extends UserCredentialsBase{
+    private Long role;
 }

@@ -23,7 +23,7 @@ public class ServiceSelectorImpl implements ServiceSelector {
 
     @Override
     public ServiceData byId(Long id) {
-        return null;
+        return this.serviceSelectorPort.byId(id);
     }
 
     @Override

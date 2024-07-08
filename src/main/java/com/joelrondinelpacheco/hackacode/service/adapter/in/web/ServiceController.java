@@ -3,6 +3,7 @@ package com.joelrondinelpacheco.hackacode.service.adapter.in.web;
 import com.joelrondinelpacheco.hackacode.service.application.dto.EditServiceDTO;
 import com.joelrondinelpacheco.hackacode.service.application.dto.NewServiceDTO;
 import com.joelrondinelpacheco.hackacode.service.application.port.in.ServicePersistence;
+import com.joelrondinelpacheco.hackacode.service.application.port.in.ServiceSelector;
 import com.joelrondinelpacheco.hackacode.service.domain.ServiceData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +18,11 @@ public class ServiceController {
     TODO Agregar atributos de multiplicador de servicio (ejm: aquiler es por dia, puede alquilar varios dias)
      */
     private final ServicePersistence servicePersistence;
+    private final ServiceSelector serviceSelector;
 
-    public ServiceController(ServicePersistence servicePersistence) {
+    public ServiceController(ServicePersistence servicePersistence, ServiceSelector serviceSelector) {
         this.servicePersistence = servicePersistence;
+        this.serviceSelector = serviceSelector;
     }
 
 
@@ -35,9 +38,13 @@ public class ServiceController {
         return ResponseEntity.ok(s);
     }
 
+    @GetMapping("/{serviceId}")
+    public ResponseEntity<ServiceData> getById(@PathVariable Long serviceId) {
+        return ResponseEntity.ok(this.serviceSelector.byId(serviceId));
+    }
+
     @PutMapping("/{serviceId}")
     public ResponseEntity<ServiceData> editService(@PathVariable Long serviceId, @RequestBody EditServiceDTO serviceDTO) {
-        System.out.println(serviceDTO);
         return ResponseEntity.ok(this.servicePersistence.update(serviceDTO));
     }
 

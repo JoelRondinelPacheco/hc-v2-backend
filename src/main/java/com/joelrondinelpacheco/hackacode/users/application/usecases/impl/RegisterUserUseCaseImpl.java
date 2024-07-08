@@ -6,10 +6,8 @@ import com.joelrondinelpacheco.hackacode.common.UseCase;
 import com.joelrondinelpacheco.hackacode.employee.application.dto.NewEmployeeDTO;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.EmployeePersistence;
 import com.joelrondinelpacheco.hackacode.employee.domain.Employee;
-import com.joelrondinelpacheco.hackacode.mail.application.dto.SendMailDTO;
 import com.joelrondinelpacheco.hackacode.mail.application.port.input.MailService;
-import com.joelrondinelpacheco.hackacode.mail.domain.MailType;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
 import com.joelrondinelpacheco.hackacode.users.application.dto.UserStarterDTO;
 import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
 import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
@@ -36,19 +34,19 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
 
     @Override
     @Transactional
-    public String registerClient(NewPersonDTO body) {
-        UserStarterDTO userStarter = this.userStarterUseCase.createUserStarter(body);
-        Client clientSaved = this.clientPersistence.saveClient(
-                this.clientPersistence.createClient(userStarter.getPerson())
-        );
+    public String registerClient(NewClientDTO body) {
+        //TODO cambiar como se obtiene el rol
+        UserStarterDTO userStarter = this.userStarterUseCase.createPersonStarterFromAdmin(body, 1L);
+        Client client = this.clientPersistence.saveClient(userStarter);
 
         //  TODO refactor
+        /*
         this.mailService.send(
                 SendMailDTO.builder()
                         .token(userStarter.getToken())
                         .mailType(MailType.NEW_ACCOUNT)
                         .build()
-        );
+        );*/
 
         return this.getRegisterOkMessage();
 
@@ -57,24 +55,18 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
     @Override
     @Transactional
     public String registerEmployee(NewEmployeeDTO employeeDTO) {
-        UserStarterDTO userStarter = this.userStarterUseCase.createUserStarter(
-                this.getNewPersonDTO(employeeDTO)
-        );
+        UserStarterDTO userStarter = this.userStarterUseCase.createPersonStarterFromAdmin(employeeDTO, 2L);
 
-        Employee employeeSaved = this.employeePersistence.save(
-                this.employeePersistence.createEmployee(
-                        userStarter.getPerson(),
-                        employeeDTO.getSalary()
-                )
-        );
+        Employee employeeSaved = this.employeePersistence.saveEmployee(userStarter, employeeDTO.getSalary());
 
         //  TODO refactor
+        /*
         this.mailService.send(
                 SendMailDTO.builder()
                         .token(userStarter.getToken())
                         .mailType(MailType.NEW_ACCOUNT)
                         .build()
-        );
+        );*/
 
         return this.getRegisterOkMessage();
     }
@@ -83,9 +75,13 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         return "Mail ok, revise su correo";
     }
 
-    private NewPersonDTO getNewPersonDTO(NewEmployeeDTO employee) {
-        return NewPersonDTO.builder()
+    private NewClientDTO getNewPersonDTO(NewEmployeeDTO employee) {
+        return NewClientDTO.builder()
                 .email(employee.getEmail())
                 .build();
+    }
+
+    private String generateRandomPassword() {
+        return "secret_password";
     }
 }

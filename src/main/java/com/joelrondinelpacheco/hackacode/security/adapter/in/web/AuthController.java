@@ -1,6 +1,6 @@
 package com.joelrondinelpacheco.hackacode.security.adapter.in.web;
 
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.LogoutResponse;
@@ -8,7 +8,6 @@ import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterU
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.RegisterEmployeeUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +30,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody NewPersonDTO body) {
-        this.registerClientUserCase.createUserStarter(body);
-        this.registerEmployeeUseCase.createEmployee(body);
+    public ResponseEntity<String> register(@RequestBody NewClientDTO body) {
+        //TODO implement
         return ResponseEntity.ok("Response");
     }
 
