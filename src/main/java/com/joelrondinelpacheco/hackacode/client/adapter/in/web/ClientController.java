@@ -5,7 +5,7 @@ import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientPersistence;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientSelector;
 import com.joelrondinelpacheco.hackacode.person.application.dto.EditClientDTO;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
 import com.joelrondinelpacheco.hackacode.users.application.dto.RegisterResponse;
 import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
 import org.springframework.data.domain.Page;
@@ -31,14 +31,10 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<RegisterResponse> save(@RequestBody NewPersonDTO userInfo) {
-    ///public ResponseEntity<RegisterResponse> save(@RequestBody TestR userInfo) {
-        System.out.println("zdasd");
-        System.out.println(userInfo);
+    public ResponseEntity<RegisterResponse> save(@RequestBody NewClientDTO userInfo) {
         return ResponseEntity.ok(
                 new RegisterResponse(
-                        //this.registerUserUseCase.registerClient(userInfo)
-                        "okk"
+                        this.registerUserUseCase.registerClient(userInfo)
                 )
         );
     }

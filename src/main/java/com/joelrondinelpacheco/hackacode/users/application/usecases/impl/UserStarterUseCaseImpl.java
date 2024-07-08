@@ -1,16 +1,15 @@
 package com.joelrondinelpacheco.hackacode.users.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.employee.application.dto.NewEmployeeDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.PersonBaseDTO;
 import com.joelrondinelpacheco.hackacode.person.application.port.in.PersonPersistence;
 import com.joelrondinelpacheco.hackacode.person.domain.Person;
 import com.joelrondinelpacheco.hackacode.security.domain.UserCredentialsReference;
 import com.joelrondinelpacheco.hackacode.users.application.dto.UserStarterDTO;
 import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
-import com.joelrondinelpacheco.hackacode.security.application.port.in.RoleSelector;
 import com.joelrondinelpacheco.hackacode.security.application.port.in.UserCredentialsService;
-import com.joelrondinelpacheco.hackacode.security.domain.Role;
-import com.joelrondinelpacheco.hackacode.security.domain.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UseCase
@@ -27,14 +26,15 @@ public class UserStarterUseCaseImpl implements UserStarterUseCase {
 
 
     @Override
-    public UserStarterDTO createUserStarter(NewPersonDTO body) {
-        Person person = this.personPersistence.createLogin(body);
-
-        UserCredentialsReference userCredentials = this.userCredentialsService.newUserCredentialsReference(person, body.getRoleId(), body.getPassword());
+    public UserStarterDTO createPersonStarterFromAdmin(PersonBaseDTO person, Long roleId) {
+        Person personEntity = this.personPersistence.createStarterPersonEntity(person);
+        UserCredentialsReference userCredentials = this.userCredentialsService.newUserCredentialsReference(personEntity, roleId, this.getDefaultPassword());
         return UserStarterDTO.builder()
-                .person(person)
+                .person(personEntity)
                 .userCredentials(userCredentials)
                 .build();
     }
-
+    private String getDefaultPassword() {
+        return "password1234";
+    }
 }

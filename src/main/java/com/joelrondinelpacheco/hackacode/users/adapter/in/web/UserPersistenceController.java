@@ -1,10 +1,9 @@
 package com.joelrondinelpacheco.hackacode.users.adapter.in.web;
 
 import com.joelrondinelpacheco.hackacode.employee.application.dto.NewEmployeeDTO;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
 import com.joelrondinelpacheco.hackacode.users.application.dto.RegisterResponse;
 import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +21,7 @@ public class UserPersistenceController {
     }
 
     @PostMapping("/client")
-    public ResponseEntity<RegisterResponse> registerClient(@RequestBody NewPersonDTO body) {
+    public ResponseEntity<RegisterResponse> registerClient(@RequestBody NewClientDTO body) {
         return ResponseEntity.ok(
                 new RegisterResponse(this.registerUserUseCase.registerClient(body))
         );

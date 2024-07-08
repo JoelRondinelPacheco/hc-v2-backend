@@ -1,7 +1,9 @@
 package com.joelrondinelpacheco.hackacode.person.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
-import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
+import com.joelrondinelpacheco.hackacode.employee.application.dto.NewEmployeeDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
+import com.joelrondinelpacheco.hackacode.person.application.dto.PersonBaseDTO;
 import com.joelrondinelpacheco.hackacode.person.application.port.in.PersonPersistence;
 import com.joelrondinelpacheco.hackacode.person.application.port.in.PersonUtils;
 import com.joelrondinelpacheco.hackacode.person.application.port.out.PersonPersistencePort;
@@ -21,7 +23,7 @@ public class PersonPersistenceImpl implements PersonPersistence {
     }
 
     @Override
-    public Person create(NewPersonDTO person) {
+    public Person create(NewClientDTO person) {
         Person p = Person.builder()
                 .name(person.getName())
                 .lastname(person.getLastname())
@@ -35,12 +37,26 @@ public class PersonPersistenceImpl implements PersonPersistence {
     }
 
     @Override
-    public Person createLogin(NewPersonDTO person) {
+    public Person createStarterPersonEntity(PersonBaseDTO person) {
         return Person.builder()
                 .name(person.getName())
                 .lastname(person.getLastname())
                 .email(person.getEmail())
+                .address(person.getAddress())
+                .dni(person.getDni())
                 .birthday(person.getBirthday())
+                .phoneNumber(person.getPhoneNumber())
+                .build();
+    }
+
+    @Override
+    public Person personForNewEmployeeFromAdmin(NewEmployeeDTO dto) {
+        return Person.builder()
+                .name(dto.getName())
+                .lastname(dto.getLastname())
+                .email(dto.getEmail())
+                .birthday(dto.getBirthday())
+                .dni(dto.getDni())
                 .build();
     }
 

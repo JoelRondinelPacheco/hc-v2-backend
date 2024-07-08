@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class EditUserDTO extends NewPersonDTO {
+public class EditUserDTO extends NewClientDTO {
     private Long id;
     private Long personId;
 }
