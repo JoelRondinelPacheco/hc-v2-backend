@@ -4,6 +4,7 @@ import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientByName
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientPersistence;
 import com.joelrondinelpacheco.hackacode.client.application.port.in.ClientSelector;
+import com.joelrondinelpacheco.hackacode.person.application.dto.EditClientDTO;
 import com.joelrondinelpacheco.hackacode.person.application.dto.NewPersonDTO;
 import com.joelrondinelpacheco.hackacode.users.application.dto.RegisterResponse;
 import com.joelrondinelpacheco.hackacode.users.application.port.in.RegisterUserUseCase;
@@ -55,6 +56,11 @@ public class ClientController {
     @GetMapping("/{clientId}")
     public ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
         return ResponseEntity.ok(this.clientSelector.byId(clientId));
+    }
+
+    @PutMapping("/{clientId}")
+    public ResponseEntity<Client> editClient(@PathVariable Long clientId, @RequestBody EditClientDTO body) {
+        return ResponseEntity.ok(this.clientPersistence.update(body));
     }
 
     @DeleteMapping("/{clientId}")

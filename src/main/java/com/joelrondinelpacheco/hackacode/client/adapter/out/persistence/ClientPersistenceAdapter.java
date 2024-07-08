@@ -68,10 +68,7 @@ public class ClientPersistenceAdapter implements ClientPersistencePort {
         return this.mapper.entityToDomain(clientEntity);
     }
 
-    @Override
-    public Client update() {
-        return null;
-    }
+
 
     @Override
     public String delete() {

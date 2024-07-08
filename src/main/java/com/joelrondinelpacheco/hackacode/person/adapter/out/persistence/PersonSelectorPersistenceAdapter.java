@@ -19,6 +19,11 @@ public class PersonSelectorPersistenceAdapter implements PersonSelectorPort {
     private Mapper<Person, PersonEntity> mapper;
 
     @Override
+    public Person getById(Long id) {
+        return this.personMySQLRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
+    }
+
+    @Override
     public Page<Person> getAll(Pageable pageable) {
         return this.personMySQLRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
