@@ -35,7 +35,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("${security.jwt.expiration-in-minutes.auth}")
     private Long AUTH_EXPIRATION_IN_MINUTES;
     @Value("${security.jwt.expiration-in-minutes.refresh}")
-    private Long HCV2_JWT_REFRESH_EXPIRATION_IN_MINUTES;
+    private Long JWT_REFRESH_EXPIRATION_IN_MINUTES;
     @Value("${security.jwt.expiration-in-minutes.validate-account}")
     private Long VALIDATE_ACCOUNT_EXPIRATION_IN_MINUTES;
 
@@ -74,9 +74,19 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     @Override
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(String username, Map<String, Object> extraClaims) {
+        Date issuedAt = new Date(System.currentTimeMillis());
+        Date expiration = this.generateExpirationDate(issuedAt, JWT_REFRESH_EXPIRATION_IN_MINUTES);
 
-        return null;
+        return Jwts.builder()
+                .header()
+                    .type("REFRESH_TOKEN")
+                    .and()
+                .subject(username)
+                .issuedAt(issuedAt)
+                .expiration(expiration)
+                .signWith(loadPrivateKey(privateKeyResource))
+                .compact();
     }
 
     @Override

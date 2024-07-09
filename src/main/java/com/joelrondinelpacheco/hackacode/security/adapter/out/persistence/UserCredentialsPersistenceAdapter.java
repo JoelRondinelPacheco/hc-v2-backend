@@ -27,10 +27,6 @@ public class UserCredentialsPersistenceAdapter implements UserCredentialsPersist
     @Override
     public UserCredentials save(UserCredentials userCredentials) {
         UserCredentialsEntity u = this.mapper.domainToEntity(userCredentials);
-        System.out.println(u);
-        System.out.println(u.getPersonEntity());
-        System.out.println(u.getRole());
-        System.out.println(u.getPersonEntity());
         u = this.userCredentialsRepository.save(u);
         return this.mapper.entityToDomain(u);
     }
