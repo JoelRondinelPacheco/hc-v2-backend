@@ -1,16 +1,15 @@
 package com.joelrondinelpacheco.hackacode.security.adapter.in.web;
 
 import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
-import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationRequest;
-import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
-import com.joelrondinelpacheco.hackacode.security.application.dto.auth.LogoutResponse;
-import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Token;
+import com.joelrondinelpacheco.hackacode.security.application.dto.auth.*;
+import com.joelrondinelpacheco.hackacode.security.application.usecases.CookiesJWTUseCase;
 import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.RegisterEmployeeUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,11 +19,13 @@ public class AuthController {
     private final AuthenticationUseCase authService;
     private final UserStarterUseCase registerClientUserCase;
     private final RegisterEmployeeUseCase registerEmployeeUseCase;
+    private final CookiesJWTUseCase createCookiesJWT;
 
-    public AuthController(AuthenticationUseCase authService, UserStarterUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase) {
+    public AuthController(AuthenticationUseCase authService, UserStarterUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase, CookiesJWTUseCase createCookiesJWT) {
         this.authService = authService;
         this.registerClientUserCase = registerClientUserCase;
         this.registerEmployeeUseCase = registerEmployeeUseCase;
+        this.createCookiesJWT = createCookiesJWT;
     }
 
     @PostMapping("/register")
@@ -35,8 +36,25 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest body) {
-        System.out.println(body);
-        return ResponseEntity.ok(this.authService.login(body));
+        AuthenticationData auth = this.authService.login(body);
+
+        AuthenticationResponse res = AuthenticationResponse.builder()
+                .name(auth.getName())
+                .lastname(auth.getLastname())
+                .email(auth.getEmail())
+                .role(auth.getRole())
+                .build();
+
+        ResponseCookie jwtCookie = createCookiesJWT.authJwtCookie(auth.getAuthToken());
+        ResponseCookie refreshJwtCookie = createCookiesJWT.refreshJwtCookie(auth.getRefreshToken());
+
+        System.out.println(jwtCookie.toString());
+        System.out.println(refreshJwtCookie.toString());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshJwtCookie.toString())
+                .body(res);
     }
 
     @PostMapping("/refresh")

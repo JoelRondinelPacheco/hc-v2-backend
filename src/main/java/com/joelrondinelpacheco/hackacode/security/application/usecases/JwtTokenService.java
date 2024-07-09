@@ -24,4 +24,6 @@ public interface JwtTokenService {
     Date extractExpiration(String jwt);
     boolean isExpired(String jwt);
     void invalidateToken(String jwt);
+
+
 }
