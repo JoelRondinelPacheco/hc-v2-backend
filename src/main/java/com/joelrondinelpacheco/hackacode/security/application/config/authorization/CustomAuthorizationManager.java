@@ -31,6 +31,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext requestContext) {
+        System.out.println("AUTH DESICION");
         HttpServletRequest request = requestContext.getRequest();
 
         String url = extractUrl(request);

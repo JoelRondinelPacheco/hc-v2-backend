@@ -41,9 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         String jwt = this.jwtTokenService.extractJwtFromRequest(request);
-
         if (jwt == null || !StringUtils.hasText(jwt)) {
             filterChain.doFilter(request, response);
             return;
@@ -62,8 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException ex) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            authenticationEntryPoint.commence(request, response, new CredentialsExpiredException("JWT token expired", ex));
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            authenticationEntryPoint.commence(request, response, new CredentialsExpiredException("JWT token expired msg", ex));
         }
         catch (JwtException ex) {
             //TODO delete refresh token?

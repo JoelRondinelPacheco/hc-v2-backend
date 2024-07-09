@@ -50,6 +50,7 @@ INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('LOGIN','/authenticate','POST', true, 7);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('LOGOUT','/logout','POST', true, 7);
+INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('REFRESH','/refresh','POST', true, 7);
 
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_MODULE','/module','POST', false, 8);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_PAGE_MODULE','/module','GET', false, 8);

@@ -3,6 +3,7 @@ package com.joelrondinelpacheco.hackacode.security.application.usecases.impl;
 import com.joelrondinelpacheco.hackacode.common.UseCase;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
+import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Token;
 import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserDetails;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;
@@ -44,7 +45,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
     }
 
     @Override
-    public AuthenticationResponse login(AuthenticationRequest credentials) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public AuthenticationResponse login(AuthenticationRequest credentials) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword());
         this.authenticationManager.authenticate(authentication);
 
@@ -58,6 +59,11 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
                 .email(userDetails.getUsername())
                 .role(userDetails.getRole().getName().toUpperCase())
                 .build();
+    }
+
+    @Override
+    public Token refreshAuthToken(Token body) {
+        return null;
     }
 
     private Map<String, Object> generateExtraClaims(CustomUserDetails user) {

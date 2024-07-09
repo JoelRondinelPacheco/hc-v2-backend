@@ -58,7 +58,7 @@ public class SalePersistenceAdapter implements SalePersistencePort {
 
         SaleEntity saleEntity = this.saleMapper.domainRefToEntity(saleData);
         saleEntity.setClient(this.clientSelectorAdapter.entityById(saleData.getClient()));
-        saleEntity.setEmployee(this.userSelectorAdapter.entityById(saleData.getEmployee()));
+        saleEntity.setEmployee(this.userSelectorAdapter.entityByEmail(saleData.getEmployeeEmail()));
         saleEntity.setPaymentMethod(this.paymentMethodMapper.domainToEntityWithId(saleData.getPaymentMethod()));
 
         SaleEntity saleSaved = this.saleRepository.save(saleEntity);

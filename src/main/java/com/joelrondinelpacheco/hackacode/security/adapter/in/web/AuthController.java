@@ -4,16 +4,14 @@ import com.joelrondinelpacheco.hackacode.person.application.dto.NewClientDTO;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationRequest;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.AuthenticationResponse;
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.LogoutResponse;
+import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Token;
 import com.joelrondinelpacheco.hackacode.users.application.usecases.UserStarterUseCase;
 import com.joelrondinelpacheco.hackacode.employee.application.port.in.RegisterEmployeeUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,9 +34,15 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest body) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest body) {
         System.out.println(body);
         return ResponseEntity.ok(this.authService.login(body));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<Token> refreshToken(@RequestBody Token req) {
+        System.out.println(req);
+        return ResponseEntity.ok(new Token("asd"));
     }
 
     @PostMapping("/logout")

@@ -14,7 +14,7 @@ import java.util.List;
 public class NewSaleDTO {
     private Long paymentMethodId;
     private Long clientId;
-    private Long employeeId;
+    private String employeeEmail;
     private List<SaleItemDTO> saleItems;
 
 }

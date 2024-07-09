@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder
 public class SaleReference extends Sale {
     private Long client;
-    private Long employee;
+    private String employeeEmail;
     private List<SaleItemReference> saleItemReferences;
 
     private SaleReference(List<SaleItemReference> saleItemReferences, PaymentMethod paymentMethod) {

@@ -17,41 +17,33 @@ import com.joelrondinelpacheco.hackacode.sale.application.dto.NewSaleDTO;
 import com.joelrondinelpacheco.hackacode.sale.application.port.out.SalePersistencePort;
 import com.joelrondinelpacheco.hackacode.service.application.port.in.ServiceSelector;
 import com.joelrondinelpacheco.hackacode.sale.domain.SaleType;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @UseCase
 public class SalePersistenceImpl implements SalePersistence {
 
-    @Autowired
-    private SalePersistencePort saleRepository;
+    private final SalePersistencePort saleRepository;
+    private final SaleItemMapper saleItemMapper;
+    private final ClientSelector clientSelector;
+    private final ClientUtils clientUtils;
+    private final EmployeeSelector employeeSelector;
+    private final EmployeeUtils employeeUtils;
+    private final PaymentMethodUtils paymentMethodUtils;
+    private final ServiceSelector serviceSelector;
+    private final PaymentMethodSelector paymentMethodSelector;
 
-    @Autowired
-    private SaleItemMapper saleItemMapper;
-
-    //CLIENT
-    @Autowired
-    private ClientSelector clientSelector;
-    @Autowired
-    private ClientUtils clientUtils;
-
-    //EMPLOYEE
-    @Autowired
-    private EmployeeSelector employeeSelector;
-    @Autowired
-    private EmployeeUtils employeeUtils;
-
-    //PAYMENT METHOD
-    @Autowired
-    private PaymentMethodUtils paymentMethodUtils;
-
-    //SERVICES
-    @Autowired
-    private ServiceSelector serviceSelector;
-
-    @Autowired
-    private PaymentMethodSelector paymentMethodSelector;
+    public SalePersistenceImpl(SalePersistencePort saleRepository, SaleItemMapper saleItemMapper, ClientSelector clientSelector, ClientUtils clientUtils, EmployeeSelector employeeSelector, EmployeeUtils employeeUtils, PaymentMethodUtils paymentMethodUtils, ServiceSelector serviceSelector, PaymentMethodSelector paymentMethodSelector) {
+        this.saleRepository = saleRepository;
+        this.saleItemMapper = saleItemMapper;
+        this.clientSelector = clientSelector;
+        this.clientUtils = clientUtils;
+        this.employeeSelector = employeeSelector;
+        this.employeeUtils = employeeUtils;
+        this.paymentMethodUtils = paymentMethodUtils;
+        this.serviceSelector = serviceSelector;
+        this.paymentMethodSelector = paymentMethodSelector;
+    }
 
     @Override
     public SaleData createSale(NewSaleDTO saleInfo) {
@@ -59,7 +51,7 @@ public class SalePersistenceImpl implements SalePersistence {
         // TODO Eliminar y solo manejar expeciones?
         this.paymentMethodUtils.assertExistsById(saleInfo.getPaymentMethodId());
         this.clientUtils.assertExistsById(saleInfo.getClientId());
-        this.employeeUtils.assertExistsById(saleInfo.getEmployeeId());
+        //this.employeeUtils.assertExistsById(saleInfo.getEmployeeEmail());
 
         List<SaleItemReference> saleItems = this.serviceSelector.saleItemsInfo(saleInfo.getSaleItems());
 
@@ -67,7 +59,7 @@ public class SalePersistenceImpl implements SalePersistence {
 
         SaleReference sale = SaleReference.withSaleItemReferencesAndPaymentMethod(saleItems, paymentMethod);
         sale.setClient(saleInfo.getClientId());
-        sale.setEmployee(saleInfo.getEmployeeId());
+        sale.setEmployeeEmail(saleInfo.getEmployeeEmail());
         sale.setInterest(paymentMethod.getInterest());
 
         return this.saleRepository.newSale(sale);
