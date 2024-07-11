@@ -1,7 +1,7 @@
 package com.joelrondinelpacheco.hackacode.security.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
-import com.joelrondinelpacheco.hackacode.common.application.exceptions.LoadKeysException;
+import com.joelrondinelpacheco.hackacode.common.domain.LoadKeysException;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

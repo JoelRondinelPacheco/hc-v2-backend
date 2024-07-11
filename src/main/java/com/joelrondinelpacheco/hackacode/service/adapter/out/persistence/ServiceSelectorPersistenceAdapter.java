@@ -42,9 +42,7 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
     @Override
     public Page<ServiceData> getAll(Pageable pageable) {
         //TODO REFACTOR
-        Page<ServiceData> s = this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
-        System.out.println(s);
-        return s;
+        return this.serviceRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 
     @Override

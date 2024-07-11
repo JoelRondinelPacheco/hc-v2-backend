@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.common.application.exceptions;
+package com.joelrondinelpacheco.hackacode.common.domain;
 
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
 import lombok.AllArgsConstructor;

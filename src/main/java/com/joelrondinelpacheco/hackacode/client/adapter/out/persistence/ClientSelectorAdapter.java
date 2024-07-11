@@ -4,6 +4,7 @@ import com.joelrondinelpacheco.hackacode.client.application.port.out.ClientSelec
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
 import com.joelrondinelpacheco.hackacode.common.adapter.Mapper;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -22,8 +23,10 @@ public class ClientSelectorAdapter implements ClientSelectorPort {
 
     @Override
     public Client byId(Long id) {
-        //Optional<ClientEntity> c = this.clientRepository.findById(id);
-        return this.clientRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
+        return this.clientRepository.findById(id).map(this.mapper::entityToDomain)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Client with ID: " + id + ", not found.")
+                );
     }
 
     @Override
@@ -37,6 +40,9 @@ public class ClientSelectorAdapter implements ClientSelectorPort {
     }
 
     public ClientEntity entityById(Long id) {
-        return this.clientRepository.findById(id).orElseThrow();
+        return this.clientRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Client with ID: " + id + ", not found.")
+                );
     }
 }

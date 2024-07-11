@@ -1,8 +1,9 @@
 package com.joelrondinelpacheco.hackacode.common.handler;
 
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
-import com.joelrondinelpacheco.hackacode.common.application.exceptions.LoadKeysException;
-import com.joelrondinelpacheco.hackacode.common.application.exceptions.ObjectNotValidException;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
+import com.joelrondinelpacheco.hackacode.common.domain.LoadKeysException;
+import com.joelrondinelpacheco.hackacode.common.domain.ObjectNotValidException;
 import com.joelrondinelpacheco.hackacode.common.application.utils.ApiErrorDefaultBuilder;
 import com.joelrondinelpacheco.hackacode.security.domain.InvalidRefreshTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -35,7 +36,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return  new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    //TODO CUSTOM EX
+    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApiError> handleException(NoSuchElementException ex) {
         ApiError err = this.apiErrorBuilder.getApiError(ex);
         err.setMessage("Entity not found");
@@ -43,7 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return  new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
-
+    //TODO CUSTOM EX
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleException(DataIntegrityViolationException ex) {
         ApiError err = this.apiErrorBuilder.getApiError(ex);
@@ -68,7 +70,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<ApiError>(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
+    //TODO CUSTOM EX
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ApiError> handleException(ExpiredJwtException ex) {
         ApiError err = this.apiErrorBuilder.getApiError(ex);

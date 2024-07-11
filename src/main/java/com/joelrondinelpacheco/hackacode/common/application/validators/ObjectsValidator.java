@@ -3,8 +3,7 @@ package com.joelrondinelpacheco.hackacode.common.application.validators;
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiErrorValidation;
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiSubError;
-import com.joelrondinelpacheco.hackacode.common.application.exceptions.ObjectNotValidException;
-import io.jsonwebtoken.lang.Collections;
+import com.joelrondinelpacheco.hackacode.common.domain.ObjectNotValidException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class ObjectsValidator<T> {

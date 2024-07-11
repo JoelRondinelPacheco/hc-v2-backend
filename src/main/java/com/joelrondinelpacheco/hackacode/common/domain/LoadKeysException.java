@@ -1,4 +1,4 @@
-package com.joelrondinelpacheco.hackacode.common.application.exceptions;
+package com.joelrondinelpacheco.hackacode.common.domain;
 
 public class LoadKeysException extends RuntimeException {
     public LoadKeysException(String message) {
