@@ -10,5 +10,5 @@ public interface AuthenticationUseCase {
 
     AuthenticationData login(AuthenticationRequest credentials);
 
-    Token refreshAuthToken(Token body);
+    Token refreshAuthToken(HttpServletRequest req);
 }

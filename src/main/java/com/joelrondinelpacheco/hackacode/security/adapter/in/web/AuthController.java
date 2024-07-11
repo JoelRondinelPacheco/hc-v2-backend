@@ -21,6 +21,7 @@ public class AuthController {
     private final RegisterEmployeeUseCase registerEmployeeUseCase;
     private final CookiesJWTUseCase createCookiesJWT;
 
+
     public AuthController(AuthenticationUseCase authService, UserStarterUseCase registerClientUserCase, RegisterEmployeeUseCase registerEmployeeUseCase, CookiesJWTUseCase createCookiesJWT) {
         this.authService = authService;
         this.registerClientUserCase = registerClientUserCase;
@@ -40,27 +41,20 @@ public class AuthController {
 
         AuthenticationResponse res = AuthenticationResponse.builder()
                 .name(auth.getName())
-                .lastname(auth.getLastname())
                 .email(auth.getEmail())
                 .role(auth.getRole())
                 .build();
 
-        ResponseCookie jwtCookie = createCookiesJWT.authJwtCookie(auth.getAuthToken());
         ResponseCookie refreshJwtCookie = createCookiesJWT.refreshJwtCookie(auth.getRefreshToken());
-
-        System.out.println(jwtCookie.toString());
-        System.out.println(refreshJwtCookie.toString());
-
+        res.setAuthToken(auth.getAuthToken());
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, refreshJwtCookie.toString())
                 .body(res);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<Token> refreshToken(@RequestBody Token req) {
-        System.out.println(req);
-        return ResponseEntity.ok(new Token("asd"));
+    public ResponseEntity<Token> refreshToken(HttpServletRequest req) {
+        return ResponseEntity.ok(this.authService.refreshAuthToken(req));
     }
 
     @PostMapping("/logout")

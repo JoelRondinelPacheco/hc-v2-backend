@@ -6,8 +6,10 @@ import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Authentic
 import com.joelrondinelpacheco.hackacode.security.application.dto.auth.Token;
 import com.joelrondinelpacheco.hackacode.security.application.entity.CustomUserDetails;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.AuthenticationUseCase;
+import com.joelrondinelpacheco.hackacode.security.application.usecases.CookiesJWTUseCase;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CustomUsersDetailsService;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.JwtTokenService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +27,14 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
     private final CustomUsersDetailsService userDetailsService;
+    private final CookiesJWTUseCase cookiesJWTUseCase;
 
     @Autowired
-    public AuthenticationUseCaseImpl(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CustomUsersDetailsService userDetailsService) {
+    public AuthenticationUseCaseImpl(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, CustomUsersDetailsService userDetailsService, CookiesJWTUseCase cookiesJWTUseCase) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenService = jwtTokenService;
         this.userDetailsService = userDetailsService;
+        this.cookiesJWTUseCase = cookiesJWTUseCase;
     }
 
     @Override
@@ -62,8 +66,14 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
     }
 
     @Override
-    public Token refreshAuthToken(Token body) {
-        return null;
+    public Token refreshAuthToken(HttpServletRequest req) {
+       String jwt = this.cookiesJWTUseCase.getRefreshJwtFromRequest(req);
+       String username = this.jwtTokenService.extractUsername(jwt);
+        CustomUserDetails userDetails = this.userDetailsService.getUserDetails(username);
+
+        String authToken = this.jwtTokenService.generateAuthToken(username, generateExtraClaims((userDetails)));
+
+        return new Token(authToken);
     }
 
     private Map<String, Object> generateExtraClaims(CustomUserDetails user) {

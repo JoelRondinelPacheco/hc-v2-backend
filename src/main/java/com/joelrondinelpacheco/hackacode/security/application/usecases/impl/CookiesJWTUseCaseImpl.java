@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.security.application.usecases.impl;
 
 import com.joelrondinelpacheco.hackacode.common.UseCase;
+import com.joelrondinelpacheco.hackacode.security.domain.InvalidRefreshTokenException;
 import com.joelrondinelpacheco.hackacode.security.application.usecases.CookiesJWTUseCase;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +37,8 @@ public class CookiesJWTUseCaseImpl implements CookiesJWTUseCase {
 
     @Override
     public String getRefreshJwtFromRequest(HttpServletRequest request) {
-        return this.getTokenFromCookieByName(request, JWT_REFRESH_COOKIE);
+        String t = this.getTokenFromCookieByName(request, JWT_REFRESH_COOKIE);
+        return t;
     }
 
     private ResponseCookie generateCookie(String name, String jwt, String path) {
@@ -48,7 +50,7 @@ public class CookiesJWTUseCaseImpl implements CookiesJWTUseCase {
         if (cookie != null) {
             return cookie.getValue();
         } else {
-            return null; //todo trow ex??
+            throw new InvalidRefreshTokenException("EX DE COCKIE NO EXISTE");
         }
     }
 }
