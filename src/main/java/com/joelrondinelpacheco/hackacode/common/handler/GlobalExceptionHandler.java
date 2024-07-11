@@ -1,9 +1,7 @@
 package com.joelrondinelpacheco.hackacode.common.handler;
 
 import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
-import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
-import com.joelrondinelpacheco.hackacode.common.domain.LoadKeysException;
-import com.joelrondinelpacheco.hackacode.common.domain.ObjectNotValidException;
+import com.joelrondinelpacheco.hackacode.common.domain.*;
 import com.joelrondinelpacheco.hackacode.common.application.utils.ApiErrorDefaultBuilder;
 import com.joelrondinelpacheco.hackacode.security.domain.InvalidRefreshTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,24 +34,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return  new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
-    //TODO CUSTOM EX
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApiError> handleException(NoSuchElementException ex) {
         ApiError err = this.apiErrorBuilder.getApiError(ex);
         err.setMessage("Entity not found");
         err.setStatus(HttpStatus.NOT_FOUND);
-
         return  new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
-    //TODO CUSTOM EX
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ApiError> handleException(DataIntegrityViolationException ex) {
+
+    @ExceptionHandler(PersistenceException.class)
+    public ResponseEntity<ApiError> handleException(PersistenceException ex) {
         ApiError err = this.apiErrorBuilder.getApiError(ex);
-        err.setMessage("Duplicated value");
+        err.setMessage("Persistence error");
         err.setStatus(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
-    //persistence
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleException(EntityAlreadyExistsException ex) {
+        ApiError err = this.apiErrorBuilder.getApiError(ex);
+        err.setMessage("Entity already exists");
+        err.setStatus(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(ObjectNotValidException.class)
     public ResponseEntity<ApiError> handleException(ObjectNotValidException ex) {

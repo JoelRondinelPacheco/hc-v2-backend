@@ -1,21 +1,24 @@
 package com.joelrondinelpacheco.hackacode.service.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
+import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.entity.CategoryEntity;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.mapper.CategoryMapper;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.repository.CategoryMySQLRepository;
-import com.joelrondinelpacheco.hackacode.service.application.port.out.CategorySelectorPort;
 import com.joelrondinelpacheco.hackacode.service.domain.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @PersistenceAdapter
-public class CategorySelectorPersistenceAdapter implements CategorySelectorPort {
+public class CategorySelectorPersistenceAdapter implements CategorySelectorAdapter {
 
-    @Autowired
-    private CategoryMySQLRepository categoryMySQLRepository;
-    @Autowired
-    private CategoryMapper categoryMapper;
+    private final CategoryMySQLRepository categoryMySQLRepository;
+    private final CategoryMapper categoryMapper;
+
+    public CategorySelectorPersistenceAdapter(CategoryMySQLRepository categoryMySQLRepository, CategoryMapper categoryMapper) {
+        this.categoryMySQLRepository = categoryMySQLRepository;
+        this.categoryMapper = categoryMapper;
+    }
 
     @Override
     public Page<Category> getPage(Pageable pageable) {
@@ -24,6 +27,13 @@ public class CategorySelectorPersistenceAdapter implements CategorySelectorPort 
 
     @Override
     public Category getById(Long categoryId) {
-        return this.categoryMySQLRepository.findById(categoryId).map(this.categoryMapper::entityToDomain).orElseThrow();
+        return this.categoryMapper.entityToDomain(this.getCategoryEntityById(categoryId));
+    }
+
+    @Override
+    public CategoryEntity getCategoryEntityById(Long id) {
+        return this.categoryMySQLRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Category with ID: " + id + ", not found.")
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.paymentmethod.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import com.joelrondinelpacheco.hackacode.paymentmethod.adapter.out.persistence.mapper.PaymentMethodMapper;
 import com.joelrondinelpacheco.hackacode.paymentmethod.application.port.out.PaymentMethodSelectorPort;
 import com.joelrondinelpacheco.hackacode.paymentmethod.domain.PaymentMethod;
@@ -20,9 +21,9 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
 
     @Override
     public PaymentMethod byId(Long id) {
-        System.out.println(id);
-        PaymentMethodEntity paymentMethodEntity = this.paymentMethodRepository.findById(id).orElseThrow(() -> new RuntimeException("no existe payment"));
-        System.out.println(paymentMethodEntity.getId());
+        PaymentMethodEntity paymentMethodEntity = this.paymentMethodRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Payment method with ID: " + id + ", not found.")
+        );
         return this.mapper.entityToDomain(paymentMethodEntity);
     }
 
@@ -37,6 +38,8 @@ public class PaymentMethodSelectorMySQLPersistenceAdapter implements PaymentMeth
     }
 
     public PaymentMethodEntity entityById(Long id) {
-        return this.paymentMethodRepository.findById(id).orElseThrow();
+        return this.paymentMethodRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Payment method with ID: " + id + ", not found.")
+        );
     }
 }

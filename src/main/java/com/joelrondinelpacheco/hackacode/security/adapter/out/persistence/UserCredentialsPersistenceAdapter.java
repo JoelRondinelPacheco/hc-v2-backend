@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.security.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.entity.UserCredentialsEntity;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.mapper.UserCredentialsMapper;
 import com.joelrondinelpacheco.hackacode.security.adapter.out.persistence.repository.UserCredentialsRepository;
@@ -38,6 +39,8 @@ public class UserCredentialsPersistenceAdapter implements UserCredentialsPersist
 
     @Override
     public UserCredentials findByUsername(String username) {
-        return this.userCredentialsRepository.findByPersonEntity_Email(username).map(this.mapper::entityToDomain).orElseThrow();
+        return this.userCredentialsRepository.findByPersonEntity_Email(username).map(this.mapper::entityToDomain).orElseThrow(
+                () -> new EntityNotFoundException("Credentials for user: " + username + ", not found.")
+        );
     }
 }

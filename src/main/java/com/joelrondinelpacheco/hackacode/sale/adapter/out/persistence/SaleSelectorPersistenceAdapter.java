@@ -19,8 +19,6 @@ public class SaleSelectorPersistenceAdapter implements SaleSelectorPort {
     private SaleMapper mapper;
     @Override
     public Page<SaleData> getPage(Pageable pageable) {
-        System.out.println(this.saleMySQLRepository.findAll(pageable).getContent().get(0).getId());
-        System.out.println(this.saleMySQLRepository.findAll(pageable).getContent().get(0).getPaymentMethod());
         return this.saleMySQLRepository.findAll(pageable).map(this.mapper::entityToDomain);
     }
 
@@ -31,12 +29,6 @@ public class SaleSelectorPersistenceAdapter implements SaleSelectorPort {
 
     @Override
     public Page<SaleData> getSalesByDay(LocalDate date, Pageable pageable) {
-        Page<SaleEntity> s = this.saleMySQLRepository.fetchByMonthAndYearAndDay(date.getMonthValue(), date.getDayOfMonth(), date.getYear(), pageable);
-        System.out.println(s.getTotalElements());
-        for (SaleEntity se : s.getContent()) {
-            System.out.println(se.getId());
-            System.out.println(se.getTotal());
-        }
         return this.saleMySQLRepository.fetchByMonthAndYearAndDay(date.getMonthValue(), date.getYear(), date.getDayOfMonth(), pageable).map(this.mapper::entityToDomain);
     }
 

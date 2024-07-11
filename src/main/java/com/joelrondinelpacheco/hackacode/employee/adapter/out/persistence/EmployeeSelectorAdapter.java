@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.employee.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import com.joelrondinelpacheco.hackacode.employee.adapter.out.persistence.mapper.EmployeeMapper;
 import com.joelrondinelpacheco.hackacode.employee.application.port.out.EmployeeSelectorPort;
 import com.joelrondinelpacheco.hackacode.employee.domain.Employee;
@@ -18,7 +19,9 @@ public class EmployeeSelectorAdapter implements EmployeeSelectorPort {
 
     @Override
     public Employee byId(Long id) {
-        return this.employeeMySQLRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow();
+        return this.employeeMySQLRepository.findById(id).map(this.mapper::entityToDomain).orElseThrow(
+                () -> new EntityNotFoundException("Employee with ID: " + id + ", not found.")
+        );
     }
 
     @Override
@@ -32,7 +35,11 @@ public class EmployeeSelectorAdapter implements EmployeeSelectorPort {
     }
 
     public EmployeeEntity entityById(Long id) {
-        return this.employeeMySQLRepository.findById(id).orElseThrow();
+        return this.employeeMySQLRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Employee with ID: " + id + ", not found.")
+        );
     }
-    public EmployeeEntity entityByEmail(String email) { return this.employeeMySQLRepository.findByPerson_Email(email).orElseThrow(); }
+    public EmployeeEntity entityByEmail(String email) { return this.employeeMySQLRepository.findByPerson_Email(email).orElseThrow(
+            () -> new EntityNotFoundException("Employee with email: " + email + ", not found.")
+    ); }
 }

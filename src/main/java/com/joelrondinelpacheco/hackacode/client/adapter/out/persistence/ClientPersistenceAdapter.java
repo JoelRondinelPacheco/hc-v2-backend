@@ -4,6 +4,7 @@ import com.joelrondinelpacheco.hackacode.client.application.port.out.ClientPersi
 import com.joelrondinelpacheco.hackacode.client.domain.Client;
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
 import com.joelrondinelpacheco.hackacode.common.adapter.Mapper;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import com.joelrondinelpacheco.hackacode.person.adapter.out.persistence.PersonEntity;
 import com.joelrondinelpacheco.hackacode.person.adapter.out.persistence.PersonMySQLRepository;
 import com.joelrondinelpacheco.hackacode.person.domain.Person;
@@ -45,7 +46,11 @@ public class ClientPersistenceAdapter implements ClientPersistencePort {
     @Override
     @Transactional
     public Client create(UserStarterDTO userInfo) {
-        RoleEntity role = this.roleMySQLRepository.findById(userInfo.getUserCredentials().getRole()).orElseThrow(); //TRHOW EX;
+
+        RoleEntity role = this.roleMySQLRepository.findById(userInfo.getUserCredentials().getRole()).orElseThrow(
+                () -> new EntityNotFoundException("Role with ID: " + userInfo.getUserCredentials().getRole() + ", not found.")
+        );
+
         PersonEntity p = this.personMapper.domainToEntity(userInfo.getPerson());
         PersonEntity personSaved = this.personMySQLRepository.save(p);
         UserCredentialsEntity u = this.userCredentialsMapper.domainReferenceToEntity(userInfo.getUserCredentials());

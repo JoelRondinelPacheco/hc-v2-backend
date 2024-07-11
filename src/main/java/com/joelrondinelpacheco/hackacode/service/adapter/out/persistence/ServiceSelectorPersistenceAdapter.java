@@ -1,6 +1,7 @@
 package com.joelrondinelpacheco.hackacode.service.adapter.out.persistence;
 
 import com.joelrondinelpacheco.hackacode.common.PersistenceAdapter;
+import com.joelrondinelpacheco.hackacode.common.domain.EntityNotFoundException;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.entity.ServiceEntity;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.mapper.ServiceMapper;
 import com.joelrondinelpacheco.hackacode.service.adapter.out.persistence.repository.ServiceMySQLRepository;
@@ -27,7 +28,9 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public ServiceData byId(Long id) {
-        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow();
+        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Service with ID: " + id + ", not found.")
+        );
         ServiceData sd = this.mapper.entityToDomain(s);
         return sd;
     }
@@ -47,7 +50,6 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public List<ServicePriceInfo> servicePriceList(List<Long> ids) {
-        //return this.serviceRepository.findAllServicePriceInfo(ids);
         List<ServiceEntity> serviceEntities = this.serviceRepository.findAllById(ids);
         //todo refactor
         List<ServicePriceInfo> sr = new ArrayList<>();
@@ -59,11 +61,15 @@ public class ServiceSelectorPersistenceAdapter implements ServiceSelectorPort {
 
     @Override
     public ServicePriceInfoImpl servicePrice(Long id) {
-        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow();
+        ServiceEntity s = this.serviceRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Service with ID: " + id + ", not found.")
+        );
         return new ServicePriceInfoImpl(s.getId(), s.getPrice());
     }
 
     public ServiceEntity entityById(Long id) {
-        return this.serviceRepository.findById(id).orElseThrow();
+        return this.serviceRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Service with ID: " + id + ", not found.")
+        );
     }
 }
