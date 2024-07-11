@@ -34,4 +34,5 @@ public class EmployeeSelectorAdapter implements EmployeeSelectorPort {
     public EmployeeEntity entityById(Long id) {
         return this.employeeMySQLRepository.findById(id).orElseThrow();
     }
+    public EmployeeEntity entityByEmail(String email) { return this.employeeMySQLRepository.findByPerson_Email(email).orElseThrow(); }
 }

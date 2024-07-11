@@ -35,7 +35,6 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
         String url = extractUrl(request);
         String httpMethod = request.getMethod();
-
         boolean isPublic = isPublic(url, httpMethod);
         if(isPublic){
             return new AuthorizationDecision(true);
@@ -57,6 +56,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
     private boolean isGranted(String url, String httpMethod, Authentication authentication) {
 
+        //TODO HANDLE EXCEPTION IN ADVICER
         if( authentication == null || !(authentication instanceof UsernamePasswordAuthenticationToken)){
             throw new AuthenticationCredentialsNotFoundException("Employee not logged in");
         }
@@ -111,7 +111,6 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
         String contextPath = request.getContextPath();
         String url = request.getRequestURI();
         url = url.replace(contextPath, "");
-        System.out.println(url);
 
         return url;
     }

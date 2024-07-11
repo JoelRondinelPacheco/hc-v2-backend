@@ -4,6 +4,7 @@ import com.joelrondinelpacheco.hackacode.common.application.dto.ApiError;
 import com.joelrondinelpacheco.hackacode.common.application.exceptions.LoadKeysException;
 import com.joelrondinelpacheco.hackacode.common.application.exceptions.ObjectNotValidException;
 import com.joelrondinelpacheco.hackacode.common.application.utils.ApiErrorDefaultBuilder;
+import com.joelrondinelpacheco.hackacode.security.domain.InvalidRefreshTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     //persistence
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<ApiError> handleException(InvalidRefreshTokenException ex) {
+        ApiError err = this.apiErrorBuilder.getApiError(ex);
+        err.setMessage("Entity not found");
+        err.setStatus(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ApiError> handleException(NoSuchElementException ex) {
